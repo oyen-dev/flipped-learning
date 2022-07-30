@@ -1,2 +1,8 @@
 # Dependencies directory
-node_modules
+/node_modules
+
+# Caches
+/cache
+
+# Distribution directory
+/dist
