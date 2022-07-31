@@ -15,8 +15,7 @@ pipeline {
         }
         stage('Clean up old container') {
             steps {
-                sh "docker stop flip-learn-back-staging"
-                sh "docker rm flip-learn-back-staging"
+                sh 'docker stop flip-learn-back-staging && docker rm flip-learn-back-staging || exit 0;'
             }
         }
         stage('Deploy') {
