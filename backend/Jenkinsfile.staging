@@ -7,14 +7,20 @@ pipeline {
 
     stages {
         stage('Build') {
-            sh 'docker build -t flip-learn-back:staging'
+            steps {
+                sh 'docker build -t flip-learn-back:staging'
+            }
         }
         stage('Clean up old container') {
-            sh "docker stop flip-learn-back-staging"
-            sh "docker rm flip-learn-back-staging"
+            steps {
+                sh "docker stop flip-learn-back-staging"
+                sh "docker rm flip-learn-back-staging"
+            }
         }
         stage('Deploy') {
-            sh "docker run --name flip-learn-back-staging --restart always -p 127.0.0.1:$PORT:3000 -e \"PORT=3000\" flip-learn-back:staging"
+            steps {
+                sh "docker run --name flip-learn-back-staging --restart always -p 127.0.0.1:$PORT:3000 -e \"PORT=3000\" flip-learn-back:staging"
+            }
         }
     }
 }
