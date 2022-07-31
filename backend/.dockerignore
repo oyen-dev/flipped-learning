@@ -1,0 +1,8 @@
+# Dependencies directory
+/node_modules
+
+# Caches
+/cache
+
+# Distribution directory
+/dist
