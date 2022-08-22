@@ -37,12 +37,16 @@ export default function Home () {
               name="username"
               rules={[
                 {
+                  type: 'email',
+                  message: 'Mohon masukkan email yang valid!'
+                },
+                {
                   required: true,
                   message: 'Mohon masukkan email terdaftar Anda!'
                 }
               ]}
             >
-              <Input placeholder="Masukkan email Anda" value={'Kucing'}/>
+              <Input placeholder="Masukkan email Anda" />
             </Form.Item>
 
             <p className="text-white text-base font-medium mb-0">Password</p>
