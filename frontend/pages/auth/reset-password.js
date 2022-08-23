@@ -1,7 +1,4 @@
 import Head from 'next/head'
-import Link from 'next/link'
-
-import { Button } from 'antd'
 import { ResetPasswordForm } from '../../components/authentication/forms'
 
 const Login = () => {
@@ -21,7 +18,7 @@ const Login = () => {
         <p className="font-bold text-xl md:text-2xl lg:text-3xl text-center tracking-wide">
           Reset Password
         </p>
-        <div className="flex flex-col w-[80%] md:w-[70%] lg:w-[30%] space-y-2">
+        <div className="flex flex-col w-[60%] md:w-[70%] lg:w-[35%] space-y-2">
           <ResetPasswordForm />
         </div>
       </main>

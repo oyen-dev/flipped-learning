@@ -21,7 +21,7 @@ const RegisterForm = () => {
     } else if (values.password !== values.confirm_password) {
       message.error('Mohon maaf, password belum sesuai.')
     } else {
-      console.log('Send API')
+      message.info('Siap Hit API')
     }
   }
 
@@ -39,7 +39,7 @@ const RegisterForm = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <p className="text-white text-base font-medium mb-0">Nama Lengkap</p>
+      <p className="text-white text-base font-normal mb-0">Nama Lengkap</p>
       <Form.Item
         name="name"
         rules={[
@@ -49,10 +49,10 @@ const RegisterForm = () => {
           }
         ]}
       >
-        <Input placeholder="Nama Lengkap" />
+        <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-medium mb-0">Email</p>
+      <p className="text-white text-base font-normal mb-0">Email</p>
       <Form.Item
         name="email"
         rules={[
@@ -66,10 +66,10 @@ const RegisterForm = () => {
           }
         ]}
       >
-        <Input placeholder="Email" />
+        <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-medium mb-0">Jenis Kelamin</p>
+      <p className="text-white text-base font-normal mb-0">Jenis Kelamin</p>
       <Form.Item
         name="gender"
         rules={[
@@ -79,13 +79,13 @@ const RegisterForm = () => {
           }
         ]}
       >
-        <Select placeholder="Jenis Kelamin">
+        <Select>
           <Select.Option value="Laki-laki">Laki</Select.Option>
           <Select.Option value="Perempuan">Perempuan</Select.Option>
         </Select>
       </Form.Item>
 
-      <p className="text-white text-base font-medium mb-0">Tanggal Lahir</p>
+      <p className="text-white text-base font-normal mb-0">Tanggal Lahir</p>
       <Form.Item
         name="dob"
         rules={[
@@ -98,11 +98,10 @@ const RegisterForm = () => {
         <DatePicker
           onChange={changeDate}
           className="w-full"
-          placeholder="Tanggal Lahir"
         />
       </Form.Item>
 
-      <p className="text-white text-base font-medium mb-0">Alamat</p>
+      <p className="text-white text-base font-normal mb-0">Alamat</p>
       <Form.Item
         name="address"
         rules={[
@@ -112,10 +111,10 @@ const RegisterForm = () => {
           }
         ]}
       >
-        <Input placeholder="Alamat" />
+        <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-medium mb-0">Password</p>
+      <p className="text-white text-base font-normal mb-0">Password</p>
       <Form.Item
         name="password"
         rules={[
@@ -125,10 +124,10 @@ const RegisterForm = () => {
           }
         ]}
       >
-        <Input.Password placeholder="Password" />
+        <Input.Password />
       </Form.Item>
 
-      <p className="text-white text-base font-medium mb-0">
+      <p className="text-white text-base font-normal mb-0">
         Konfirmasi Password
       </p>
       <Form.Item
@@ -140,7 +139,7 @@ const RegisterForm = () => {
           }
         ]}
       >
-        <Input.Password placeholder="Konfirmasi Password" />
+        <Input.Password />
       </Form.Item>
 
       <div className="flex flex-row items-start justify-start space-x-4 text-white">
@@ -162,7 +161,7 @@ const RegisterForm = () => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">
-          <p className='text-white font-semibold'>Daftar Flipped Learning</p>
+          <p className='text-white font-medium'>Daftar Flipped Learning</p>
         </Button>
       </Form.Item>
     </Form>

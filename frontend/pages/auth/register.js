@@ -20,7 +20,7 @@ const Register = () => {
         <p className="font-bold text-xl md:text-2xl lg:text-3xl text-center tracking-wide">
           Pendaftaran Pengguna Flipped Learning
         </p>
-        <div className="flex flex-col w-[80%] md:w-[30%] space-y-2">
+        <div className="flex flex-col w-[60%] md:w-[70%] lg:w-[35%] space-y-2">
           <RegisterForm />
           <Link href='/auth' className="flex flex-col space-y-2 items-center text-white">
               <button className="text-base font-semibold mb-0 hover:text-blue-500 duration-150 cursor-pointer">Kembali ke Login</button>

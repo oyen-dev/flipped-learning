@@ -1,14 +1,19 @@
-import { Button, Checkbox, Form, Input } from 'antd';
-import React from 'react';
+import { Button, Form, Input, message } from 'antd'
 
-const App = () => {
+const ResetPasswordForm = () => {
   const onFinish = (values) => {
-    console.log('Success:', values);
-  };
+    if (values.password.length < 8) {
+      message.error('Mohon buat password dengan minimal 8 karakter!')
+    } else if (values.password !== values.confirm_password) {
+      message.error('Mohon maaf, password belum sesuai.')
+    } else {
+      console.log('Success:', values)
+    }
+  }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+    console.log('Failed:', errorInfo)
+  }
 
   return (
     <Form
@@ -17,27 +22,27 @@ const App = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <p className='text-white text-base font-medium mb-0'>Password</p>
+      <p className='text-white text-base font-normal mb-0'>Password</p>
       <Form.Item
         name="password"
         rules={[
           {
             required: true,
-            message: 'Please input your username!',
-          },
+            message: 'Please input your username!'
+          }
         ]}
       >
         <Input.Password />
       </Form.Item>
 
-      <p className='text-white text-base font-medium mb-0'>Konfirmasi Password</p>
+      <p className='text-white text-base font-normal mb-0'>Konfirmasi Password</p>
       <Form.Item
         name="confirm_password"
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
-          },
+            message: 'Please input your password!'
+          }
         ]}
       >
         <Input.Password />
@@ -46,11 +51,11 @@ const App = () => {
       <Form.Item
       >
         <Button className='w-full' type="primary" htmlType="submit">
-          <p className='text-white font-semibold'>Reset Password</p>
+          <p className='text-white font-medium'>Reset Password</p>
         </Button>
       </Form.Item>
     </Form>
-  );
-};
+  )
+}
 
-export default App;
+export default ResetPasswordForm

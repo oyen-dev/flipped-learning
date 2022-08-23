@@ -21,16 +21,18 @@ const Login = () => {
         <p className="font-bold text-xl md:text-2xl lg:text-3xl text-center tracking-wide">
           Pendaftaran Pengguna Flipped Learning
         </p>
-        <div className="flex flex-col w-[80%] md:w-[70%] lg:w-[30%] space-y-2">
+        <div className="flex flex-col w-[60%] md:w-[70%] lg:w-[35%] space-y-2">
           <LoginForm />
 
-          <div className="flex flex-col w-full text-base items-center ">
+          <div className="flex flex-col w-full text-sm items-center">
             <p>Belum punya akun?</p>
             <Link href="/auth/register">
-            <Button type="default" className="w-full">
-              Daftar
-            </Button>
-          </Link>
+              <Button type="link" className="w-full">
+                <p className="font-semibold text-base text-white hover:text-blue-500 cursor-pointer duration-150">
+                  Daftar
+                </p>
+              </Button>
+            </Link>
           </div>
         </div>
       </main>

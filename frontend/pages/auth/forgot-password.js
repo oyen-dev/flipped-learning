@@ -1,10 +1,9 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-import { Button } from 'antd'
 import { ForgotPasswordForm } from '../../components/authentication/forms'
 
-const Login = () => {
+const ForgotPassword = () => {
   return (
     <div>
       <Head>
@@ -21,7 +20,7 @@ const Login = () => {
         <p className="font-bold text-xl md:text-2xl lg:text-3xl text-center tracking-wide">
           Lupa Password?
         </p>
-        <div className="flex flex-col w-[80%] md:w-[70%] lg:w-[30%] space-y-2">
+        <div className="flex flex-col w-[60%] md:w-[70%] lg:w-[35%] space-y-2">
           <ForgotPasswordForm />
 
           <div className="flex flex-col w-full text-base items-center ">
@@ -35,4 +34,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default ForgotPassword
