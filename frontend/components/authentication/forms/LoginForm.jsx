@@ -1,4 +1,5 @@
 import { Form, Input, Button } from 'antd'
+import Link from 'next/link'
 
 const LoginForm = () => {
   const onFinish = (values) => {
@@ -41,9 +42,11 @@ const LoginForm = () => {
       </Form.Item>
 
       <div className="flex flex-col space-y-1 items-end text-white">
+        <Link href='/auth/forgot-password'>
         <p className="text-base font-bold hover:text-blue-500 cursor-pointer duration-150">
           Lupa password?
         </p>
+        </Link>
       </div>
 
       <Form.Item>

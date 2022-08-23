@@ -13,7 +13,7 @@ const Register = () => {
       </Head>
 
       <main className="container mx-auto h-full flex flex-col px-5 py-10 bg-gray-800 items-center justify-center space-y-10 text-white">
-        <div className="flex w-full space-x-10 justify-center lg:justify-start">
+        <div className="flex w-full space-x-10 justify-center">
           <div className="w-20 h-20 bg-gray-200" />
           <div className="w-20 h-20 bg-gray-200" />
         </div>

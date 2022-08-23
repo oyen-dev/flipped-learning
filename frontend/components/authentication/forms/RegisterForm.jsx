@@ -19,7 +19,7 @@ const RegisterForm = () => {
     } else if (values.password.length < 8) {
       message.error('Mohon buat password dengan minimal 8 karakter!')
     } else if (values.password !== values.confirm_password) {
-      message.error('Mohon maaf, passwrod belum sesuai.')
+      message.error('Mohon maaf, password belum sesuai.')
     } else {
       console.log('Send API')
     }
@@ -162,7 +162,7 @@ const RegisterForm = () => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">
-          Daftar Flipped Learning
+          <p className='text-white font-semibold'>Daftar Flipped Learning</p>
         </Button>
       </Form.Item>
     </Form>
