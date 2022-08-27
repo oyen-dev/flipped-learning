@@ -5,7 +5,7 @@ import Sidebar from './Sidebar'
 import Content from './Content'
 
 const index = (props) => {
-  const { title, description, keywords, author, ogTitle, ogDescription } = props
+  const { title, description, keywords, author, ogTitle, ogDescription, children } = props
   return (
     <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-700 text-white">
       <Head>
@@ -24,7 +24,7 @@ const index = (props) => {
       <Header />
       <Sidebar />
       <Content>
-        <p className="flex text-xl">Hello world</p>
+        {children}
       </Content>
     </div>
   )

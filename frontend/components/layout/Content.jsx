@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 const Content = ({ children }) => {
   return (
-    <div className="h-screen overflow-y-auto justify-start items-start ml-14 md:ml-64 bg-gray-800">
-      <div className="flex items-center justify-center">
+    <div className="h-screen overflow-y-auto justify-start items-start ml-14 pt-2 px-2 md:ml-64 bg-gray-800">
+      <div className="flex flex-col items-start justify-center px-2 py-2">
         {children}
       </div>
     </div>

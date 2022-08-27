@@ -1,26 +1,29 @@
-import Content from '../../../components/layout/Content'
-import Header from '../../../components/layout/Header'
-import Sidebar from '../../../components/layout/Sidebar'
-import TableTwoColumn from '../../../components/table/TableTwoColumn'
+import Layout from '../../../components/layout'
+import RecentAccess from '../../../components/table/RecentAccess'
 
 const guru = () => {
   return (
-    <div>
-      <Header>
-        <p className='px-10 pt-5 font-medium'>Flipped Learning</p>
-      </Header>
-
-      <Sidebar>
-
-      </Sidebar>
-
-      <Content>
-        <div className='flex flex-col space-x-4'>
-          <TableTwoColumn />
-          <TableTwoColumn />
+    <Layout
+      title="Admin"
+      description="Admin page"
+      keywords="Admin page"
+      author="Admin"
+      ogTitle="Admin"
+      ogDescription="Admin page"
+      ogImage="https://www.example.com/image.jpg"
+    >
+      <div className='w-full grid auto-rows-auto lg:grid-cols-2 gap-5'>
+        <div className='flex flex-col w-full items-start justify-start bg-gray-900 px-5 py-5 rounded-lg'>
+          <p className='text-base font-medium'>Riwayat Akses Terkini</p>
+          <RecentAccess />
         </div>
-      </Content>
-    </div>
+
+        <div className='flex flex-col w-full items-start justify-start bg-gray-900 px-5 py-5 rounded-lg'>
+          <p className='text-base font-medium'>Statistik Warga Sekolah</p>
+          <RecentAccess />
+        </div>
+      </div>
+    </Layout>
   )
 }
 export default guru

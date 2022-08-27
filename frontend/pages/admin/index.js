@@ -11,7 +11,7 @@ const index = () => {
       ogDescription="Admin page"
       ogImage="https://www.example.com/image.jpg"
     >
-
+      <p>Hallo hallo</p>
     </Layout>
   )
 }

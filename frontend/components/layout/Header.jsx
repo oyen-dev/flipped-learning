@@ -7,9 +7,9 @@ const Header = ({ children }) => {
     setTheme(!theme)
   }
   return (
-    <div className="w-full flex items-center justify-between h-14 text-white z-10 bg-gray-800">
+    <div className="w-full flex items-center justify-between h-14 text-white z-10 bg-gray-900">
       {/* Left empty space */}
-      <div className="flex items-center justify-start md:justify-center pl-3 w-16 lg:w-64 h-full bg-gray-800 border-none" />
+      <div className="flex items-center justify-start md:justify-center pl-3 w-16 lg:w-64 h-full bg-gray-900 border-none" />
 
       {/* Header container */}
       <div className="flex flex-col header-right h-full justify-center">
