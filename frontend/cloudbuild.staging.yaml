@@ -1,0 +1,20 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/flipped-learn/flipped-learn-back:staging', '.']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/flipped-learn/flipped-learn-back:staging']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: [
+    'run', 
+    'deploy', 
+    'flipped-learn-back-staging', 
+    '--image', 
+    'gcr.io/flipped-learn/flipped-learn-back:staging', 
+    '--region', 
+    'asia-southeast1-b']
+images:
+- gcr.io/flipped-learn/flipped-learn-back:staging
