@@ -19,6 +19,7 @@ steps:
     'asia-southeast1',
     '--service-account',
     'cloudbuild-rundeployer@flipped-learn.iam.gserviceaccount.com'
+    '--allow-unauthenticated'
   ]
 images:
 - gcr.io/flipped-learn/flipped-learn-back:staging
