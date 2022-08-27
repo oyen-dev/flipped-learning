@@ -18,7 +18,7 @@ steps:
     '--region', 
     'asia-southeast1',
     '--service-account',
-    'cloudbuild-rundeployer@flipped-learn.iam.gserviceaccount.com'
+    'cloudbuild-rundeployer@flipped-learn.iam.gserviceaccount.com',
     '--allow-unauthenticated'
   ]
 images:
