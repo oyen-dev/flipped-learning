@@ -16,7 +16,9 @@ steps:
     '--image', 
     'gcr.io/flipped-learn/flipped-learn-back:staging', 
     '--region', 
-    'asia-southeast1'
+    'asia-southeast1',
+    '--service-account',
+    'cloudbuild-rundeployer@flipped-learn.iam.gserviceaccount.com'
   ]
 images:
 - gcr.io/flipped-learn/flipped-learn-back:staging
