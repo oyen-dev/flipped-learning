@@ -1,6 +1,7 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
+  dir: 'frontend'
   args: ['build', '-t', 'gcr.io/flipped-learn/flipped-learn-back:staging', '.']
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
