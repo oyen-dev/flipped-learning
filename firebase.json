@@ -1,6 +1,9 @@
 {
   "hosting": [
     {
+      "target": "flipped-learn"
+    },
+    {
       "target": "staging-flipped-learn",
       "rewrites": [
         {
