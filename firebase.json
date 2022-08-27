@@ -1,0 +1,26 @@
+{
+  "hosting": [
+    {
+      "target": "flippedlearn"
+    },
+    {
+      "target": "staging-flippedlearn",
+      "rewrites": [
+        {
+          "source": "api/**",
+          "run": {
+            "serviceId": "flipped-learn-back-staging",
+            "region": "asia-southeast1"
+          }
+        },
+        {
+          "source": "**",
+          "run": {
+            "serviceId": "flipped-learn-front-staging",
+            "region": "asia-southeast1"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+steps:
+  - name: gcr.io/flipped-learn/firebase
+    args: ["deploy", "--project=flipped-learn", "--only=hosting"]
