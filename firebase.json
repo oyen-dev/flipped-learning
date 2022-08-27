@@ -1,10 +1,7 @@
 {
   "hosting": [
     {
-      "target": "flippedlearn"
-    },
-    {
-      "target": "staging-flippedlearn",
+      "target": "staging-flipped-learn",
       "rewrites": [
         {
           "source": "api/**",

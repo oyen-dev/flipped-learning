@@ -1,5 +1,21 @@
 {
   "projects": {
     "default": "flipped-learn"
-  }
+  },
+  "targets": {
+    "flipped-learn": {
+      "hosting": {
+        "flippedlearn": [
+          "flippedlearn"
+        ],
+        "staging-flippedlearn": [
+          "staging-flippedlearn"
+        ],
+        "staging-flipped-learn": [
+          "staging-flipped-learn"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
