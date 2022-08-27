@@ -16,8 +16,10 @@ const host = process.env.HOST || (NODE_ENV === 'development' ? 'localhost' : '::
 const port = parseInt(process.env.PORT || '3000');
 
 // Endpoints routing
-app.all('/', (_: Request, res: Response) => {
-    res.send('Welcome. Flipped Learning API is working.')
+app.all('/api', (_: Request, res: Response) => {
+    res.json({
+        message: 'Welcome. Flipped Learning API is working.'
+    })
 });
 
 app.listen(port, host, () => {
