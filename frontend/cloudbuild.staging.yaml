@@ -20,3 +20,5 @@ steps:
   ]
 images:
 - gcr.io/flipped-learn/flipped-learn-back:staging
+options:
+  logging: CLOUD_LOGGING_ONLY
