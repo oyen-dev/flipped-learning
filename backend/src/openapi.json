@@ -6,6 +6,14 @@
   },
   "servers": [
     {
+      "description": "Production Server",
+      "url": "https://flippedlearn.binaceria.dev/api"
+    },
+    {
+      "description": "Staging Server",
+      "url": "https://staging.flippedlearn.binaceria.dev/api"
+    },
+    {
       "description": "Local Server",
       "url": "http://localhost:3000/api"
     }
