@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "API Title",
+    "title": "Flipped Learn API",
     "version": "1.0"
   },
   "servers": [
