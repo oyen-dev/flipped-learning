@@ -1,10 +1,11 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import { isDev, isProd, isTest } from './utils/environment';
 import { LOG_ENTITY_SERVER } from './utils/consts';
 import { AppLogger } from './utils/logger';
 import { connectToDatabase } from './utils/database';
+import { getRoutes } from './routes';
 
 // Load .env file configuration
 dotenv.config({
@@ -33,12 +34,8 @@ async function main() {
     // Init database connection
     const db = await connectToDatabase(logger);
 
-    // Init routes
-    app.all('/api', (_: Request, res: Response) => {
-        res.json({
-            message: 'Welcome. Flipped Learning API is working.'
-        });
-    });
+    // Load routes
+    app.use('/api', getRoutes(db, logger));
 
     // Start listening requests
     app.listen(port, host, () => {
