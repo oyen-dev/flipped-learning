@@ -3,10 +3,10 @@ const fs = require("fs");
 const { LOG_ENTITY_LOGGER } = require("./consts");
 
 class AppLogger {
-    fileLogPath = process.env.LOG_PATH || ""
-    fileLogEnabled = false;
+    static fileLogPath = process.env.LOG_PATH || ""
+    static fileLogEnabled = false;
 
-    async init() {
+    static async init() {
         if (this.fileLogPath == "") {
             this.fileLogEnabled = false;
         } else {
@@ -25,7 +25,7 @@ class AppLogger {
         }
     }
 
-    async writeLog(entity, message, isConsoleLog = true) {
+    static async writeLog(entity, message, isConsoleLog = true) {
         const logMessage = `${entity}: ${message}`;
         if (isConsoleLog) {
             console.log(logMessage);
