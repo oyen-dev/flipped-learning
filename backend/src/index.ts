@@ -4,6 +4,7 @@ import path from 'path';
 import { isDev, isProd, isTest } from './utils/environment';
 import { LOG_ENTITY_SERVER } from './utils/consts';
 import { AppLogger } from './utils/logger';
+import { connectToDatabase } from './utils/database';
 
 // Load .env file configuration
 dotenv.config({
@@ -28,6 +29,9 @@ const port = parseInt(process.env.PORT || '3000');
 async function main() {
     // Init application logger
     await logger.init();
+
+    // Init database connection
+    const db = await connectToDatabase(logger);
 
     // Init routes
     app.all('/api', (_: Request, res: Response) => {
