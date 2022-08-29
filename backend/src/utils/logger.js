@@ -1,12 +1,12 @@
-import { access, appendFile, writeFile } from "fs/promises";
-import { constants as fsConstants, existsSync } from "fs";
-import { LOG_ENTITY_LOGGER } from "./consts";
+const { access, appendFile, writeFile } = require("fs/promises");
+const fs = require("fs");
+const { LOG_ENTITY_LOGGER } = require("./consts");
 
-export class AppLogger {
-    fileLogPath = process.env.LOG_PATH || ""
-    fileLogEnabled: boolean = false;
+class AppLogger {
+    static fileLogPath = process.env.LOG_PATH || ""
+    static fileLogEnabled = false;
 
-    async init(): Promise<void> {
+    static async init() {
         if (this.fileLogPath == "") {
             this.fileLogEnabled = false;
         } else {
@@ -14,7 +14,7 @@ export class AppLogger {
                 if (!existsSync(this.fileLogPath)) {
                     writeFile(this.fileLogPath, "");
                 }
-                await access(this.fileLogPath, fsConstants.W_OK);
+                await access(this.fileLogPath, fs.constants.W_OK);
                 this.fileLogEnabled = true;
                 await this.writeLog("", "\n", false);
                 await this.writeLog(LOG_ENTITY_LOGGER, '==========================================================', false);
@@ -25,7 +25,7 @@ export class AppLogger {
         }
     }
 
-    async writeLog(entity: string, message: string, isConsoleLog: boolean = true) {
+    static async writeLog(entity, message, isConsoleLog = true) {
         const logMessage = `${entity}: ${message}`;
         if (isConsoleLog) {
             console.log(logMessage);
@@ -34,4 +34,8 @@ export class AppLogger {
             await appendFile(this.fileLogPath, logMessage + "\n");
         }
     }
+}
+
+module.exports = {
+    AppLogger
 }

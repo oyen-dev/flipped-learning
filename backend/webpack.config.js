@@ -4,7 +4,7 @@ const { NODE_ENV = 'production' } = process.env
 
 module.exports = {
     mode: NODE_ENV,
-    entry: path.resolve(__dirname, 'src', 'index.ts'),
+    entry: path.resolve(__dirname, 'src', 'index.js'),
     target: 'node',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -12,16 +12,8 @@ module.exports = {
         clean: true,
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.js']
     },
     module: {
-        rules: [
-            {
-                test: /\.ts$/i,
-                use: [
-                    'ts-loader',
-                ]
-            },
-        ],
     },
 };
