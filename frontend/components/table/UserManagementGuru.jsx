@@ -1,6 +1,6 @@
 import UserAction from './UserAction'
 
-const UserManagement = () => {
+const UserManagementGuru = () => {
   return (
     <table className="w-full table-auto">
       <thead>
@@ -41,7 +41,7 @@ const UserManagement = () => {
             </div>
           </td>
           <td className="py-3 px-5 text-left">
-            <div className="flex items-center">
+            <div className="flex justify-center">
               <UserAction />
             </div>
           </td>
@@ -74,7 +74,7 @@ const UserManagement = () => {
             </div>
           </td>
           <td className="py-3 px-5 text-left">
-            <div className="flex items-center">
+            <div className="flex justify-center">
               <UserAction />
             </div>
           </td>
@@ -107,7 +107,7 @@ const UserManagement = () => {
             </div>
           </td>
           <td className="py-3 px-5 text-left">
-            <div className="flex items-center">
+            <div className="flex justify-center">
               <UserAction />
             </div>
           </td>
@@ -117,4 +117,4 @@ const UserManagement = () => {
   )
 }
 
-export default UserManagement
+export default UserManagementGuru

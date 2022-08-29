@@ -7,8 +7,8 @@ const ModalDeleteUser = () => {
                 <p className="text-base text-center font-normal">Apakah Anda yakin ingin menghapus data Budi Santoso?</p>
 
                 <div className="flex justify-center gap-16">
-                    <button className="btn btn-accent w-2/6">Batal</button>
-                    <button className="btn btn-primary w-2/6">Hapus</button>
+                    <button className="btn btn-sm btn-accent w-2/6">Batal</button>
+                    <button className="btn btn-sm bt-[#34A0A4] w-2/6">Hapus</button>
                 </div>
             </div>
         </div>

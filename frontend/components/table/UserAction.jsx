@@ -1,8 +1,11 @@
 import ModalViewUser from '../../components/modal/ModalViewUser'
 import ModalUpdateUser from '../../components/modal/ModalUpdateUser'
 import ModalDeleteUser from '../../components/modal/ModalDeleteUser'
+import Swal from 'sweetalert2/dist/sweetalert2.all'
+import withReactContent from 'sweetalert2-react-content'
 
 const UserAction = () => {
+  const MySwal = withReactContent(Swal)
   return (
     <div className="flex items-center justify-center gap-4">
       <div>
@@ -44,7 +47,23 @@ const UserAction = () => {
       </div>
 
       <div>
-        <label htmlFor="my-modal-delete" className="btn modal-button">
+        <label className="btn modal-button" onClick={() => MySwal.fire({
+          title: 'Konfirmasi Hapus',
+          text: 'Apakah Anda akan menghapus data Budi Santoso?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }
+        })}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
