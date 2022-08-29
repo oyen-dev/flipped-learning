@@ -1,9 +1,9 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
-import path from 'path';
-import { isDev, isProd, isTest } from './utils/environment';
-import { LOG_ENTITY_SERVER } from './utils/consts';
-import { AppLogger } from './utils/logger';
+const express = require('express');
+const dotenv = require('dotenv');
+const path = require('path');
+const { isDev, isProd, isTest } = require('./utils/environment');
+const { LOG_ENTITY_SERVER } = require('./utils/consts');
+const { AppLogger } = require('./utils/logger');
 
 // Load .env file configuration
 dotenv.config({
@@ -15,7 +15,7 @@ dotenv.config({
 });
 
 // Create express instance
-const app: Express = express();
+const app = express();
 
 // Create application logger instance
 const logger = new AppLogger();
@@ -30,7 +30,7 @@ async function main() {
     await logger.init();
 
     // Init routes
-    app.all('/api', (_: Request, res: Response) => {
+    app.all('/api', (_, res) => {
         res.json({
             message: 'Welcome. Flipped Learning API is working.'
         });
