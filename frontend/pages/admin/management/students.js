@@ -3,7 +3,7 @@ import RecentAccess from '../../../components/table/RecentAccess'
 import Statistic from '../../../components/dashboard/Statistic'
 import ActiveClass from '../../../components/table/ActiveClass'
 
-const guru = () => {
+const Students = () => {
   return (
     <Layout
       title="Admin"
@@ -39,4 +39,4 @@ const guru = () => {
     </Layout>
   )
 }
-export default guru
+export default Students

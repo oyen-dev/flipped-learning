@@ -1,6 +1,6 @@
-import Layout from '../../../../components/layout'
-import BorderBottom from '../../../../components/button/BorderBottom'
-import Class from '../../../../components/card/Class'
+import Layout from '../../../components/layout'
+import BorderBottom from '../../../components/button/BorderBottom'
+import Class from '../../../components/card/Class'
 
 import { Input } from 'antd'
 
@@ -35,7 +35,7 @@ const FilterIcon = () => {
   )
 }
 
-const index = () => {
+const Classes = () => {
   return (
     <Layout
       title="Manajemen Data Kelas"
@@ -81,7 +81,7 @@ const index = () => {
 
         <button
           title="Contact Us"
-          className="fixed z-40 bottom-8 right-8 bg-blue-600 w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-blue-700 hover:drop-shadow-2xl duration-300"
+          className="fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-blue-700 hover:drop-shadow-2xl duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -102,4 +102,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Classes
