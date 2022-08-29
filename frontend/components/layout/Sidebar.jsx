@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const Sidebar = () => {
   return (
     <div className="fixed flex flex-col group top-0 left-0 w-14 group-hover:w-64 md:w-64 bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar">
@@ -13,53 +15,53 @@ const Sidebar = () => {
             </p>
           </li>
 
-          <li className="pt-5">
-            <a
-              href="#"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150"
-            >
-              <span className="inline-flex justify-center items-center ml-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-house-door"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
-                </svg>
-              </span>
-              <span className="ml-2 text-sm tracking-wide truncate">
-                Dashboard
-              </span>
-            </a>
-          </li>
+          <Link href="/dashboard">
+            <li className="pt-5">
+              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
+                <span className="inline-flex justify-center items-center ml-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-house-door"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
+                  </svg>
+                </span>
+                <span className="ml-2 text-sm tracking-wide truncate">
+                  Dashboard
+                </span>
+              </a>
+            </li>
+          </Link>
 
+          <Link href="/admin/management/classes">
+            <li>
+              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
+                <span className="inline-flex justify-center items-center ml-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-grid"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+                  </svg>
+                </span>
+                <span className="ml-2 text-sm tracking-wide truncate">
+                  Manajemen Kelas
+                </span>
+              </a>
+            </li>
+          </Link>
+
+          <Link href="/admin/management/teachers/user">
           <li>
             <a
-              href="#"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150"
-            >
-              <span className="inline-flex justify-center items-center ml-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-grid"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
-                </svg>
-              </span>
-              <span className="ml-2 text-sm tracking-wide truncate">Kelas</span>
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
               className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150"
             >
               <span className="inline-flex justify-center items-center ml-4">
@@ -79,29 +81,29 @@ const Sidebar = () => {
               </span>
             </a>
           </li>
+          </Link>
 
-          <li>
-            <a
-              href="#"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150"
-            >
-              <span className="inline-flex justify-center items-center ml-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-person-lines-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
-                </svg>
-              </span>
-              <span className="ml-2 text-sm tracking-wide truncate">
-                Manajemen Data Siswa
-              </span>
-            </a>
-          </li>
+          <Link href="/admin/management/students/user">
+            <li>
+              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
+                <span className="inline-flex justify-center items-center ml-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-person-lines-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                  </svg>
+                </span>
+                <span className="ml-2 text-sm tracking-wide truncate">
+                  Manajemen Data Siswa
+                </span>
+              </a>
+            </li>
+          </Link>
         </ul>
       </div>
     </div>
