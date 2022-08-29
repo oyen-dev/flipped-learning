@@ -8,6 +8,8 @@ import {
   message
 } from 'antd'
 
+import { PrivacyPolicy } from '../../../components/modal'
+
 const RegisterForm = () => {
   const onFinish = (values) => {
     console.log('Success:', values)
@@ -95,10 +97,7 @@ const RegisterForm = () => {
           }
         ]}
       >
-        <DatePicker
-          onChange={changeDate}
-          className="w-full"
-        />
+        <DatePicker onChange={changeDate} className="w-full" />
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Alamat</p>
@@ -148,22 +147,26 @@ const RegisterForm = () => {
         </Form.Item>
         <p className="text-sm justify-center text-justify">
           Dengan mencentang kotak ini, saya menyetujui{' '}
-          <span className="font-bold hover:text-blue-500 duration-150 cursor-pointer">
+          <label htmlFor='modal-privacy-policy' className="modal-button font-bold hover:text-blue-500 duration-150 cursor-pointer">
             Ketentuan Penggunaan
-          </span>{' '}
+          </label>{' '}
           dan{' '}
-          <span className="font-bold hover:text-blue-500 duration-150 cursor-pointer">
+          <label htmlFor='modal-privacy-policy' className="modal-button font-bold hover:text-blue-500 duration-150 cursor-pointer">
             Kebijakan Privasi
-          </span>{' '}
+          </label>{' '}
           Flipped Learning.
         </p>
       </div>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">
-          <p className='text-white font-medium'>Daftar Flipped Learning</p>
+          <p className="text-white font-medium">Daftar Flipped Learning</p>
         </Button>
       </Form.Item>
+
+      {/* Modal container */}
+      <input type="checkbox" id="modal-privacy-policy" className="modal-toggle" />
+      <PrivacyPolicy />
     </Form>
   )
 }
