@@ -16,4 +16,7 @@ module.exports = {
     },
     module: {
     },
+    node: {
+        __dirname: true
+    }
 };
