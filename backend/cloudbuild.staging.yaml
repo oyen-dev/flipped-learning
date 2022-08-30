@@ -2,10 +2,10 @@ steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
   dir: 'backend'
-  args: ['build', '-t', 'gcr.io/flipped-learn/flipped-learn-back:staging', '.']
+  args: ['build', '-t', 'gcr.io/flipped-learn/flipped-learn-back:staging:$COMMIT_SHA', '.']
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/flipped-learn/flipped-learn-back:staging']
+  args: ['push', 'gcr.io/flipped-learn/flipped-learn-back:staging:$COMMIT_SHA']
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
@@ -14,7 +14,7 @@ steps:
     'deploy', 
     'flipped-learn-back-staging', 
     '--image', 
-    'gcr.io/flipped-learn/flipped-learn-back:staging', 
+    'gcr.io/flipped-learn/flipped-learn-back:staging:$COMMIT_SHA', 
     '--region', 
     'asia-southeast1',
     '--service-account',
@@ -22,6 +22,6 @@ steps:
     '--allow-unauthenticated'
   ]
 images:
-- gcr.io/flipped-learn/flipped-learn-back:staging
+- gcr.io/flipped-learn/flipped-learn-back:staging:$COMMIT_SHA
 options:
   logging: CLOUD_LOGGING_ONLY
