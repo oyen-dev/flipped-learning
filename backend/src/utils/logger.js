@@ -28,7 +28,7 @@ class AppLogger {
     static async writeLog(entity, message, isConsoleLog = true) {
         const logMessage = `${entity}: ${message}`;
         if (isConsoleLog) {
-            console.log(logMessage);
+            console.log(`${entity}:`, message);
         }
         if (this.fileLogEnabled) {
             await appendFile(this.fileLogPath, logMessage + "\n");

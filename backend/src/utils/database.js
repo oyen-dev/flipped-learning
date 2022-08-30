@@ -9,7 +9,7 @@ const connectToDatabase = async () => {
         );
         AppLogger.writeLog(LOG_ENTITY_DATABASE, 'Database connection is established successfully')
     } catch (e) {
-        AppLogger.writeLog(LOG_ENTITY_DATABASE, `${e}`);
+        AppLogger.writeLog(LOG_ENTITY_DATABASE, e);
         process.exit(1);
     }
 }
