@@ -1,6 +1,11 @@
+import { useState } from 'react'
+
 import Layout from '../../../components/layout'
 import BorderBottom from '../../../components/button/BorderBottom'
 import Class from '../../../components/card/Class'
+
+import classData from '../../../constants/classData'
+import tabData from '../../../constants/tabData'
 
 import { Input } from 'antd'
 
@@ -36,6 +41,10 @@ const FilterIcon = () => {
 }
 
 const Classes = () => {
+  const [tabKey, setTabKey] = useState('1')
+  const [clases, setClases] = useState(classData)
+  const [tabs, setTabs] = useState(tabData)
+
   return (
     <Layout
       title="Manajemen Data Kelas"
@@ -48,9 +57,15 @@ const Classes = () => {
     >
       <div className="flex flex-col w-full h-full items-start justify-start space-y-5">
         <div className="flex flex-row w-full items-center justify-start lg:justify-center overflow-x-auto space-x-4 pb-5 lg:pb-0">
-          <BorderBottom name="Daftar Kelas" />
-          <BorderBottom name="Arsip Kelas" />
-          <BorderBottom name="Kelas Dihapus" />
+          {tabs.map((tab) => (
+            <BorderBottom
+            name={tab.name}
+            tabId={tab.tabId}
+            active={tabKey === tab.tabId}
+            setTabKey={setTabKey}
+            key={tab.tabId}
+          />
+          ))}
         </div>
 
         <div className="flex flex-col w-full items-end justify-center">
@@ -60,28 +75,19 @@ const Classes = () => {
           </div>
         </div>
 
-        <div className="grid w-full h-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
+        <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
+          {clases.map((kelas) => (
+            <Class key={kelas.id} title={kelas.name} clases={kelas.class} />
+          ))}
           <Class
             title="Teknik Pengolahan Audio Video"
             clases="XI - Multimedia"
           />
-          <Class
-            title="Pemeliharaan Kelistrikan Kendaraan Ringan"
-            clases="XI - Multimedia"
-          />
-          <Class title="Desain Grafis" clases="XI - Multimedia" />
-          <Class title="Apa Gitu Kelas" clases="XI - Multimedia" />
-          <Class title="Kelas Berbuat Baik" clases="XI - Multimedia" />
-          <Class title="Tiktok Influencer" clases="XI - Multimedia" />
-          <Class title="Youtube Master" clases="XI - Multimedia" />
-          <Class title="Web Development" clases="XI - Multimedia" />
-          <Class title="Audio Video Mixing" clases="XI - Multimedia" />
-          <Class title="Pet Owner" clases="XI - Multimedia" />
         </div>
 
         <button
           title="Contact Us"
-          className="fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-blue-700 hover:drop-shadow-2xl duration-300"
+          className="fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-[#7C3AED] hover:drop-shadow-2xl duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

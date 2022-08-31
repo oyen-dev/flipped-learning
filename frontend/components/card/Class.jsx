@@ -1,7 +1,7 @@
 const Class = (props) => {
   const { title, clases } = props
   return (
-    <div className="flex flex-col w-full items-center justify-center bg-gray-900 h-full px-5 pt-5 pb-2 rounded-md">
+    <div className="flex flex-col w-full items-center justify-center bg-gray-900 px-5 pt-5 pb-2 rounded-md">
       <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/class.jpg')] bg-center object-cover object-center px-3 py-3 rounded-md">
         <div className="flex w-full items-center justify-end">
           <svg
