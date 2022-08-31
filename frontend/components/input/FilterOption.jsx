@@ -2,9 +2,11 @@ import { Select } from 'antd'
 
 const { Option } = Select
 
-const FilterOption = () => {
+const FilterOption = (props) => {
+  const { setFilter } = props
   const handleChange = (value) => {
     console.log(`selected ${value}`)
+    setFilter(value)
   }
 
   return (
