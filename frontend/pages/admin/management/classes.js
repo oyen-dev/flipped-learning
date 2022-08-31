@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Layout from '../../../components/layout'
 import BorderBottom from '../../../components/button/BorderBottom'
 import Class from '../../../components/card/Class'
+import FilterOption from '../../../components/input/FilterOption'
 
 import classData from '../../../constants/classData'
 import tabData from '../../../constants/tabData'
@@ -24,26 +25,18 @@ const SearchIcon = () => {
   )
 }
 
-const FilterIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      className="bi bi-filter-circle"
-      viewBox="0 0 16 16"
-    >
-      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-      <path d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z" />
-    </svg>
-  )
-}
-
 const Classes = () => {
   const [tabKey, setTabKey] = useState('1')
   const [clases, setClases] = useState(classData)
+  const [tempClasses, setTempClasses] = useState(classData)
   const [tabs, setTabs] = useState(tabData)
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    setTempClasses(classData)
+
+    setClases(classData.filter(({ name }) => name.toLocaleLowerCase().includes(search.toLocaleLowerCase())))
+  }, [search])
 
   return (
     <Layout
@@ -70,8 +63,12 @@ const Classes = () => {
 
         <div className="flex flex-col w-full items-end justify-center">
           <div className="flex flex-col lg:flex-row w-full lg:w-2/5 space-x-0 lg:space-x-5 space-y-5 lg:space-y-0">
-            <Input placeholder="Filter Kelas" prefix={<FilterIcon />} />
-            <Input placeholder="Cari Kelas" prefix={<SearchIcon />} />
+            <FilterOption />
+            <Input
+              placeholder="Cari Kelas"
+              prefix={<SearchIcon />}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
         </div>
 
@@ -79,10 +76,6 @@ const Classes = () => {
           {clases.map((kelas) => (
             <Class key={kelas.id} title={kelas.name} clases={kelas.class} />
           ))}
-          <Class
-            title="Teknik Pengolahan Audio Video"
-            clases="XI - Multimedia"
-          />
         </div>
 
         <button
