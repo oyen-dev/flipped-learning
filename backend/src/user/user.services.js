@@ -1,6 +1,6 @@
 const { User } = require('./user.model')
 
-const checkUserIsExist = async (email) => {
+const findUserByEmail = async (email) => {
   return await User.findOne({ email: email.toLowerCase() })
 }
 
@@ -10,6 +10,6 @@ const createUser = async (user) => {
 }
 
 module.exports = {
-  checkUserIsExist,
+  findUserByEmail,
   createUser
 }

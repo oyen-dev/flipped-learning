@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const { auth1Routes } = require('./auth/auth.routes')
-const { AppLogger } = require('./utils/logger')
 const { serve, setup } = require('swagger-ui-express')
 const swaggerDoc = require('./openapi.json')
 
