@@ -29,12 +29,13 @@ const Classes = () => {
   const [tabKey, setTabKey] = useState('1')
   const [clases, setClases] = useState(classData)
   const [tempClasses, setTempClasses] = useState(classData)
-  const [tabs, setTabs] = useState(tabData)
+  const [tabs] = useState(tabData)
 
   // Control filter and search input
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('')
 
+  // Search classes
   useEffect(() => {
     setTempClasses(classData)
 
@@ -45,10 +46,11 @@ const Classes = () => {
     )
   }, [search])
 
+  // Filter classes
   useEffect(() => {
     setTempClasses(classData)
 
-    if (filter === undefined) return setClases(classData)
+    if (filter === undefined) return setClases(tempClasses)
     else {
       setClases(
         classData.filter((kelas) =>
