@@ -2,8 +2,23 @@ import Layout from '../../../../components/layout'
 import UserManagementGuru from '../../../../components/table/UserManagementGuru'
 import UserPagination from '../../../../components/table/UserPagination'
 import ModalCreateUser from '../../../../components/modal/ModalCreateUser'
+import { Input } from 'antd'
 
 const user = () => {
+  const SearchIcon = () => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        className="bi bi-search"
+        viewBox="0 0 16 16"
+      >
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+      </svg>
+    )
+  }
   return (
     <Layout
       title="Admin"
@@ -23,6 +38,13 @@ const user = () => {
             Tambah User
           </p>
         </label>
+
+        <div className="flex flex-col w-full items-end justify-center">
+          <div className="flex flex-col lg:flex-row w-full lg:w-1/5 space-x-0 lg:space-x-5 space-y-5 lg:space-y-0">
+            <Input placeholder="Cari nama" prefix={<SearchIcon />} />
+          </div>
+        </div>
+
         <input type="checkbox" id="my-modal-create" className="modal-toggle" />
         <ModalCreateUser />
       </div>
