@@ -1,10 +1,11 @@
-const { Router } = require("express");
-const { loginHandler } = require("./auth.handlers");
+const { Router } = require('express')
+const { loginHandler, registerHandler } = require('./auth.handlers')
 
-const auth1Routes = Router();
+const auth1Routes = Router()
 
 auth1Routes.post('/login', loginHandler)
+auth1Routes.post('/register', registerHandler)
 
 module.exports = {
-    auth1Routes
+  auth1Routes
 }
