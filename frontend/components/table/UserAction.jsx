@@ -7,7 +7,7 @@ import withReactContent from 'sweetalert2-react-content'
 const UserAction = () => {
   const MySwal = withReactContent(Swal)
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="flex items-center justify-center space-x-5">
       <div>
         <label htmlFor="my-modal-view" className="btn modal-button">
           <svg

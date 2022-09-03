@@ -59,7 +59,7 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <Link href="/admin/management/teachers/user">
+          <Link href="/admin/management/teachers">
           <li>
             <a
               className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150"
@@ -83,7 +83,7 @@ const Sidebar = () => {
           </li>
           </Link>
 
-          <Link href="/admin/management/students/user">
+          <Link href="/admin/management/students">
             <li>
               <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
                 <span className="inline-flex justify-center items-center ml-4">
