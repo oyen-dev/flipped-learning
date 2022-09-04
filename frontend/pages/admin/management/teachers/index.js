@@ -29,19 +29,19 @@ const user = () => {
       ogDescription="Admin page for user management"
       ogImage="https://www.example.com/image.jpg"
     >
-      <div className="flex w-full h-full items-center justify-end">
+      <div className="flex flex-col lg:flex-row w-full h-full items-end lg:items-center justify-end space-y-4 lg:space-y-0">
         <label
           htmlFor="my-modal-create"
-          className="btn bg-[#34A0A4] btn-sm modal-button hover:bg-blue-700 hover:drop-shadow-2xl duration-300"
+          className="btn btn-sm bg-[#34A0A4] modal-button hover:bg-blue-700 hover:drop-shadow-2xl duration-300"
         >
           <p className="font-medium capitalize text-sm text-white mb-0">
-            Tambah User
+            Tambah Guru
           </p>
         </label>
 
         <div className="flex flex-col w-full items-end justify-center">
           <div className="flex flex-col lg:flex-row w-full lg:w-1/5 space-x-0 lg:space-x-5 space-y-5 lg:space-y-0">
-            <Input placeholder="Cari nama" prefix={<SearchIcon />} />
+            <Input placeholder="Cari Data Guru" prefix={<SearchIcon />} />
           </div>
         </div>
 
