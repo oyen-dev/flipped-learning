@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const Sidebar = () => {
   return (
-    <div className="fixed flex flex-col group top-0 left-0 w-14 group-hover:w-64 md:w-64 bg-sky-200 dark:bg-gray-900 h-full text-white transition-all ease-in-out duration-300 border-none z-10 sidebar">
+    <div className="fixed flex flex-col group top-0 left-0 w-14 group-hover:w-64 md:w-64 bg-[#accbe1] dark:bg-gray-900 h-full text-white transition-all ease-in-out duration-300 border-none z-10 sidebar">
       <div className="flex flex-col overflow-y-auto overflow-x-hidden justify-between flex-grow">
         <ul className="flex flex-col py-4 space-y-1">
           <li className="flex flex-col items-center justify-center">
