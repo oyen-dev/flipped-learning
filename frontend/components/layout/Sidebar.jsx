@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const Sidebar = () => {
   return (
-    <div className="fixed flex flex-col group top-0 left-0 w-14 group-hover:w-64 md:w-64 bg-sky-100 dark:bg-gray-900 h-full text-white ease-in-out duration-300 border-none z-10 sidebar">
+    <div className="fixed flex flex-col group top-0 left-0 w-14 group-hover:w-64 md:w-64 bg-sky-200 dark:bg-gray-900 h-full text-white transition-all ease-in-out duration-300 border-none z-10 sidebar">
       <div className="flex flex-col overflow-y-auto overflow-x-hidden justify-between flex-grow">
         <ul className="flex flex-col py-4 space-y-1">
           <li className="flex flex-col items-center justify-center">
@@ -10,14 +10,14 @@ const Sidebar = () => {
               className="w-[60%] items-center justify-center rounded-full overflow-hidden"
               src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg"
             />
-            <p className="hidden md:block group-hover:block truncate w-full text-sm text-center text-gray-900 dark:text-white duration-300 ease-in-out font-medium tracking-wide mb-0 pt-2">
+            <p className="hidden md:block group-hover:block truncate w-full text-sm text-center text-gray-900 dark:text-white transition-all duration-300 ease-in-out font-medium tracking-wide mb-0 pt-2">
               Budi Tono, S.Pd., M.Pd.
             </p>
           </li>
 
           <Link href="/dashboard">
             <li className="pt-5">
-              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
+              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-100 dark:hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@ const Sidebar = () => {
 
           <Link href="/admin/management/classes">
             <li>
-              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
+              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-100 dark:hover:bg-gray-700 hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@ const Sidebar = () => {
           <Link href="/admin/management/teachers">
           <li>
             <a
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150"
+              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-100 dark:hover:bg-gray-700 hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150"
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <svg
@@ -85,7 +85,7 @@ const Sidebar = () => {
 
           <Link href="/admin/management/students">
             <li>
-              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-700 text-white hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
+              <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-100 dark:hover:bg-gray-700 hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

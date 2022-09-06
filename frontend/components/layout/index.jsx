@@ -7,7 +7,7 @@ import Content from './Content'
 const index = (props) => {
   const { title, description, keywords, author, ogTitle, ogDescription, children } = props
   return (
-    <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-800 text-white">
+    <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-sky-50 dark:bg-gray-800 text-white transition-all ease-in-out duration-300">
       <Head>
         <title className="text-5xl font-bold">{title}</title>
         <meta charSet="UTF-8" />

@@ -11,8 +11,7 @@ const Header = ({ children }) => {
   }
 
   return (
-    <div className="w-full flex items-center justify-between h-14 text-white z-10 bg-sky-100 dark:bg-gray-900 duration-300 ease-inw
-    ">
+    <div className="w-full flex items-center justify-between h-14 text-white z-10 bg-sky-200 dark:bg-gray-900 transition-all ease-in-out duration-300">
       {/* Left empty space */}
       <div className="flex items-center justify-start md:justify-center pl-3 w-16 lg:w-64 h-full bg-gray-900 border-none" />
 
