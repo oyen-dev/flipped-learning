@@ -1,119 +1,106 @@
+import { Table } from 'antd'
 import UserAction from './UserAction'
 
 const UserManagementSiswa = () => {
+  const columns = [
+    {
+      title: (
+        <p className="text-white uppercase text-sm text-center leading-normal mb-0">
+          No
+        </p>
+      ),
+      dataIndex: 'no',
+      key: 'no',
+      render: (no) => (
+        <p className="font-medium text-center whitespace-nowrap mb-0">{no}</p>
+      )
+    },
+    {
+      title: (
+        <p className="text-white uppercase text-sm leading-normal mb-0">Nama</p>
+      ),
+      dataIndex: 'name',
+      key: 'name',
+      render: (name) => (
+        <p className="font-medium whitespace-nowrap mb-0">{name}</p>
+      )
+    },
+    {
+      title: (
+        <p className="text-white uppercase text-sm leading-normal mb-0">
+          Email
+        </p>
+      ),
+      dataIndex: 'email',
+      key: 'email',
+      render: (email) => (
+        <a
+          href={`mailto:${email}`}
+          className="font-medium whitespace-nowrap mb-0"
+        >
+          {email}
+        </a>
+      )
+    },
+    {
+      title: (
+        <p className="text-white uppercase text-sm text-center leading-normal mb-0">
+          No Telepon
+        </p>
+      ),
+      dataIndex: 'telp',
+      key: 'telp',
+      render: (text) => (
+        <p className="font-medium text-center whitespace-nowrap mb-0">{text}</p>
+      )
+    },
+    {
+      title: (
+        <p className="text-white uppercase text-sm text-center leading-normal mb-0">
+          Action
+        </p>
+      ),
+      key: 'action',
+      render: () => <UserAction />
+    }
+  ]
+  const data = [
+    {
+      key: '1',
+      no: '1',
+      name: 'John Brown',
+      email: 'kucing@meong.com',
+      telp: '081335488360'
+    },
+    {
+      key: '2',
+      no: '2',
+      name: 'Jim Green',
+      email: 'kucingbarong@meong.com',
+      telp: '081335488360'
+    },
+    {
+      key: '3',
+      no: '3',
+      name: 'Joe Black',
+      email: 'kon67kucing@meong.com',
+      telp: '081335488360'
+    }
+  ]
+
+  const onShowSizeChange = (current, pageSize) => {
+    console.log(current, pageSize)
+  }
+
   return (
-        <table className="w-full table-auto">
-          <thead>
-            <tr className="bg-black text-white uppercase text-sm leading-normal">
-              <th className="py-3 px-5 text-center whitespace-nowrap">No</th>
-              <th className="py-3 px-5 text-start whitespace-nowrap">Nama Lengkap</th>
-              <th className="py-3 px-5 text-start whitespace-nowrap">Nomor Telepon</th>
-              <th className="py-3 px-5 text-start whitespace-nowrap">Email</th>
-              <th className="py-3 px-5 text-start whitespace-nowrap">Role</th>
-              <th className="py-3 px-5 text-center whitespace-nowrap">Aksi</th>
-            </tr>
-          </thead>
-          <tbody className="text-white text-xs font-light">
-            <tr className="bg-gray-700 hover:bg-gray-500">
-              <td className="py-3 px-5 text-left whitespace-nowrap">
-                <div className="flex items-center justify-center">
-                  <span className="font-medium">1</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">Reza Bagus </span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">087834563321</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">Rezaba@gmail.com</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">Siswa</span>
-                </div>
-              </td>
-              <td className="py-3 px-5 text-left">
-                <div className="flex justify-center">
-                  <UserAction />
-                </div>
-              </td>
-            </tr>
-
-            <tr className="bg-gray-700 hover:bg-gray-500">
-              <td className="py-3 px-5 text-left whitespace-nowrap">
-                <div className="flex items-center justify-center">
-                  <span className="font-medium">2</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">Adinda Rahma </span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">087834563328</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">adinda332@gmail.com</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">Siswa</span>
-                </div>
-              </td>
-              <td className="py-3 px-5 text-left">
-                <div className="flex justify-center">
-                  <UserAction />
-                </div>
-              </td>
-            </tr>
-
-            <tr className="bg-gray-700 hover:bg-gray-500">
-              <td className="py-3 px-5 text-left whitespace-nowrap">
-                <div className="flex items-center justify-center">
-                  <span className="font-medium">3</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">Bagus Putra Djatmiko</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">087834533328</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">DjaBagus@gmail.com</span>
-                </div>
-              </td>
-              <td className="py-3 px-5  text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium">Siswa</span>
-                </div>
-              </td>
-              <td className="py-3 px-5 text-left">
-                <div className="flex justify-center">
-                  <UserAction />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <Table
+      columns={columns}
+      dataSource={data}
+      tableLayout="auto"
+      className="w-full"
+      pagination={{ position: ['bottomLeft'], showSizeChanger: true, onShowSizeChange }}
+      rowClassName={() => 'bg-white'}
+    />
   )
 }
 

@@ -15,7 +15,7 @@ const UserPagination = () => {
             </button>
           </li>
           <li>
-            <button className="w-10 h-10 text-indigo-600 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100">
+            <button className="w-10 h-10 text-white transition-colors duration-150 bg-indigo-600 border border-r-0 border-indigo-600 rounded-full focus:shadow-outline">
               1
             </button>
           </li>
@@ -25,7 +25,7 @@ const UserPagination = () => {
             </button>
           </li>
           <li>
-            <button className="w-10 h-10 text-white transition-colors duration-150 bg-indigo-600 border border-r-0 border-indigo-600 rounded-full focus:shadow-outline">
+            <button className="w-10 h-10 text-indigo-600 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100">
               3
             </button>
           </li>
