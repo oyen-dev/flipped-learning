@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Sidebar = () => {
   return (
@@ -6,10 +7,7 @@ const Sidebar = () => {
       <div className="flex flex-col overflow-y-auto overflow-x-hidden justify-between flex-grow">
         <ul className="flex flex-col py-4 space-y-1">
           <li className="flex flex-col items-center justify-center">
-            <img
-              className="w-[60%] items-center justify-center rounded-full overflow-hidden"
-              src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg"
-            />
+            <Image src='/images/dummy.jpg' alt="Profile" width={'100%'} height={'100%'} className='w-[60%] items-center justify-center rounded-full object-cover overflow-hidden' />
             <p className="hidden md:block group-hover:block truncate w-full text-sm text-center text-gray-900 dark:text-white transition-all duration-300 ease-in-out font-medium tracking-wide mb-0 pt-2">
               Budi Tono, S.Pd., M.Pd.
             </p>

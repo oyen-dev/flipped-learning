@@ -1,7 +1,8 @@
 import { Table } from 'antd'
 import UserAction from './UserAction'
 
-const UserManagementSiswa = () => {
+const UserManagementSiswa = (props) => {
+  const { students } = props
   const columns = [
     {
       title: (
@@ -64,29 +65,6 @@ const UserManagementSiswa = () => {
       render: () => <UserAction />
     }
   ]
-  const data = [
-    {
-      key: '1',
-      no: '1',
-      name: 'John Brown',
-      email: 'kucing@meong.com',
-      telp: '081335488360'
-    },
-    {
-      key: '2',
-      no: '2',
-      name: 'Jim Green',
-      email: 'kucingbarong@meong.com',
-      telp: '081335488360'
-    },
-    {
-      key: '3',
-      no: '3',
-      name: 'Joe Black',
-      email: 'kon67kucing@meong.com',
-      telp: '081335488360'
-    }
-  ]
 
   const onShowSizeChange = (current, pageSize) => {
     console.log(current, pageSize)
@@ -95,11 +73,11 @@ const UserManagementSiswa = () => {
   return (
     <Table
       columns={columns}
-      dataSource={data}
+      dataSource={students}
       tableLayout="auto"
       className="w-full"
       pagination={{ position: ['bottomLeft'], showSizeChanger: true, onShowSizeChange }}
-      rowClassName={() => 'bg-white'}
+      rowClassName={() => 'text-gray-900 dark:text-white dark:hover:text-gray-900 bg-gray-100 dark:bg-[#17171A] transition-all duration-300 ease-in-out'}
     />
   )
 }
