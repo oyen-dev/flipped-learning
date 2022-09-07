@@ -1,17 +1,24 @@
-const { AppLogger } = require('../utils/logger')
-const { validateRegister, validateLogin } = require('./auth.validation')
+// Services
 const { generateAccessToken } = require('./auth.services')
+const { generateToken, getTokenByEmail } = require('../token/token.services')
+
+// Validations
+const { validateRegister, validateLogin, validateForgot } = require('./auth.validation')
+
+// Utilities
+const { AppLogger } = require('../utils/logger')
 const { findUserByEmail, createUser } = require('../user/user.services')
 const { successResponse, badResponse } = require('../utils/responses')
+
+// Errors
 const { invariantError } = require('../errors')
 
 const loginHandler = async (req, res) => {
   const payload = req.body
+  const { email, password } = payload
 
   try {
     validateLogin(payload)
-
-    const { email, password } = payload
 
     const user = await findUserByEmail(email)
     if (!user) throw invariantError(401, 'Unauthorized')
@@ -33,8 +40,8 @@ const loginHandler = async (req, res) => {
     // Beautify error message to remove double quote from joi validation
     const message = error.message.replace(/['"]+/g, '')
 
-    const response = badResponse(message, error.code)
-    return res.status(error.code).json(response)
+    const response = badResponse(message, error.code || 400)
+    return res.status(error.code || 400).json(response)
   }
 }
 
@@ -60,12 +67,49 @@ const registerHandler = async (req, res) => {
     // Beautify error message to remove double quote from joi validation
     const message = error.message.replace(/['"]+/g, '')
 
-    const response = badResponse(message, error.code)
-    return res.status(error.code).json(response)
+    const response = badResponse(message, error.code || 400)
+    return res.status(error.code || 400).json(response)
+  }
+}
+
+const forgotPassword = async (req, res) => {
+  const payload = req.body
+  const { email } = payload
+
+  try {
+    // Validate payload
+    validateForgot(payload)
+
+    // Get user data
+    const user = await findUserByEmail(email)
+    if (!user) throw invariantError(404, 'Cannot find account with this email.')
+
+    // Check if user have token
+    const currentToken = await getTokenByEmail(email)
+
+    // Use current token or generate new token with duration for 24 hours
+    let token = ''
+    if (currentToken) token = currentToken
+    else token = await generateToken(email)
+
+    // Todo Send email for reseting password
+
+    // Response payload
+    const response = successResponse('Request reset password success.', {
+      token: token.token
+    })
+    return res.status(200).send(response)
+  } catch (error) {
+    // Beautify error message to remove double quote from joi validation
+    const message = error.message.replace(/['"]+/g, '')
+
+    const response = badResponse(message, error.code || 400)
+    return res.status(error.code || 400).json(response)
   }
 }
 
 module.exports = {
   loginHandler,
-  registerHandler
+  registerHandler,
+  forgotPassword
 }

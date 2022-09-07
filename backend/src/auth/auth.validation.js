@@ -1,4 +1,8 @@
-const { RegisterSchema, LoginSchema } = require('./auth.schema')
+const {
+  RegisterSchema,
+  LoginSchema,
+  ForgotSchema
+} = require('./auth.schema')
 
 const validateRegister = (payload) => {
   const { error } = RegisterSchema.validate(payload)
@@ -12,7 +16,14 @@ const validateLogin = (payload) => {
   if (error) throw new Error(error.message)
 }
 
+const validateForgot = payload => {
+  const { error } = ForgotSchema.validate(payload)
+
+  if (error) throw new Error(error.message)
+}
+
 module.exports = {
   validateRegister,
-  validateLogin
+  validateLogin,
+  validateForgot
 }
