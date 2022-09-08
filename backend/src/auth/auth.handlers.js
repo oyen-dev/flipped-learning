@@ -1,9 +1,10 @@
 // Services
 const { generateAccessToken } = require('./auth.services')
-const { generateToken, getTokenByEmail } = require('../token/token.services')
+const { updatePassword } = require('../user/user.services')
+const { generateToken, getTokenByEmail, getTokenByToken, deleteTokenByToken } = require('../token/token.services')
 
 // Validations
-const { validateRegister, validateLogin, validateForgot } = require('./auth.validation')
+const { validateRegister, validateLogin, validateForgot, validateReset } = require('./auth.validation')
 
 // Utilities
 const { AppLogger } = require('../utils/logger')
@@ -108,8 +109,45 @@ const forgotPassword = async (req, res) => {
   }
 }
 
+const resetPassword = async (req, res) => {
+  const token = req.query.token
+  const payload = req.body
+
+  try {
+    // Validate payload
+    validateReset(payload)
+
+    // Destructure
+    const { password } = payload
+
+    // Query token
+    const userToken = await getTokenByToken(token)
+
+    if (!userToken) throw invariantError(404, 'Invalid token')
+
+    // Update account password based on email
+    await updatePassword(userToken.email, password)
+
+    // Delete token
+    await deleteTokenByToken(token)
+
+    // Todo send email notification
+
+    // Response payload
+    const response = successResponse('Update password success')
+    return res.status(200).send(response)
+  } catch (error) {
+    // Beautify error message to remove double quote from joi validation
+    const message = error.message.replace(/['"]+/g, '')
+
+    const response = badResponse(message, error.code || 400)
+    return res.status(error.code || 400).json(response)
+  }
+}
+
 module.exports = {
   loginHandler,
   registerHandler,
-  forgotPassword
+  forgotPassword,
+  resetPassword
 }

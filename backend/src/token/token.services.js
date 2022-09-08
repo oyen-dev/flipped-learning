@@ -5,9 +5,8 @@ const generateToken = async (email) => {
   // Generate random string
   const secureToken = crypto.randomBytes(48).toString('hex')
 
-  // Setting token expiration time by one day
+  // Setting token expiration
   const expire = new Date()
-  expire.setDate(expire.getDate() + 1)
 
   // Create document object
   const token = new Token({
@@ -16,12 +15,8 @@ const generateToken = async (email) => {
     expiresIn: expire.toISOString()
   })
 
-  console.log(token)
-
   // Save token
   await token.save()
-
-  console.log(token)
 
   // Return result
   if (token) return token

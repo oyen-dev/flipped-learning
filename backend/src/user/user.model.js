@@ -9,7 +9,10 @@ const UserSchema = new Schema({
   gender: { type: Number, required: true },
   dateOfBorn: { type: Date, required: true },
   placeOfBorn: { type: String, required: true },
-  address: { type: String, required: true }
+  address: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+
 }, {
   methods: {
     verifyPassword (password) {
