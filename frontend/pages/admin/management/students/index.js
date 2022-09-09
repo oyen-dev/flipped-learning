@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 import Layout from '../../../../components/layout'
-import UserManagementSiswa from '../../../../components/table/UserManagementSiswa'
+import Students from '../../../../components/table/Students'
 import ModalCreateUser from '../../../../components/modal/ModalCreateUser'
 import { Input } from 'antd'
 
@@ -10,7 +10,7 @@ import students from '../../../../constants/studentData'
 const user = () => {
   // Local state
   const [studentData, setStudentData] = useState(students)
-  const [tempStudentData, setTempStudentData] = useState(students)
+  const [tempStudentData] = useState(students)
 
   // Control filter and search
   const [search, setSearch] = useState('')
@@ -65,7 +65,7 @@ const user = () => {
       <div className="flex flex-col w-full items-center lg:items-start justify-start bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300 px-5 py-5 rounded-lg">
         <p className="text-base font-semibold pb-5 mb-0 text-gray-900 dark:text-white transition-all duration-300 ease-in-out">Daftar Siswa</p>
         <div className="flex flex-col w-full items-start justify-start overflow-x-auto">
-          <UserManagementSiswa students={studentData} />
+          <Students students={studentData} />
           <div className="flex w-full mt-5 lg:mt-0 justify-center items-center" />
         </div>
       </div>

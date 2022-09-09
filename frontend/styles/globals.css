@@ -20,3 +20,8 @@
     width: calc(100% - 16rem);
   }
 }
+
+/* Fix css conflict between antd and tailwindcss  */
+img {
+  display: unset !important;
+}

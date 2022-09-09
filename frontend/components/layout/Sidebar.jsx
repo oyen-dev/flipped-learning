@@ -5,12 +5,14 @@ const Sidebar = () => {
   return (
     <div className="fixed flex flex-col group top-0 left-0 w-14 group-hover:w-64 md:w-64 bg-[#accbe1] dark:bg-gray-900 h-full text-white transition-all ease-in-out duration-300 border-none z-10 sidebar">
       <div className="flex flex-col overflow-y-auto overflow-x-hidden justify-between flex-grow">
-        <ul className="flex flex-col py-4 space-y-1">
-          <li className="flex flex-col items-center justify-center">
-            <Image src='/images/dummy.jpg' alt="Profile" width={'100%'} height={'100%'} className='w-[60%] items-center justify-center rounded-full object-cover overflow-hidden' />
-            <p className="hidden md:block group-hover:block truncate w-full text-sm text-center text-gray-900 dark:text-white transition-all duration-300 ease-in-out font-medium tracking-wide mb-0 pt-2">
-              Budi Tono, S.Pd., M.Pd.
-            </p>
+        <ul className="flex flex-col py-2 space-y-1">
+          <li className="flex w-full items-center justify-center">
+            <div className="flex flex-col items-center justify-center w-10/12">
+              <Image src='/images/dummy.jpg' alt="Profile" width={'100%'} height={'100%'} className='w-[60%] items-center justify-center rounded-full object-cover overflow-hidden' />
+              <p className="hidden md:block group-hover:block truncate w-full text-sm text-center text-gray-900 dark:text-white transition-all duration-300 ease-in-out font-medium tracking-wide mb-0 pt-2">
+                Budi Tono, S.Pd., M.Pd.
+              </p>
+            </div>
           </li>
 
           <Link href="/dashboard">

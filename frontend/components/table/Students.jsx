@@ -1,7 +1,7 @@
 import { Table } from 'antd'
 import UserAction from './UserAction'
 
-const UserManagementSiswa = (props) => {
+const Students = (props) => {
   const { students } = props
   const columns = [
     {
@@ -46,18 +46,6 @@ const UserManagementSiswa = (props) => {
     {
       title: (
         <p className="text-white uppercase text-sm text-center leading-normal mb-0">
-          No Telepon
-        </p>
-      ),
-      dataIndex: 'telp',
-      key: 'telp',
-      render: (text) => (
-        <p className="font-medium text-center whitespace-nowrap mb-0">{text}</p>
-      )
-    },
-    {
-      title: (
-        <p className="text-white uppercase text-sm text-center leading-normal mb-0">
           Action
         </p>
       ),
@@ -82,4 +70,4 @@ const UserManagementSiswa = (props) => {
   )
 }
 
-export default UserManagementSiswa
+export default Students
