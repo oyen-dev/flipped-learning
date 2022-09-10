@@ -1,2 +1,5 @@
 export { default as PrivacyPolicy } from './PrivacyPolicy'
 export { default as ModalCreateUser } from './ModalCreateUser'
+export { default as ModalUpdateUser } from './ModalUpdateUser'
+export { default as ModalDeleteUser } from './ModalDeleteUser'
+export { default as StudentProfile } from './StudentProfile'

@@ -1,5 +1,4 @@
-import ModalViewUser from '../../components/modal/ModalViewUser'
-import ModalUpdateUser from '../../components/modal/ModalUpdateUser'
+import { StudentProfile, ModalUpdateUser } from '../modal'
 import Swal from 'sweetalert2/dist/sweetalert2.all'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -22,7 +21,7 @@ const UserAction = () => {
           </svg>
         </label>
         <input type="checkbox" id="my-modal-view" className="modal-toggle" />
-        <ModalViewUser />
+        <StudentProfile />
       </div>
 
       <div>
