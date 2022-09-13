@@ -37,13 +37,6 @@ const loginHandler = async (req, res) => {
       }
     )
 
-    const message = {
-      name: user.fullName,
-      email
-    }
-
-    await sendEmail(message, 'Pendaftaran Berhasil', 'register')
-
     return res.status(200).json(response)
   } catch (error) {
     // Beautify error message to remove double quote from joi validation
@@ -56,6 +49,7 @@ const loginHandler = async (req, res) => {
 
 const registerHandler = async (req, res) => {
   const payload = req.body
+  console.log(payload)
 
   try {
     // Validate payload
@@ -68,6 +62,14 @@ const registerHandler = async (req, res) => {
     await createUser(payload)
 
     AppLogger.writeLog('Register success:', payload.email, false)
+
+    const message = {
+      name: payload.fullName,
+      email: payload.email
+    }
+
+    // move this shit to registration handler, aowkaowkaowka
+    await sendEmail(message, 'Hooray, Your Registration Success', 'register')
 
     // Response payload
     const response = successResponse('Register success')
