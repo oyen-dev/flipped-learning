@@ -23,36 +23,36 @@ const students = [
   {
     key: '4',
     no: '4',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Arina Kucing',
+    email: 'klasjdjas@meong.com',
     telp: '081335488360'
   },
   {
     key: '5',
     no: '5',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Adam Smith',
+    email: 'admnsd3@meong.com',
     telp: '081335488360'
   },
   {
     key: '6',
     no: '6',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Manba Nasku',
+    email: 'manba89@meong.com',
     telp: '081335488360'
   },
   {
     key: '7',
     no: '7',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Boini Kaws',
+    email: 'kawes3@meong.com',
     telp: '081335488360'
   },
   {
     key: '8',
     no: '8',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Cecil aaj',
+    email: 'cecisda@meong.com',
     telp: '081335488360'
   },
   {
@@ -65,71 +65,71 @@ const students = [
   {
     key: '10',
     no: '10',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Dany aposda',
+    email: 'daks2@meong.com',
     telp: '081335488360'
   },
   {
     key: '11',
     no: '11',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Meong apahs',
+    email: 'meong@meong.com',
     telp: '081335488360'
   },
   {
     key: '12',
     no: '12',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Iwan sdwd2',
+    email: 'iawanq2@meong.com',
     telp: '081335488360'
   },
   {
     key: '13',
     no: '13',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Arki dsawwd',
+    email: 'ariks2@meong.com',
     telp: '081335488360'
   },
   {
     key: '14',
     no: '14',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Udin alsida',
+    email: 'uisda12@meong.com',
     telp: '081335488360'
   },
   {
     key: '15',
     no: '15',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Via Vallen',
+    email: 'via121@meong.com',
     telp: '081335488360'
   },
   {
     key: '16',
     no: '16',
-    name: 'Joe Black',
+    name: 'Pondi sdad',
     email: 'sin67kucing@meong.com',
     telp: '081335488360'
   },
   {
     key: '17',
     no: '17',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Qusas2 sadsa',
+    email: 'uawa@meong.com',
     telp: '081335488360'
   },
   {
     key: '18',
     no: '18',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Ahmad Ldai',
+    email: 'asdjaasm3@meong.com',
     telp: '081335488360'
   },
   {
     key: '19',
     no: '19',
-    name: 'Joe Black',
-    email: 'sin67kucing@meong.com',
+    name: 'Boindetsds ',
+    email: 'sadsad@meong.com',
     telp: '081335488360'
   },
   {

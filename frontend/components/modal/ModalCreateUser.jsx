@@ -1,6 +1,7 @@
-import { AddTeacherForm } from '../authentication/forms'
+import { AddStudent, AddTeacher } from '../forms'
 
-const ModalCreateUser = () => {
+const ModalCreateUser = (props) => {
+  const { mode } = props
   return (
     <div className="modal backdrop-blur-sm">
       <div className="modal-box relative bg-gray-800">
@@ -20,10 +21,10 @@ const ModalCreateUser = () => {
           </svg>
         </label>
         <h4 className="font-semibold text-lg text-center text-white">
-          Tambah Data Guru
+          {mode === 'teacher' ? 'Tambah Data Guru' : 'Tambah Data Siswa'}
         </h4>
 
-        <AddTeacherForm />
+        {mode === 'teacher' ? <AddTeacher /> : <AddStudent />}
       </div>
     </div>
   )
