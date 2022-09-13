@@ -10,6 +10,17 @@ const UserSchema = new Schema({
   dateOfBorn: { type: Date, required: true },
   placeOfBorn: { type: String, required: true },
   address: { type: String, required: true },
+  picture: { type: String, required: true, default: 'default.png' },
+
+  // Activation and Soft delete
+  isActivated: { type: Boolean, default: false },
+  isDeleted: { type: Boolean, default: false },
+  deletedAt: { type: Date, default: null },
+
+  // Role
+  role: { type: String, default: null },
+
+  // Timestamps
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 

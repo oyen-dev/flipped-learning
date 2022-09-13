@@ -10,6 +10,7 @@ const { validateRegister, validateLogin, validateForgot, validateReset } = requi
 const { AppLogger } = require('../utils/logger')
 const { findUserByEmail, createUser } = require('../user/user.services')
 const { successResponse, badResponse } = require('../utils/responses')
+const { sendEmail } = require('../utils/mail')
 
 // Errors
 const { invariantError } = require('../errors')
@@ -35,6 +36,13 @@ const loginHandler = async (req, res) => {
         expiresIn: 86400
       }
     )
+
+    const message = {
+      name: user.fullName,
+      email
+    }
+
+    await sendEmail(message, 'Pendaftaran Berhasil', 'register')
 
     return res.status(200).json(response)
   } catch (error) {
