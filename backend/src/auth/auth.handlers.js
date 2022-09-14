@@ -34,8 +34,11 @@ const loginHandler = async (req, res) => {
     validateLogin(payload)
 
     const user = await findUserByEmail(email)
+
+    // Checking user
     if (!user) throw invariantError(401, 'Unauthorized')
     if (!user.verifyPassword(password)) throw invariantError(401, 'Unauthorized')
+    if (!user.isActivated) throw invariantError(401, 'Please contact admin to activate your account!')
 
     const accessToken = generateAccessToken(user, remember)
 

@@ -14,7 +14,8 @@ const RegisterSchema = Joi.object({
 
 const LoginSchema = Joi.object({
   email: Joi.string().email().required(),
-  password: Joi.string().min(8).required()
+  password: Joi.string().min(8).required(),
+  remember: Joi.boolean().required()
 })
 
 const ForgotSchema = Joi.object({
