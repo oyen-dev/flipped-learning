@@ -49,7 +49,6 @@ const loginHandler = async (req, res) => {
 
 const registerHandler = async (req, res) => {
   const payload = req.body
-  console.log(payload)
 
   try {
     // Validate payload
@@ -69,7 +68,6 @@ const registerHandler = async (req, res) => {
       link: `https://wa.me/+6285736822725?text=Hallo%20mimin%20Flipped%20Learning..%0ASaya%20baru%20saja%20mendaftar%20LMS%20dengan%20nama%20lengkap%20${encodeURIComponent(payload.fullName.trim())}%20dan%20email%20${payload.email.replace(/@/g, '%40')}`
     }
 
-    // move this shit to registration handler, aowkaowkaowka
     await sendEmail(message, 'Hooray, Your Registration Success', 'register')
 
     // Response payload
@@ -105,6 +103,16 @@ const forgotPassword = async (req, res) => {
     else token = await generateToken(email)
 
     // Todo Send email for reseting password
+    const { fullName } = user
+    const link = `https://lms.flippedlearning.id/reset-password?token=${token.token}`
+
+    const message = {
+      name: fullName,
+      email,
+      link
+    }
+
+    await sendEmail(message, 'Permintaan Reset Password', 'forgot')
 
     // Response payload
     const response = successResponse('Request reset password success.', {
