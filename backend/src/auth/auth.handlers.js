@@ -65,7 +65,8 @@ const registerHandler = async (req, res) => {
 
     const message = {
       name: payload.fullName,
-      email: payload.email
+      email: payload.email,
+      link: `https://wa.me/+6285736822725?text=Hallo%20mimin%20Flipped%20Learning..%0ASaya%20baru%20saja%20mendaftar%20LMS%20dengan%20nama%20lengkap%20${encodeURIComponent(payload.fullName.trim())}%20dan%20email%20${payload.email.replace(/@/g, '%40')}`
     }
 
     // move this shit to registration handler, aowkaowkaowka

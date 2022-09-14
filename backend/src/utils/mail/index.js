@@ -58,7 +58,7 @@ const createTransporter = async () => {
 
 const sendEmail = async (message, subject, template) => {
   // Destructure message object
-  const { name, email } = message
+  const { name, email, link } = message
 
   // Declare options
   const mailOptions = {
@@ -67,8 +67,14 @@ const sendEmail = async (message, subject, template) => {
     subject,
     template,
     context: {
-      name
-    }
+      name,
+      link
+    },
+    attachments: [{
+      filename: 'wave.png',
+      path: path.join(__dirname, './images/wave.png'),
+      cid: 'wave'
+    }]
   }
 
   const emailTransporter = await createTransporter()
