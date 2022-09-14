@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+import { ManagementStudentContext } from '../../../contexts/ManagementStudent'
+
 import Layout from '../../../components/layout'
 import Students from '../../../components/table/Students'
 import ModalCreateUser from '../../../components/modal/ModalCreateUser'
@@ -8,8 +10,13 @@ import { Input } from 'antd'
 import students from '../../../constants/studentData'
 
 const ManagementStudent = () => {
+  // Global state
+  const { managementstudentStates } = ManagementStudentContext()
+
+  // Destructure state
+  const { studentData, setStudentData } = managementstudentStates
+
   // Local state
-  const [studentData, setStudentData] = useState(students)
   const [tempStudentData] = useState(students)
 
   // Control filter and search

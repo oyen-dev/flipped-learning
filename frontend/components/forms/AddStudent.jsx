@@ -7,10 +7,26 @@ import {
   message
 } from 'antd'
 
+import { ManagementStudentContext } from '../../contexts/ManagementStudent'
+
 const AddStudent = () => {
+  // Global state
+  const { managementstudentStates } = ManagementStudentContext()
+
+  // Destructure state
+  const { addStudentForm, setAddStudentForm } = managementstudentStates
+
   const onFinish = (values) => {
     console.log('Success:', values)
 
+    setAddStudentForm({
+      fullName: '',
+      email: '',
+      gender: '',
+      dob: '',
+      pob: '',
+      address: ''
+    })
     message.info('Siap Hit API')
   }
 
@@ -39,7 +55,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Input />
+        <Input defaultValue={addStudentForm.fullName} />
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Email</p>
@@ -56,7 +72,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Input />
+        <Input defaultValue={addStudentForm.email} />
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Jenis Kelamin</p>
@@ -69,7 +85,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Select>
+        <Select defaultValue={addStudentForm.gender}>
           <Select.Option value="Laki-laki">Laki</Select.Option>
           <Select.Option value="Perempuan">Perempuan</Select.Option>
         </Select>
@@ -98,7 +114,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Input />
+        <Input defaultValue={addStudentForm.pob}/>
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Alamat</p>
@@ -111,7 +127,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Input />
+        <Input defaultValue={addStudentForm.address}/>
       </Form.Item>
 
       <Form.Item>

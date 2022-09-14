@@ -2,9 +2,9 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import { Button } from 'antd'
-import { LoginForm } from '../../components/authentication/forms'
+import { Login } from '../../components/forms'
 
-const Login = () => {
+const Auth = () => {
   return (
     <div>
       <Head>
@@ -19,13 +19,13 @@ const Login = () => {
           <div className="w-20 h-20 bg-gray-200" />
         </div>
         <p className="font-bold text-xl md:text-2xl lg:text-3xl text-center tracking-wide">
-          Pendaftaran Pengguna Flipped Learning
+          Login Flipped Learning
         </p>
         <div className="flex flex-col w-[90%] md:w-[70%] lg:w-[35%] space-y-2">
-          <LoginForm />
+          <Login />
 
           <div className="flex flex-col w-full text-sm items-center">
-            <p>Belum punya akun?</p>
+            <p className='text-sm text-white mb-0'>Belum punya akun?</p>
             <Link href="/auth/register">
               <Button type="link" className="w-full">
                 <p className="font-semibold text-base text-white hover:text-blue-500 cursor-pointer duration-150">
@@ -40,4 +40,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Auth
