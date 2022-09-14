@@ -1,10 +1,21 @@
 // Services
 const { generateAccessToken } = require('./auth.services')
 const { updatePassword } = require('../user/user.services')
-const { generateToken, getTokenByEmail, getTokenByToken, deleteTokenByToken } = require('../token/token.services')
+const {
+  generateToken,
+  getTokenByEmail,
+  getTokenByToken,
+  deleteTokenByToken
+} = require('../token/token.services')
 
 // Validations
-const { validateRegister, validateLogin, validateForgot, validateReset, validateToken } = require('./auth.validation')
+const {
+  validateRegister,
+  validateLogin,
+  validateForgot,
+  validateReset,
+  validateToken
+} = require('./auth.validation')
 
 // Utilities
 const { AppLogger } = require('../utils/logger')
@@ -33,7 +44,7 @@ const loginHandler = async (req, res) => {
       {
         accessToken,
         type: 'Bearer',
-        expiresIn: 86400
+        expiresIn: remember ? 604800 : 86400
       }
     )
 
