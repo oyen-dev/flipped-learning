@@ -4,7 +4,7 @@ const { updatePassword } = require('../user/user.services')
 const { generateToken, getTokenByEmail, getTokenByToken, deleteTokenByToken } = require('../token/token.services')
 
 // Validations
-const { validateRegister, validateLogin, validateForgot, validateReset } = require('./auth.validation')
+const { validateRegister, validateLogin, validateForgot, validateReset, validateToken } = require('./auth.validation')
 
 // Utilities
 const { AppLogger } = require('../utils/logger')
@@ -17,7 +17,7 @@ const { invariantError } = require('../errors')
 
 const loginHandler = async (req, res) => {
   const payload = req.body
-  const { email, password } = payload
+  const { email, password, remember } = payload
 
   try {
     validateLogin(payload)
@@ -26,7 +26,7 @@ const loginHandler = async (req, res) => {
     if (!user) throw invariantError(401, 'Unauthorized')
     if (!user.verifyPassword(password)) throw invariantError(401, 'Unauthorized')
 
-    const accessToken = generateAccessToken(user)
+    const accessToken = generateAccessToken(user, remember)
 
     // Response payload
     const response = successResponse('Login success.',
@@ -128,6 +128,35 @@ const forgotPassword = async (req, res) => {
   }
 }
 
+const checkToken = async (req, res) => {
+  const payload = req.query
+
+  try {
+    // Validate payload
+    validateToken(payload)
+
+    // Check token is exist
+    const userToken = await getTokenByToken(payload.token)
+
+    // Temp response
+    let response = ''
+
+    if (!userToken) {
+      response = successResponse('Token is not valid.', { valid: false })
+    } else {
+      response = successResponse('Token is valid.', { valid: true })
+    }
+
+    return res.status(200).json(response)
+  } catch (error) {
+    // Beautify error message to remove double quote from joi validation
+    const message = error.message.replace(/['"]+/g, '')
+
+    const response = badResponse(message, error.code || 400)
+    return res.status(error.code || 400).json(response)
+  }
+}
+
 const resetPassword = async (req, res) => {
   const token = req.query.token
   const payload = req.body
@@ -168,5 +197,6 @@ module.exports = {
   loginHandler,
   registerHandler,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  checkToken
 }

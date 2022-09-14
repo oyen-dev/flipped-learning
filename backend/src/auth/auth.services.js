@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const generateAccessToken = (user) => {
+const generateAccessToken = (user, remember) => {
   const JWT_SECRET = process.env.JWT_SECRET || 'jwt-secret'
   const payload = jwt.sign(
     {
@@ -8,7 +8,7 @@ const generateAccessToken = (user) => {
     },
     JWT_SECRET,
     {
-      expiresIn: '24h',
+      expiresIn: remember ? '168' : '24h',
       jwtid: user._id.toString(),
       subject: user.email
     }

@@ -2,7 +2,8 @@ const {
   RegisterSchema,
   LoginSchema,
   ForgotSchema,
-  ResetPasswordSchema
+  ResetPasswordSchema,
+  checkToken
 } = require('./auth.schema')
 
 const validateRegister = (payload) => {
@@ -25,9 +26,15 @@ const validateReset = payload => {
   if (error) throw new Error(error.message)
 }
 
+const validateToken = payload => {
+  const { error } = checkToken.validate(payload)
+  if (error) throw new Error(error.message)
+}
+
 module.exports = {
   validateRegister,
   validateLogin,
   validateForgot,
-  validateReset
+  validateReset,
+  validateToken
 }

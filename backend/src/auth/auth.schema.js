@@ -26,9 +26,14 @@ const ResetPasswordSchema = Joi.object({
   confirmPassword: Joi.ref('password')
 })
 
+const checkToken = Joi.object({
+  token: Joi.string().required()
+})
+
 module.exports = {
   RegisterSchema,
   LoginSchema,
   ForgotSchema,
-  ResetPasswordSchema
+  ResetPasswordSchema,
+  checkToken
 }
