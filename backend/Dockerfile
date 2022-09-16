@@ -1,4 +1,4 @@
-FROM node:16-alpine AS builder
+FROM node:16-alpine 
 
 WORKDIR /usr/src/app
 
@@ -8,10 +8,4 @@ RUN npm install
 COPY . .
 
 ENV NODE_ENV=production
-RUN npm run build
-
-FROM node:16-alpine AS production
-WORKDIR /usr/run/app
-COPY --from=builder /usr/src/app/dist/* ./
-
-CMD [ "node", "main.js" ]
+CMD [ "node", "src/index.js" ]
