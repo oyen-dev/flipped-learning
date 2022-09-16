@@ -9,15 +9,32 @@ const RegisterSchema = Joi.object({
   placeOfBorn: Joi.string().required(),
   address: Joi.string().required(),
   password: Joi.string().min(8).required(),
-  confirm_password: Joi.ref('password')
+  confirmPassword: Joi.ref('password')
 })
 
 const LoginSchema = Joi.object({
   email: Joi.string().email().required(),
-  password: Joi.string().min(8).required()
+  password: Joi.string().min(8).required(),
+  remember: Joi.boolean().required()
+})
+
+const ForgotSchema = Joi.object({
+  email: Joi.string().email().required()
+})
+
+const ResetPasswordSchema = Joi.object({
+  password: Joi.string().min(8).required(),
+  confirmPassword: Joi.ref('password')
+})
+
+const checkToken = Joi.object({
+  token: Joi.string().required()
 })
 
 module.exports = {
   RegisterSchema,
-  LoginSchema
+  LoginSchema,
+  ForgotSchema,
+  ResetPasswordSchema,
+  checkToken
 }

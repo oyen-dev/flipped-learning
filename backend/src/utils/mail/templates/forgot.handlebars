@@ -1,0 +1,216 @@
+<html lang="en">
+  <link type="text/css" id="dark-mode" rel="stylesheet" href="" />
+
+  <head>
+    <title>Lupa Password</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html {
+        font-family: Helvetica, sans-serif !important;
+      }
+      .main,
+      .wrapper {
+        display: block;
+        width: 100%;
+      }
+      blockquote,
+      blockquote footer {
+        position: relative;
+      }
+      html {
+        height: 100%;
+        background-color: #edede9;
+        font-size: 15px;
+      }
+      body {
+        height: auto;
+        background-color: #fff !important;
+        font-family: Helvetica, sans-serif;
+      }
+      .wrapper {
+        box-sizing: border-box;
+        margin: 0 auto;
+        background-color: #fff;
+        max-width: 600px;
+        padding: 0;
+      }
+      .regular {
+        font-size: 17px !important;
+        padding: 40px 20px 60px;
+        text-align: justify;
+      }
+      .normal {
+        font-size: 17px !important;
+        padding: 10px 20px;
+        text-align: justify;
+      }
+      .small {
+        font-size: 14px !important;
+        padding: 10px 20px;
+        text-align: justify;
+        margin-top: 0;
+      }
+      .btn,
+      .btn-lg {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+      .main {
+        padding: 20px;
+        margin: 0 auto !important;
+      }
+      .background {
+        background-color: #416475 !important;
+        width: 100%;
+      }
+      .body {
+        padding: 2%;
+      }
+      .body img {
+        max-width: 100%;
+      }
+      ol,
+      ol > li,
+      ul,
+      ul > li {
+        margin-left: 20px;
+      }
+      .no-spacing-bottom {
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      .no-spacing-top {
+        margin-top: 0;
+        padding-top: 0;
+      }
+      .footer {
+        text-align: center;
+        background-color: #99a3a4;
+        padding: 20px 10px;
+      }
+      .text-center {
+        text-align: center !important;
+      }
+      .mt-2,
+      .my-2 {
+        margin-top: 1rem !important;
+      }
+      .mt-5,
+      .my-5 {
+        margin-top: 3rem !important;
+      }
+      .pr-5,
+      .px-5 {
+        padding-right: 3rem !important;
+      }
+      .pl-5,
+      .px-5 {
+        padding-left: 3rem !important;
+      }
+      .btn {
+        display: inline-block;
+        cursor: pointer;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+      .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+      .btn-lg {
+        padding: 0.5rem 1rem;
+        border-radius: 0.3rem;
+      }
+      .btn-sm {
+        padding: 0.1rem 1rem;
+        border-radius: 0.3rem;
+      }
+      @media screen and (max-width: 600px) {
+        .main,
+        body {
+          width: 100% !important;
+          min-width: 100% !important;
+          max-width: 100% !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+        body {
+          background-color: #fff;
+        }
+        u + #body {
+          width: 100vw !important;
+          max-width: 100% !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="background">
+      <div class="main">
+        <div class="wrapper">
+          <div class="body">
+            <div style="text-align: start">
+              <p class="regular no-spacing-top no-spacing-bottom">
+                Halo,
+                <span>{{name}}</span>
+                <img src="cid:wave" height="25px" />
+              </p>
+              <br />
+              <p class="regular no-spacing-top no-spacing-bottom">
+                Baru saja mimin menerima permintaan untuk pengubahan password.
+                Jika kamu tidak merasa melakukan permintaan ini, abaikan saja
+                email ini.
+              </p>
+
+              <p class="regular mt-2 no-spacing-top no-spacing-bottom">
+                Untuk mengubah password kamu, klik tombol di bawah ya..
+              </p>
+
+              <div class="normal">
+                <a href="{{link}}" rel="no-referrer" target="_blank">
+                  <button class="btn btn-primary btn-sm">Ubah Password</button>
+                </a>
+              </div>
+
+              <p class="small">
+                Jika tombol di atas tidak berfungsi, kamu bisa copy link di
+                bawah ini dan paste di browser kamu: <br>
+                <a href="{{link}}" rel="no-referrer" target="_blank">
+                  {{link}}
+                </a>
+              </p>
+            </div>
+            <br />
+            <div class="footer">
+              <p class="no-spacing-bottom">
+                Email ini dihasilkan secara otomatis oleh sistem dan mohon untuk
+                tidak membalas email ini. Informasi lebih lanjut hubungi UBBG
+                Call Center di 012129021.
+                <br />
+                <br />
+                Salam hangat,
+                <br />
+                Mimin Flipped Learning :&#41;
+              </p>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+  </body>
+</html>
