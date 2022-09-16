@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const dotenv = require('dotenv')
 const path = require('path')
 const { isDev, isProd, isTest } = require('./utils/environment')
@@ -22,6 +23,11 @@ const app = express()
 
 // parse application/json
 app.use(express.json())
+
+// enable cors with all origins
+app.use(cors({
+  origin: '*'
+}))
 
 // Configure listening parameters
 const host = process.env.HOST || (isDev ? 'localhost' : '::')
