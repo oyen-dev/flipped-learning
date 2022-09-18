@@ -1,8 +1,10 @@
+const { nanoid } = require('nanoid')
 const { Schema, model } = require('mongoose')
 const { compareSync, hashSync } = require('bcrypt')
 
 const UserSchema = new Schema({
   // Base user fields
+  _id: { type: String, required: true, default: `usr-${nanoid(16)}` },
   email: { type: String, required: true, unique: true },
   fullName: { type: String, required: true },
   password: { type: String, required: true },
@@ -10,7 +12,7 @@ const UserSchema = new Schema({
   dateOfBorn: { type: Date, required: true },
   placeOfBorn: { type: String, required: true },
   address: { type: String, required: true },
-  picture: { type: String, required: true, default: 'default.png' },
+  picture: { type: String, required: true, default: 'https://i.pravatar.cc/300' },
 
   // Activation and Soft delete
   isActivated: { type: Boolean, default: false },

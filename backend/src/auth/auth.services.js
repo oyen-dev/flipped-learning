@@ -8,7 +8,7 @@ const generateAccessToken = (user, remember) => {
     },
     JWT_SECRET,
     {
-      expiresIn: remember ? '168' : '24h',
+      expiresIn: remember ? '168h' : '24h',
       jwtid: user._id.toString(),
       subject: user.email
     }
@@ -17,6 +17,13 @@ const generateAccessToken = (user, remember) => {
   return payload
 }
 
+const validateAccessToken = (token) => {
+  const jwtToken = token.replace('Bearer ', '')
+  const payload = jwt.verify(jwtToken, process.env.JWT_SECRET || 'jwt-secret')
+  return payload
+}
+
 module.exports = {
-  generateAccessToken
+  generateAccessToken,
+  validateAccessToken
 }

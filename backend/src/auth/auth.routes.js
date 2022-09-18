@@ -7,14 +7,14 @@ const {
   checkToken
 } = require('./auth.handlers')
 
-const auth1Routes = Router()
+const authRoutes = Router()
 
-auth1Routes.post('/login', loginHandler)
-auth1Routes.post('/register', registerHandler)
-auth1Routes.post('/forgot-password', forgotPassword)
-auth1Routes.post('/reset-password', resetPassword)
-auth1Routes.get('/reset-password', checkToken)
+authRoutes.post('/login', loginHandler)
+authRoutes.post('/register', registerHandler)
+authRoutes.post('/forgot-password', forgotPassword)
+authRoutes.post('/reset-password', resetPassword)
+authRoutes.get('/reset-password', checkToken)
 
 module.exports = {
-  auth1Routes
+  authRoutes
 }

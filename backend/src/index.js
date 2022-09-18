@@ -6,8 +6,10 @@ const { isDev, isProd, isTest } = require('./utils/environment')
 const { LOG_ENTITY_SERVER } = require('./utils/consts')
 const { AppLogger } = require('./utils/logger')
 const { connectToDatabase } = require('./utils/database')
-// const { routes } = require('./routes')
-const { auth1Routes } = require('./auth/auth.routes')
+
+// Routes
+const { authRoutes } = require('./auth/auth.routes')
+const { userRoutes } = require('./user/user.routes')
 
 // Load .env file configuration
 dotenv.config({
@@ -41,9 +43,9 @@ async function main () {
   // Init database connection
   await connectToDatabase()
 
-  // Init routes
-  // app.use('/api', routes)
-  app.use('/api/v1/auth', auth1Routes)
+  // Register routes
+  app.use('/api/v1/auth', authRoutes)
+  app.use('/api/v1/user', userRoutes)
 
   // Start listening requests
   app.listen(port, host, () => {
