@@ -1,8 +1,11 @@
 import { createContext, useContext, useState } from 'react'
+import Cookies from 'js-cookie'
+import Swal from 'sweetalert2/dist/sweetalert2.all'
+import withReactContent from 'sweetalert2-react-content'
 
 const StateContext = createContext({})
 
-export const ContextProvider = (props) => {
+export const GlobalContext = (props) => {
   const { children } = props
 
   // Global State
@@ -10,7 +13,11 @@ export const ContextProvider = (props) => {
   const [colSideContent, setColSideContent] = useState('')
 
   // Auth State
-  const [authName, setAuthName] = useState('Wildan')
+  const auth = Cookies.get('jwtToken') !== undefined
+  const [isAuthenticated, setIsAuthenticated] = useState(auth)
+
+  // Swal
+  const MySwal = withReactContent(Swal)
 
   // Export collaboration state here
   const collabStates = {
@@ -22,18 +29,23 @@ export const ContextProvider = (props) => {
 
   // Export global auth state here
   const authStates = {
-    authName,
-    setAuthName
+    isAuthenticated,
+    setIsAuthenticated
+  }
+
+  const globalFunctions = {
+    MySwal
   }
 
   return (
     <StateContext.Provider value={{
       authStates,
-      collabStates
+      collabStates,
+      globalFunctions
     }}>
       {children}
     </StateContext.Provider>
   )
 }
 
-export const useStateContext = () => useContext(StateContext)
+export const globalStateContext = () => useContext(StateContext)
