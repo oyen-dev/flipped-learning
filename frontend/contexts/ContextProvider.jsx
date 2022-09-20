@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { createContext, useContext, useState } from 'react'
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2/dist/sweetalert2.all'
@@ -19,6 +20,29 @@ export const GlobalContext = (props) => {
   // Swal
   const MySwal = withReactContent(Swal)
 
+  // Router
+  const router = useRouter()
+
+  // Create function to check if jwtToken is exist and valid
+  const checkAuth = () => {
+    if (Cookies.get('jwtToken') !== undefined) {
+      setIsAuthenticated(true)
+    } else {
+      setIsAuthenticated(false)
+    }
+  }
+
+  // Validate auth
+  const validateAuth = () => {
+    console.log('Validating auth...')
+    const path = router.pathname
+    if (isAuthenticated && path.includes('auth')) {
+      router.push('/dashboard')
+    } else {
+      router.push('/auth')
+    }
+  }
+
   // Export collaboration state here
   const collabStates = {
     colHide,
@@ -34,7 +58,9 @@ export const GlobalContext = (props) => {
   }
 
   const globalFunctions = {
-    MySwal
+    MySwal,
+    checkAuth,
+    validateAuth
   }
 
   return (
