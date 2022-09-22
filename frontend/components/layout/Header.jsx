@@ -19,7 +19,7 @@ const Header = ({ children }) => {
       <div className="flex flex-col header-right h-full justify-center">
         {/* Flipped Learning and Logout */}
         <div className="flex w-full justify-between px-2 py-1">
-          <p className="mb-0 font-semibold text-lg text-gray-900 dark:text-white transition-all duration-300 ease-in-out">Flipped Learning</p>
+          <p className="mb-0 font-semibold text-lg text-gray-900 dark:text-white transition-all duration-300 ease-in-out">Online Learning</p>
           <div className="flex flex-row items-center justify-items-center mb-0 space-x-6">
             <button onClick={handleTheme}>
               {themeValue
