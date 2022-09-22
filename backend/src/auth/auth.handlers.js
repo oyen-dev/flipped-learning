@@ -7,6 +7,7 @@ const {
   getTokenByToken,
   deleteTokenByToken
 } = require('../token/token.services')
+const { getProfile } = require('../user/user.services')
 
 // Validations
 const {
@@ -22,6 +23,7 @@ const { AppLogger } = require('../utils/logger')
 const { findUserByEmail, createUser } = require('../user/user.services')
 const { successResponse, badResponse } = require('../utils/responses')
 const { sendEmail } = require('../utils/mail')
+const { validateAccessToken } = require('../auth/auth.services')
 
 // Errors
 const { invariantError } = require('../errors')
@@ -207,10 +209,41 @@ const resetPassword = async (req, res) => {
   }
 }
 
+const getUserProfile = async (req, res) => {
+  const token = req.headers.authorization
+
+  try {
+    // Check and validate authorization token
+    if (!token) throw invariantError(401, 'Token is required')
+
+    // Validate token
+    const decoded = validateAccessToken(token)
+    if (!decoded) invariantError(401, 'Invalid token')
+
+    // Destructure payload
+    const { jti } = decoded
+
+    // Get user profile
+    const user = await getProfile(jti)
+
+    // Response payload
+    const response = successResponse('Get user profile success.', { user })
+
+    return res.status(200).json(response)
+  } catch (error) {
+    // Beautify error message to remove double quote from joi validation
+    const message = error.message.replace(/['"]+/g, '')
+
+    const response = badResponse(message, error.code || 400)
+    return res.status(error.code || 400).json(response)
+  }
+}
+
 module.exports = {
   loginHandler,
   registerHandler,
   forgotPassword,
   resetPassword,
-  checkToken
+  checkToken,
+  getUserProfile
 }

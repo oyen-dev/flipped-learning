@@ -4,7 +4,8 @@ const {
   registerHandler,
   forgotPassword,
   resetPassword,
-  checkToken
+  checkToken,
+  getUserProfile
 } = require('./auth.handlers')
 
 const authRoutes = Router()
@@ -14,6 +15,7 @@ authRoutes.post('/register', registerHandler)
 authRoutes.post('/forgot-password', forgotPassword)
 authRoutes.post('/reset-password', resetPassword)
 authRoutes.get('/reset-password', checkToken)
+authRoutes.get('/profile', getUserProfile)
 
 module.exports = {
   authRoutes
