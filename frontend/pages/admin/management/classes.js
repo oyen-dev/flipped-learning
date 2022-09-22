@@ -1,6 +1,12 @@
+import { useState, useEffect } from 'react'
+
 import Layout from '../../../components/layout'
 import BorderBottom from '../../../components/button/BorderBottom'
 import Class from '../../../components/card/Class'
+import FilterOption from '../../../components/input/FilterOption'
+
+import classData from '../../../constants/classData'
+import tabData from '../../../constants/tabData'
 
 import { Input } from 'antd'
 
@@ -19,23 +25,41 @@ const SearchIcon = () => {
   )
 }
 
-const FilterIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      className="bi bi-filter-circle"
-      viewBox="0 0 16 16"
-    >
-      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-      <path d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z" />
-    </svg>
-  )
-}
-
 const Classes = () => {
+  const [tabKey, setTabKey] = useState('1')
+  const [clases, setClases] = useState(classData)
+  const [tempClasses, setTempClasses] = useState(classData)
+  const [tabs] = useState(tabData)
+
+  // Control filter and search input
+  const [search, setSearch] = useState('')
+  const [filter, setFilter] = useState('')
+
+  // Search classes
+  useEffect(() => {
+    setTempClasses(classData)
+
+    setClases(
+      classData.filter(({ name }) =>
+        name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      )
+    )
+  }, [search])
+
+  // Filter classes
+  useEffect(() => {
+    setTempClasses(classData)
+
+    if (filter === undefined) return setClases(tempClasses)
+    else {
+      setClases(
+        classData.filter((kelas) =>
+          kelas.class.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        )
+      )
+    }
+  }, [filter])
+
   return (
     <Layout
       title="Manajemen Data Kelas"
@@ -48,40 +72,60 @@ const Classes = () => {
     >
       <div className="flex flex-col w-full h-full items-start justify-start space-y-5">
         <div className="flex flex-row w-full items-center justify-start lg:justify-center overflow-x-auto space-x-4 pb-5 lg:pb-0">
-          <BorderBottom name="Daftar Kelas" />
-          <BorderBottom name="Arsip Kelas" />
-          <BorderBottom name="Kelas Dihapus" />
+          {tabs.map((tab) => (
+            <BorderBottom
+              name={tab.name}
+              tabId={tab.tabId}
+              active={tabKey === tab.tabId}
+              setTabKey={setTabKey}
+              key={tab.tabId}
+            />
+          ))}
         </div>
 
         <div className="flex flex-col w-full items-end justify-center">
           <div className="flex flex-col lg:flex-row w-full lg:w-2/5 space-x-0 lg:space-x-5 space-y-5 lg:space-y-0">
-            <Input placeholder="Filter Kelas" prefix={<FilterIcon />} />
-            <Input placeholder="Cari Kelas" prefix={<SearchIcon />} />
+            <FilterOption setFilter={setFilter} />
+            <Input
+              placeholder="Cari Kelas"
+              prefix={<SearchIcon />}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
         </div>
 
-        <div className="grid w-full h-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
-          <Class
-            title="Teknik Pengolahan Audio Video"
-            clases="XI - Multimedia"
-          />
-          <Class
-            title="Pemeliharaan Kelistrikan Kendaraan Ringan"
-            clases="XI - Multimedia"
-          />
-          <Class title="Desain Grafis" clases="XI - Multimedia" />
-          <Class title="Apa Gitu Kelas" clases="XI - Multimedia" />
-          <Class title="Kelas Berbuat Baik" clases="XI - Multimedia" />
-          <Class title="Tiktok Influencer" clases="XI - Multimedia" />
-          <Class title="Youtube Master" clases="XI - Multimedia" />
-          <Class title="Web Development" clases="XI - Multimedia" />
-          <Class title="Audio Video Mixing" clases="XI - Multimedia" />
-          <Class title="Pet Owner" clases="XI - Multimedia" />
+        {clases.length === 0
+          ? (
+          <div className="flex flex-col w-full items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              fill="currentColor"
+              className="bi bi-emoji-frown fill-gray-500"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+              <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
+            </svg>
+            <p className="text-gray-500 pt-3">Tidak ada kelas ditemukan.</p>
+          </div>
+            )
+          : null}
+        <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
+          {clases.map((kelas) => (
+            <Class
+              key={kelas.id}
+              title={kelas.name}
+              clases={kelas.class}
+              major={kelas.major}
+            />
+          ))}
         </div>
 
         <button
           title="Contact Us"
-          className="fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-blue-700 hover:drop-shadow-2xl duration-300"
+          className="fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-[#7C3AED] hover:drop-shadow-2xl duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
