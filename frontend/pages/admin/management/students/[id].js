@@ -1,7 +1,7 @@
-import Layout from '../../../components/layout'
-import RecentAccess from '../../../components/table/RecentAccess'
-import Statistic from '../../../components/dashboard/Statistic'
-import ActiveClass from '../../../components/table/ActiveClass'
+import Layout from '../../../../components/layout'
+import RecentAccess from '../../../../components/table/RecentAccess'
+import Statistic from '../../../../components/dashboard/Statistic'
+import ActiveClass from '../../../../components/table/ActiveClass'
 
 const Students = () => {
   return (

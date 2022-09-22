@@ -15,5 +15,6 @@ module.exports = {
       '3xl': '1920px'
     }
   },
+  darkMode: 'class',
   plugins: [require('daisyui')]
 }

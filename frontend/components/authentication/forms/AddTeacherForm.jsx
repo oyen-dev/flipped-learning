@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import {
   Form,
   Input,
@@ -8,23 +10,17 @@ import {
   message
 } from 'antd'
 
-import { PrivacyPolicy } from '../../../components/modal'
+const AddTeacherForm = () => {
+  // Local state
+  const [assignClass, setAssignClass] = useState(false)
 
-const RegisterForm = () => {
+  // Option for select
+  const { Option } = Select
+
   const onFinish = (values) => {
     console.log('Success:', values)
 
-    if (!values.agree) {
-      message.error(
-        'Mohon setujui ketentuan penggunaan dan kebijakan privasi!'
-      )
-    } else if (values.password.length < 8) {
-      message.error('Mohon buat password dengan minimal 8 karakter!')
-    } else if (values.password !== values.confirm_password) {
-      message.error('Mohon maaf, password belum sesuai.')
-    } else {
-      message.info('Siap Hit API')
-    }
+    message.info('Siap Hit API')
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -34,6 +30,15 @@ const RegisterForm = () => {
   const changeDate = (date, dateString) => {
     console.log(date, dateString)
   }
+
+  const changeAssign = (e) => {
+    setAssignClass(e.target.checked)
+  }
+
+  const assignClasses = (value) => {
+    console.log(`selected ${value}`)
+  }
+
   return (
     <Form
       name="registerForm"
@@ -47,7 +52,7 @@ const RegisterForm = () => {
         rules={[
           {
             required: true,
-            message: 'Mohon masukkan nama lengkap Anda!'
+            message: 'Mohon masukkan nama lengkap!'
           }
         ]}
       >
@@ -64,7 +69,7 @@ const RegisterForm = () => {
           },
           {
             required: true,
-            message: 'Mohon masukkan email aktif Anda!'
+            message: 'Mohon masukkan email aktif!'
           }
         ]}
       >
@@ -77,7 +82,7 @@ const RegisterForm = () => {
         rules={[
           {
             required: true,
-            message: 'Pilih jenis kelamin Anda!'
+            message: 'Pilih jenis kelamin!'
           }
         ]}
       >
@@ -93,11 +98,24 @@ const RegisterForm = () => {
         rules={[
           {
             required: true,
-            message: 'Masukkan tanggal lahir Anda!'
+            message: 'Mohon masukkan tanggal lahir!'
           }
         ]}
       >
         <DatePicker onChange={changeDate} className="w-full" />
+      </Form.Item>
+
+      <p className="text-white text-base font-normal mb-0">Tempat Lahir</p>
+      <Form.Item
+        name="pob"
+        rules={[
+          {
+            required: true,
+            message: 'Mohon masukkan tempat lahir!'
+          }
+        ]}
+      >
+        <Input />
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Alamat</p>
@@ -106,71 +124,57 @@ const RegisterForm = () => {
         rules={[
           {
             required: true,
-            message: 'Mohon masukkan data alamat Anda!'
+            message: 'Mohon masukkan data alamat!'
           }
         ]}
       >
         <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Password</p>
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!'
-          }
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <p className="text-white text-base font-normal mb-0">
-        Konfirmasi Password
-      </p>
-      <Form.Item
-        name="confirm_password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!'
-          }
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+      {assignClass && (
+        <>
+          <p className="text-white text-base font-normal mb-0">Kelas Diampu</p>
+          <Form.Item
+            name="classes"
+            rules={[
+              {
+                required: true,
+                message: 'Mohon pilih kelas yang akan diampu!'
+              }
+            ]}
+          >
+            <Select
+              mode="multiple"
+              allowClear
+              placeholder="Pilih kelas yang akan diampu"
+              onChange={assignClasses}
+            >
+              <Option title="Pemrograman Dasar" value="Pemdas" />
+              <Option title="Pemrograman Berorientasi Objek" value="PBO" />
+              <Option title="Algoritma dan Strukur Data" value="ASD" />
+            </Select>
+          </Form.Item>
+        </>
+      )}
 
       <div className="flex flex-row items-start justify-start space-x-4 text-white">
         <Form.Item name="agree" valuePropName="checked">
           <div className="flex flex-row space-x-4">
-            <Checkbox />
-            <p className="text-sm justify-center text-justify text-white">
-            Dengan mencentang kotak ini, saya menyetujui{' '}
-            <label htmlFor='modal-privacy-policy' className="modal-button font-bold hover:text-blue-500 duration-150 cursor-pointer">
-              Ketentuan Penggunaan
-            </label>{' '}
-            dan{' '}
-            <label htmlFor='modal-privacy-policy' className="modal-button font-bold hover:text-blue-500 duration-150 cursor-pointer">
-              Kebijakan Privasi
-            </label>{' '}
-            Flipped Learning.
-          </p>
+            <Checkbox onChange={changeAssign} />
+            <p className="text-sm justify-center items-center mb-0 text-justify text-white">
+              Tugaskan guru ini untuk mengajar kelas?
+            </p>
           </div>
         </Form.Item>
       </div>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">
-          <p className="text-white font-medium">Daftar Flipped Learning</p>
+          <p className="text-white font-medium">Tambahkan Data Guru</p>
         </Button>
       </Form.Item>
-
-      {/* Modal container */}
-      <input type="checkbox" id="modal-privacy-policy" className="modal-toggle" />
-      <PrivacyPolicy />
     </Form>
   )
 }
 
-export default RegisterForm
+export default AddTeacherForm

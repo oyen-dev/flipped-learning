@@ -1,27 +1,67 @@
+import { Image, message, Upload, Button } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
+
+import { EditStudentProfile } from '../forms'
+
 const ModalUpdateUser = () => {
+  const props = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+      authorization: 'authorization-text'
+    },
+
+    onChange (info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList)
+      }
+
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`)
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`)
+      }
+    }
+  }
+
   return (
-    <div className="modal backdrop-blur-sm">
-      <div className="modal-box relative bg-gray-800">
-        <label htmlFor="my-modal-update" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-        <h1 className="font-semibold text-lg text-center text-white">Update data user</h1>
-        <p className="text-base font-normal mb-2">Nama Lengkap</p>
-        <input className="appearance-none border-2 border-gray-200 w-full mb-4 py-2 px-4 leading-tight focus:outline-none focus:border-purple-500 text-black text-lg font-medium rounded-md pl-2" id="fullname" placeholder="Budi Santoso" type="text" name="fullname" />
-
-        <p className="text-base font-normal mb-2">Nomor Telepon</p>
-        <input className="appearance-none border-2 border-gray-200 w-full mb-4 py-2 px-4 leading-tight focus:outline-none focus:border-purple-500 text-black text-lg font-medium rounded-md pl-2" id="phonenumber" placeholder="085734568876" type="text" name="phonenumber" />
-
-        <p className="text-base font-normal mb-2">Email</p>
-        <input className="appearance-none border-2 border-gray-200 w-full mb-4 py-2 px-4 leading-tight focus:outline-none focus:border-purple-500 text-black text-lg font-medium rounded-md pl-2" id="email" placeholder="budisan@gmail.com" type="text" name="email" />
-
-        <p className="text-base font-normal mb-2">Role</p>
-        <div className="flex">
-          <input type="radio" name="radio-2" className="radio radio-primary" /><span className="w-2/6 px-4 appearance-none leading-normal text-white text-lg font-medium rounded-md pl-2">Guru</span>
-          <input type="radio" name="radio-2" className="radio radio-primary" /><span className="w-2/6 px-4 appearance-none leading-normal text-white text-lg font-medium rounded-md pl-2">Siswa</span>
+    <div className="modal backdrop-blur-sm w-full h-screen">
+      <div className="modal-box h-[70%] w-11/12 max-w-5xl bg-gray-900">
+        <div className="flex w-full justify-center items-center h-10 sticky top-0 left-0 z-40">
+          <label
+            htmlFor="my-modal-update"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-x-lg"
+              viewBox="0 0 16 16"
+            >
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+            </svg>
+          </label>
+          <h5 className="font-semibold text-lg text-center mb-0 text-white">
+            Data Profil Siswa
+          </h5>
         </div>
-        <div className='flex justify-center mt-8'>
-          <button type="button" className="btn btn-sm bg-[#34A0A4]">
-            <p className='font-medium text-lg text-white mb-0'>Simpan</p>
-          </button>
+        <div className="flex flex-col w-full h-[90%]">
+          <div className="flex flex-col lg:flex-row w-full text-white items-start justify-start py-5 space-y-4 lg:space-y-0 overflow-auto">
+            <div className="flex flex-col w-full lg:w-1/3 space-y-4 items-center justify-center">
+              <Image src="/images/pass.png" className="h-[80%] w-[60%]" />
+
+              <div className="flex flex-col items-center justify-center w-full overflow-auto">
+                <Upload {...props}>
+                  <Button icon={<UploadOutlined />}>Ubah Foto Profil</Button>
+                </Upload>
+              </div>
+            </div>
+            <div className="flex flex-col items-start justify-start w-full h-full p-2 space-y-4">
+              <EditStudentProfile />
+            </div>
+          </div>
         </div>
       </div>
     </div>
