@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { globalStateContext } from '../contexts/ContextProvider'
+// import { useEffect } from 'react'
+// import { globalStateContext } from '../contexts/ContextProvider'
 
 import Layout from '../components/layout'
 import RecentAccess from '../components/table/RecentAccess'
@@ -7,14 +7,13 @@ import Statistic from '../components/dashboard/Statistic'
 import ActiveClass from '../components/table/ActiveClass'
 
 const Dashboard = () => {
-  const { globalFunctions } = globalStateContext()
-  const { checkAuth, validateAuth } = globalFunctions
-  checkAuth()
+  // const { globalFunctions } = globalStateContext()
+  // const { checkAuth, validateAuth } = globalFunctions
 
-  useEffect(() => {
-    checkAuth()
-    validateAuth()
-  }, [])
+  // useEffect(() => {
+  //   checkAuth()
+  //   validateAuth()
+  // }, [])
 
   return (
     <Layout

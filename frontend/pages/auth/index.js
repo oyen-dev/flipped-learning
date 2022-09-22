@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
+// import { globalStateContext } from '../../contexts/ContextProvider'
+
 import Head from 'next/head'
 import Link from 'next/link'
 
 import { Button } from 'antd'
 import { Login } from '../../components/forms'
-import { globalStateContext } from '../../contexts/ContextProvider'
 
 const Auth = () => {
-  const { globalFunctions } = globalStateContext()
-  const { checkAuth, validateAuth } = globalFunctions
-  checkAuth()
+  // const { globalFunctions } = globalStateContext()
+  // const { checkAuth, validateAuth } = globalFunctions
 
-  useEffect(() => {
-    checkAuth()
-    validateAuth()
-  }, [])
+  // useEffect(() => {
+  //   checkAuth()
+  //   validateAuth()
+  // }, [])
 
   return (
     <>
