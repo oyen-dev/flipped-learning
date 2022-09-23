@@ -42,10 +42,27 @@ const getProfile = async (id) => {
   }
 }
 
+const getNotActivatedYet = async () => {
+  const users = await User.find({ isActivated: false })
+
+  if (!users) return []
+
+  return users.map((user) => {
+    return {
+      id: user._id,
+      name: user.fullName,
+      email: user.email,
+      gender: user.gender,
+      dateOfBorn: user.dateOfBorn
+    }
+  })
+}
+
 module.exports = {
   findUserByEmail,
   getUserById,
   createUser,
   updatePassword,
-  getProfile
+  getProfile,
+  getNotActivatedYet
 }
