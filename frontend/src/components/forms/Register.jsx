@@ -1,4 +1,4 @@
-import { PrivacyPolicy } from '../modal'
+import { PrivacyPolicy } from '../modals'
 
 import {
   Form,
