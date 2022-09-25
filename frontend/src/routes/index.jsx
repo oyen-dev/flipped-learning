@@ -24,7 +24,7 @@ function Contact () {
 }
 
 function Dashboard () {
-  return <h2>Dashboard</h2>
+  return <button className="btn btn-ghost">Button</button>
 }
 
 function NotFound () {
