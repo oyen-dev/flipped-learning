@@ -1,3 +1,5 @@
+import { LoginPage } from '../pages/auth'
+
 import {
   BrowserRouter,
   Routes,
@@ -13,6 +15,7 @@ export default function AppRoutes () {
         <Route path="/" element={<Dashboard />} />
         <Route path="/home" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<LoginPage />} />
 
         {/* Handle page not found */}
         <Route path="*" element={<NotFound />} />
@@ -72,6 +75,10 @@ function Dashboard () {
   const handleMove = () => {
     navigate('/home')
   }
+
+  const handleMoveL = () => {
+    navigate('/login')
+  }
   return (
     <div className="flex flex-col w-full ">
       <p className="text-center text-xl text-red-500">
@@ -81,6 +88,10 @@ function Dashboard () {
 
       <button className="btn btn-primary" onClick={handleMove}>
         Home
+      </button>
+
+      <button className="mt-5 btn btn-primary" onClick={handleMoveL}>
+        Login
       </button>
     </div>
   )

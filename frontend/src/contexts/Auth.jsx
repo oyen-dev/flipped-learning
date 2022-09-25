@@ -4,11 +4,14 @@ const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState('Wildan')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   // Export auth state here
   const authState = {
     user,
-    setUser
+    setUser,
+    isAuthenticated,
+    setIsAuthenticated
   }
 
   return (
