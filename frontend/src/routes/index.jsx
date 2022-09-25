@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation
+} from 'react-router-dom'
 
 export default function AppRoutes () {
   return (
@@ -16,15 +22,68 @@ export default function AppRoutes () {
 }
 
 function Home () {
-  return <h2>Home</h2>
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleMove = () => {
+    navigate('/contact')
+  }
+  return (
+    <div className="flex flex-col w-full ">
+      <p className="text-center text-xl text-red-500">
+        Ini adalah tampilan Home
+      </p>
+      <p className="font-bold text-center">{location.pathname}</p>
+
+      <button className="btn btn-primary" onClick={handleMove}>
+        Contact
+      </button>
+    </div>
+  )
 }
 
 function Contact () {
-  return <h2>Contact</h2>
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleMove = () => {
+    navigate('/')
+  }
+  return (
+    <div className="flex flex-col w-full ">
+      <p className="text-center text-xl text-red-500">
+        Ini adalah tampilan Contact
+      </p>
+      <p className="font-bold text-center">{location.pathname}</p>
+
+      <button className="btn btn-primary" onClick={handleMove}>
+        Dashboard
+      </button>
+
+      <p>{location.pathname.includes('/') ? 'Yass' : 'Nope'}</p>
+    </div>
+  )
 }
 
 function Dashboard () {
-  return <button className="btn btn-ghost">Button</button>
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleMove = () => {
+    navigate('/home')
+  }
+  return (
+    <div className="flex flex-col w-full ">
+      <p className="text-center text-xl text-red-500">
+        Ini adalah tampilan Dashboard
+      </p>
+      <p className="font-bold text-center">{location.pathname}</p>
+
+      <button className="btn btn-primary" onClick={handleMove}>
+        Home
+      </button>
+    </div>
+  )
 }
 
 function NotFound () {
