@@ -1,4 +1,4 @@
-import { LoginPage } from '../pages/auth'
+import { LoginPage, RegisterPage, ForgotPage } from '../pages/auth'
 
 import {
   BrowserRouter,
@@ -15,7 +15,11 @@ export default function AppRoutes () {
         <Route path="/" element={<Dashboard />} />
         <Route path="/home" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/auth">
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="forgot-password" element={<ForgotPage />} />
+          <Route index element={<LoginPage />} />
+        </Route>
 
         {/* Handle page not found */}
         <Route path="*" element={<NotFound />} />
@@ -77,7 +81,7 @@ function Dashboard () {
   }
 
   const handleMoveL = () => {
-    navigate('/login')
+    navigate('/auth')
   }
   return (
     <div className="flex flex-col w-full ">
