@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useGlobal } from '../contexts/Global'
 import { LoginPage, RegisterPage, ForgotPage } from '../pages/auth'
 import { NotFound } from '../pages/error'
-import { DashboardPage } from '../pages/admin'
+import { DashboardPage, ManagementClassPage } from '../pages/admin'
 
 import {
   BrowserRouter,
@@ -27,6 +27,11 @@ export default function AppRoutes () {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DashboardPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/management">
+          <Route path="classes" element={<ManagementClassPage />} />
+          <Route index element={<NotFound />} />
+        </Route>
         <Route path="/auth">
           <Route path="register" element={<RegisterPage />} />
           <Route path="forgot-password" element={<ForgotPage />} />

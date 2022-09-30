@@ -20,7 +20,8 @@ const Login = () => {
   const navigate = useNavigate()
 
   const onFinish = async (values) => {
-    // Show loadng using mySwal
+    console.log(values)
+    // Show loadng
     mySwal.fire({
       title: 'Logging you in...',
       allowOutsideClick: false,
@@ -31,52 +32,8 @@ const Login = () => {
         mySwal.showLoading()
       }
     })
-    await api
-      .post('/auth/login', {
-        email: values.email,
-        password: values.password,
-        remember: values.remember
-      })
-      .then((res) => {
-        // console.log(res.data)
-        if (res.data.status) {
-          Cookies.set('jwtToken', res.data.data.accessToken, {
-            expires: res.data.expiresIn === '86400' ? 1 : 7
-          })
-          setIsAuthenticated(true)
 
-          // Show success message using mySwal
-          mySwal.fire({
-            icon: 'success',
-            title: 'Login Success',
-            text: 'You will be redirected to the dashboard',
-            timer: 2000,
-            showConfirmButton: false
-          }).then(() => {
-            navigate('/dashboard')
-          })
-        } else {
-          // message.error(res.data.message)
-          // Show error message using mySwal
-          mySwal.fire({
-            icon: 'error',
-            title: 'Login Failed',
-            text: res.data.message,
-            timer: 2000,
-            showConfirmButton: false
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-        mySwal.fire({
-          icon: 'error',
-          title: 'Login Failed',
-          text: error.response.data.message,
-          timer: 2000,
-          showConfirmButton: false
-        })
-      })
+    logIn(values)
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -87,6 +44,50 @@ const Login = () => {
 
   const onChange = (e) => {
     console.log(`checked = ${e.target.checked}`)
+  }
+
+  const logIn = async (values) => {
+    await api.post('/auth/login', {
+      email: values.email,
+      password: values.password
+    }).then((res) => {
+      console.log(res.data)
+      // if (res.data.status) {
+      //   Cookies.set('jwtToken', res.data.data.accessToken, {
+      //     expires: 1 / 24
+      //   })
+      //   setIsAuthenticated(true)
+
+      //   // Show success message using mySwal
+      //   mySwal.fire({
+      //     icon: 'success',
+      //     title: 'Login Success',
+      //     text: 'You will be redirected to the dashboard',
+      //     timer: 2000,
+      //     showConfirmButton: false
+      //   }).then(() => {
+      //     navigate('/dashboard')
+      //   })
+      // } else {
+      //   // Show error message using mySwal
+      //   mySwal.fire({
+      //     icon: 'error',
+      //     title: 'Login Failed',
+      //     text: res.data.message,
+      //     timer: 2000,
+      //     showConfirmButton: false
+      //   })
+      // }
+    }).catch((error) => {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: error.response.data.message,
+        timer: 2000,
+        showConfirmButton: false
+      })
+    })
   }
   return (
     <Form

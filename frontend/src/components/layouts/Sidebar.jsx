@@ -44,7 +44,7 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <Link to="/admin/management/classes">
+          <Link to="/management/classes">
             <li>
               <div className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-100 dark:hover:bg-gray-700 hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
                 <span className="inline-flex justify-center items-center ml-4">
@@ -66,7 +66,7 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <Link to="/admin/management/teachers">
+          <Link to="/management/teachers">
             <li>
               <div className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-100 dark:hover:bg-gray-700 hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
                 <span className="inline-flex justify-center items-center ml-4">
@@ -88,7 +88,7 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <Link to="/admin/management/students">
+          <Link to="/management/students">
             <li>
               <div className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-cyan-100 dark:hover:bg-gray-700 hover:text-blue-500 border-l-4 border-transparent hover:border-gray-800 pr-6 duration-150">
                 <span className="inline-flex justify-center items-center ml-4">
