@@ -1,15 +1,15 @@
 const Class = (props) => {
   const { title, clases, major } = props
   return (
-    <div className="flex flex-col w-full items-center justify-center bg-gray-900 px-5 pt-5 pb-2 rounded-md">
-      <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('https://mathusee.com/wp-content/uploads/2021/06/alpha-teaching.png')] bg-center object-cover object-center px-3 py-3 rounded-md">
+    <div className="flex flex-col w-full items-center justify-center bg-[#accbe1] text-black dark:bg-gray-900 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
+      <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('https://miro.medium.com/max/1400/1*dJ49PZ3OTzFJfA3Rr-xslw.png')] bg-center object-contain object-center px-3 py-3 rounded-md">
         <div className="flex w-full items-center justify-end">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
             fill="currentColor"
-            className="bi bi-gear cursor-pointer hover:fill-blue-500 duration-150"
+            className="bi bi-gear cursor-pointer fill-white hover:fill-blue-500 duration-150"
             viewBox="0 0 16 16"
           >
             <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
@@ -17,7 +17,7 @@ const Class = (props) => {
           </svg>
         </div>
 
-        <div className="flex flex-col w-full items-start justify-start">
+        <div className="flex flex-col w-full items-start justify-start text-white">
           <p className="mb-0 text-xs hover:font-semibold duration-150 ease-in">
             Senin 07:00 AM - 08:30 AM
           </p>
