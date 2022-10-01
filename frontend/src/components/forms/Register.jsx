@@ -1,5 +1,10 @@
+import { useGlobal } from '../../contexts/Global'
+
+import api from '../../api'
 import { PrivacyPolicy } from '../modals'
 
+import { useNavigate } from 'react-router-dom'
+import moment from 'moment/moment'
 import {
   Form,
   Input,
@@ -11,19 +16,84 @@ import {
 } from 'antd'
 
 const Register = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  // Global context
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
 
-    if (!values.agree) {
+  // Navigator
+  const navigate = useNavigate()
+
+  const register = async (values) => {
+    await api.post('/auth/register', values).then((res) => {
+      // console.log(res.data)
+      if (res.data.statusCode === 201) {
+        // Show success message using mySwal
+        mySwal.fire({
+          icon: 'success',
+          title: 'Register Success',
+          text: 'Please check your email to verify your account',
+          timer: 5000,
+          showConfirmButton: false
+        }).then(() => {
+          navigate('/auth')
+        })
+      } else {
+        // Show error message using mySwal
+        mySwal.fire({
+          icon: 'error',
+          title: 'Register Failed',
+          text: 'Make sure you fill all the fields correctly',
+          timer: 5000,
+          showConfirmButton: false
+        })
+      }
+    }).catch((error) => {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Register Failed',
+        text: 'Make sure you fill all the fields correctly',
+        timer: 5000,
+        showConfirmButton: false
+      })
+    })
+  }
+
+  const onFinish = (values) => {
+    // Destrucutre values
+    const { email, fullName, gender, dateOfBorn, placeOfBorn, address, password, confirmPassword, agree } = values
+
+    if (!agree) {
       message.error(
         'Mohon setujui ketentuan penggunaan dan kebijakan privasi!'
       )
-    } else if (values.password.length < 8) {
+    } else if (password.length < 8) {
       message.error('Mohon buat password dengan minimal 8 karakter!')
-    } else if (values.password !== values.confirm_password) {
+    } else if (password !== confirmPassword) {
       message.error('Mohon maaf, password belum sesuai.')
     } else {
-      message.info('Siap Hit API')
+      const payload = {
+        email,
+        fullName,
+        gender,
+        dateOfBorn: moment(dateOfBorn).format('YYYY-MM-DD'),
+        placeOfBorn,
+        address,
+        password
+      }
+
+      // Show loadng
+      mySwal.fire({
+        title: 'Registering you in...',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          mySwal.showLoading()
+        }
+      })
+
+      register(payload)
     }
   }
 
@@ -31,9 +101,11 @@ const Register = () => {
     console.log('Failed:', errorInfo)
   }
 
-  const changeDate = (date, dateString) => {
-    console.log(date, dateString)
+  const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current > moment().endOf('day')
   }
+
   return (
     <Form
       name="registerForm"
@@ -43,7 +115,7 @@ const Register = () => {
     >
       <p className="text-white text-base font-normal mb-0">Nama Lengkap</p>
       <Form.Item
-        name="name"
+        name="fullName"
         rules={[
           {
             required: true,
@@ -77,27 +149,44 @@ const Register = () => {
         rules={[
           {
             required: true,
-            message: 'Pilih jenis kelamin Anda!'
+            message: 'Mohom memilih jenis kelamin Anda!'
           }
         ]}
       >
         <Select>
-          <Select.Option value="Laki-laki">Laki</Select.Option>
-          <Select.Option value="Perempuan">Perempuan</Select.Option>
+          <Select.Option value="MALE">Laki</Select.Option>
+          <Select.Option value="FEMALE">Perempuan</Select.Option>
         </Select>
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Tanggal Lahir</p>
       <Form.Item
-        name="dob"
+        name="dateOfBorn"
         rules={[
           {
             required: true,
-            message: 'Masukkan tanggal lahir Anda!'
+            message: 'Mohon masukkan tanggal lahir Anda!'
           }
         ]}
       >
-        <DatePicker onChange={changeDate} className="w-full" />
+        {/* <DatePicker className="w-full" /> */}
+        <DatePicker className="w-full" format={'YYYY-MM-DD'}
+            style={{ width: '100%' }}
+            disabledDate={disabledDate}
+          />
+      </Form.Item>
+
+      <p className="text-white text-base font-normal mb-0">Tempat Lahir</p>
+      <Form.Item
+        name="placeOfBorn"
+        rules={[
+          {
+            required: true,
+            message: 'Mohon masukkan tempat lahir Anda!'
+          }
+        ]}
+      >
+        <Input />
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Alamat</p>
@@ -119,7 +208,7 @@ const Register = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!'
+            message: 'Mohon masukkan password Anda!'
           }
         ]}
       >
@@ -130,11 +219,11 @@ const Register = () => {
         Konfirmasi Password
       </p>
       <Form.Item
-        name="confirm_password"
+        name="confirmPassword"
         rules={[
           {
             required: true,
-            message: 'Please input your password!'
+            message: 'Mohon konfirmasi password Anda!'
           }
         ]}
       >

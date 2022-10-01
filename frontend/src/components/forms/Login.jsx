@@ -20,13 +20,12 @@ const Login = () => {
   const navigate = useNavigate()
 
   const onFinish = async (values) => {
-    console.log(values)
+    // console.log(values)
     // Show loadng
     mySwal.fire({
       title: 'Logging you in...',
       allowOutsideClick: false,
       allowEscapeKey: false,
-      allowEnterKey: false,
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -51,33 +50,33 @@ const Login = () => {
       email: values.email,
       password: values.password
     }).then((res) => {
-      console.log(res.data)
-      // if (res.data.status) {
-      //   Cookies.set('jwtToken', res.data.data.accessToken, {
-      //     expires: 1 / 24
-      //   })
-      //   setIsAuthenticated(true)
+      // console.log(res.data)
+      if (res.data.statusCode === 200) {
+        Cookies.set('jwtToken', res.data.data.accessToken, {
+          expires: 1 / 24
+        })
+        setIsAuthenticated(true)
 
-      //   // Show success message using mySwal
-      //   mySwal.fire({
-      //     icon: 'success',
-      //     title: 'Login Success',
-      //     text: 'You will be redirected to the dashboard',
-      //     timer: 2000,
-      //     showConfirmButton: false
-      //   }).then(() => {
-      //     navigate('/dashboard')
-      //   })
-      // } else {
-      //   // Show error message using mySwal
-      //   mySwal.fire({
-      //     icon: 'error',
-      //     title: 'Login Failed',
-      //     text: res.data.message,
-      //     timer: 2000,
-      //     showConfirmButton: false
-      //   })
-      // }
+        // Show success message using mySwal
+        mySwal.fire({
+          icon: 'success',
+          title: 'Login Success',
+          text: 'You will be redirected to the dashboard',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          navigate('/dashboard')
+        })
+      } else {
+        // Show error message using mySwal
+        mySwal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: res.data.message,
+          timer: 2000,
+          showConfirmButton: false
+        })
+      }
     }).catch((error) => {
       console.log(error)
       mySwal.fire({

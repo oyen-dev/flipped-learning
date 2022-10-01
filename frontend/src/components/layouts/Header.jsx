@@ -1,12 +1,38 @@
 import { useGlobal } from '../../contexts/Global'
 
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
+
 const Header = ({ children }) => {
   // Global States
   const { globalState } = useGlobal()
   const { theme, setTheme } = globalState
 
+  // Global context
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
   const handleTheme = () => {
     setTheme(!theme)
+  }
+
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    // Remove jwtToken from cookies
+    Cookies.remove('jwtToken')
+    console.log('Logout')
+
+    // Show success message using mySwal
+    mySwal.fire({
+      title: 'See you again!',
+      icon: 'info',
+      timer: 2000,
+      timerProgressBar: true,
+      showConfirmButton: false
+    }).then(() => {
+      navigate('/auth')
+    })
   }
 
   return (
@@ -51,7 +77,7 @@ const Header = ({ children }) => {
                   )}
             </button>
 
-            <button className="flex flex-row items-center space-x-2 group">
+            <button className="flex flex-row items-center space-x-2 group" onClick={handleLogout}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
