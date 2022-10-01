@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 
-import classData from '../../constants/classData'
-import tabData from '../../constants/tabData'
+import classData from '../../../constants/classData'
+import tabData from '../../../constants/tabData'
 
-import Layout from '../../components/layouts'
-import { BorderBottom } from '../../components/buttons'
-import { FilterOption } from '../../components/input'
-import { Class } from '../../components/card'
+import Layout from '../../../components/layouts'
+import { BorderBottom } from '../../../components/buttons'
+import { FilterOption } from '../../../components/input'
+import { Class } from '../../../components/card'
 
 import { Input } from 'antd'
 
