@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react'
-
 import studentData from '../../../constants/studentData'
 
 import Layout from '../../../components/layouts'
@@ -9,26 +7,6 @@ import { CreateUser } from '../../../components/modals'
 import { Input } from 'antd'
 
 const ManagementStudentPage = () => {
-  // Local States
-  const [students, setStudents] = useState(studentData)
-  const [tempStudents] = useState(studentData)
-
-  // Control filter and search
-  const [search, setSearch] = useState('')
-
-  // Filter search result
-  useEffect(() => {
-    console.log(search)
-    if (search === '' || search === undefined) setStudents(tempStudents)
-    else {
-      setStudents(
-        students.filter((student) => {
-          return student.name.toLowerCase().includes(search.toLowerCase())
-        })
-      )
-    }
-  }, [search])
-
   return (
     <Layout>
         <div className="flex flex-col lg:flex-row w-full h-full items-end lg:items-center justify-between space-y-4 lg:space-y-0">
@@ -46,7 +24,6 @@ const ManagementStudentPage = () => {
             <Input
               placeholder="Cari Data Siswa"
               prefix={<SearchIcon />}
-              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </div>

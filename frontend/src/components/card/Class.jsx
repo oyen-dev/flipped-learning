@@ -2,7 +2,7 @@ const Class = (props) => {
   const { title, clases, major } = props
   return (
     <div className="flex flex-col w-full items-center justify-center bg-[#accbe1] text-black dark:bg-gray-900 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
-      <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('https://miro.medium.com/max/1400/1*dJ49PZ3OTzFJfA3Rr-xslw.png')] bg-center object-contain object-center px-3 py-3 rounded-md">
+      <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/class.jpg')] bg-center object-contain object-center px-3 py-3 rounded-md">
         <div className="flex w-full items-center justify-end">
           <svg
             xmlns="http://www.w3.org/2000/svg"
