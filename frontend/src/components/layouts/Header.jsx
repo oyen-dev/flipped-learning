@@ -1,3 +1,4 @@
+import { useAuth } from '../../contexts/Auth'
 import { useGlobal } from '../../contexts/Global'
 
 import { useNavigate } from 'react-router-dom'
@@ -8,9 +9,13 @@ const Header = ({ children }) => {
   const { globalState } = useGlobal()
   const { theme, setTheme } = globalState
 
-  // Global context
+  // Global Functions
   const { globalFunctions } = useGlobal()
   const { mySwal } = globalFunctions
+
+  // Auth States
+  const { authState } = useAuth()
+  const { setIsAuthenticated, setJwtToken } = authState
 
   const handleTheme = () => {
     setTheme(!theme)
@@ -19,19 +24,32 @@ const Header = ({ children }) => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    // Remove jwtToken from cookies
-    Cookies.remove('jwtToken')
-    console.log('Logout')
-
     // Show success message using mySwal
     mySwal.fire({
-      title: 'See you again!',
-      icon: 'info',
-      timer: 2000,
-      timerProgressBar: true,
-      showConfirmButton: false
-    }).then(() => {
-      navigate('/auth')
+      title: 'Apakah Anda yakin ingin keluar?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya',
+      cancelButtonText: 'Tidak'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Remove jwtToken from cookies
+        Cookies.remove('jwtToken')
+        setJwtToken(null)
+        setIsAuthenticated(false)
+
+        mySwal.fire({
+          title: 'See you again!',
+          icon: 'info',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => {
+          navigate('/auth')
+        })
+      }
     })
   }
 

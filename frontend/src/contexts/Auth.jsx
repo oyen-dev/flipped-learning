@@ -1,17 +1,22 @@
 import { createContext, useContext, useState } from 'react'
 
+import Cookies from 'js-cookie'
+
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
+  const [jwtToken, setJwtToken] = useState(Cookies.get('jwtToken'))
+  const [isAuthenticated, setIsAuthenticated] = useState(!!jwtToken)
   const [user, setUser] = useState('Wildan')
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   // Export auth state here
   const authState = {
     user,
     setUser,
     isAuthenticated,
-    setIsAuthenticated
+    setIsAuthenticated,
+    jwtToken,
+    setJwtToken
   }
 
   return (

@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
+
 import { useGlobal } from '../contexts/Global'
+import { useAuth } from '../contexts/Auth'
+
 import { LoginPage, RegisterPage, ForgotPage } from '../pages/auth'
 import { NotFound } from '../pages/error'
 import { DashboardPage, ManagementClassPage, ManagementStudentPage } from '../pages/admin'
@@ -7,13 +10,18 @@ import { DashboardPage, ManagementClassPage, ManagementStudentPage } from '../pa
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  Navigate
 } from 'react-router-dom'
 
 export default function AppRoutes () {
   // Global States
   const { globalState } = useGlobal()
   const { theme } = globalState
+
+  // Auth States
+  const { authState } = useAuth()
+  const { isAuthenticated } = authState
 
   useEffect(() => {
     if (theme) {
@@ -27,10 +35,10 @@ export default function AppRoutes () {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DashboardPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/auth" />} />
         <Route path="/management">
-          <Route path="classes" element={<ManagementClassPage />} />
-          <Route path="students" element={<ManagementStudentPage />} />
+          <Route path="classes" element={isAuthenticated ? <ManagementClassPage /> : <Navigate to="/auth" /> } />
+          <Route path="students" element={isAuthenticated ? <ManagementStudentPage /> : <Navigate to="/auth" />} />
           <Route index element={<NotFound />} />
         </Route>
         <Route path="/auth">

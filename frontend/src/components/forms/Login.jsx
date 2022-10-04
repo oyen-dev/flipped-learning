@@ -10,7 +10,7 @@ import Cookies from 'js-cookie'
 const Login = () => {
   // Auth context
   const { authState } = useAuth()
-  const { setIsAuthenticated } = authState
+  const { setIsAuthenticated, setJwtToken } = authState
 
   // Global context
   const { globalFunctions } = useGlobal()
@@ -55,6 +55,7 @@ const Login = () => {
         Cookies.set('jwtToken', res.data.data.accessToken, {
           expires: 1 / 24
         })
+        setJwtToken(res.data.data.accessToken)
         setIsAuthenticated(true)
 
         // Show success message using mySwal
