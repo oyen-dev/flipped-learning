@@ -9,8 +9,9 @@ import Cookies from 'js-cookie'
 
 const Login = () => {
   // Auth context
-  const { authState } = useAuth()
+  const { authState, authFunctions } = useAuth()
   const { setIsAuthenticated, setJwtToken } = authState
+  const { fetchUser } = authFunctions
 
   // Global context
   const { globalFunctions } = useGlobal()
@@ -52,6 +53,7 @@ const Login = () => {
     }).then((res) => {
       // console.log(res.data)
       if (res.data.statusCode === 200) {
+        // Set jwtToken to cookies
         Cookies.set('jwtToken', res.data.data.accessToken, {
           expires: 1 / 24
         })
@@ -65,8 +67,13 @@ const Login = () => {
           text: 'You will be redirected to the dashboard',
           timer: 2000,
           showConfirmButton: false
-        }).then(() => {
+        }).then(async () => {
           navigate('/dashboard')
+
+          // Fetch user data
+          await Promise.all([
+            await fetchUser()
+          ])
         })
       } else {
         // Show error message using mySwal

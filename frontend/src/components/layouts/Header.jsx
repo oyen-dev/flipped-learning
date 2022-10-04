@@ -15,7 +15,7 @@ const Header = ({ children }) => {
 
   // Auth States
   const { authState } = useAuth()
-  const { setIsAuthenticated, setJwtToken } = authState
+  const { setIsAuthenticated, setJwtToken, setUser } = authState
 
   const handleTheme = () => {
     setTheme(!theme)
@@ -39,6 +39,7 @@ const Header = ({ children }) => {
         Cookies.remove('jwtToken')
         setJwtToken(null)
         setIsAuthenticated(false)
+        setUser({})
 
         mySwal.fire({
           title: 'See you again!',

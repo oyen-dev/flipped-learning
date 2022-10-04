@@ -1,13 +1,34 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 import Cookies from 'js-cookie'
+import api from '../api'
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const [jwtToken, setJwtToken] = useState(Cookies.get('jwtToken'))
   const [isAuthenticated, setIsAuthenticated] = useState(!!jwtToken)
-  const [user, setUser] = useState('Wildan')
+  const [user, setUser] = useState({})
+
+  // fetch user data
+  const fetchUser = async () => {
+    // Set header authorization
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+    await api.get('/auth/me', config).then((res) => {
+      console.log(res.data)
+      setUser(res.data)
+    })
+  }
+
+  useEffect(() => {
+    if (jwtToken) {
+      fetchUser()
+    }
+  }, [jwtToken])
 
   // Export auth state here
   const authState = {
@@ -19,8 +40,13 @@ export const AuthProvider = ({ children }) => {
     setJwtToken
   }
 
+  // Export auth functions here
+  const authFunctions = {
+    fetchUser
+  }
+
   return (
-    <AuthContext.Provider value={{ authState }}>
+    <AuthContext.Provider value={{ authState, authFunctions }}>
       {children}
     </AuthContext.Provider>
   )
