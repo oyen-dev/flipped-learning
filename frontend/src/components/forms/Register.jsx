@@ -154,8 +154,8 @@ const Register = () => {
         ]}
       >
         <Select>
-          <Select.Option value="MALE">Laki</Select.Option>
-          <Select.Option value="FEMALE">Perempuan</Select.Option>
+          <Select.Option value="Male">Laki</Select.Option>
+          <Select.Option value="Female">Perempuan</Select.Option>
         </Select>
       </Form.Item>
 

@@ -2,17 +2,17 @@ import { useEffect } from 'react'
 
 import { useGlobal } from '../contexts/Global'
 import { useAuth } from '../contexts/Auth'
+import { ManagementProvider } from '../contexts/Management'
 
 import { LoginPage, RegisterPage, ForgotPage } from '../pages/auth'
 import { NotFound } from '../pages/error'
-import { DashboardPage, ManagementClassPage, ManagementStudentPage } from '../pages/admin'
-
 import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate
-} from 'react-router-dom'
+  DashboardPage,
+  ManagementClassPage,
+  ManagementStudentPage
+} from '../pages/admin'
+
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 export default function AppRoutes () {
   // Global States
@@ -35,10 +35,41 @@ export default function AppRoutes () {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DashboardPage />} />
-        <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/auth" />} />
+        <Route
+          path="/dashboard"
+          element={
+            isAuthenticated ? <DashboardPage /> : <Navigate to="/auth" />
+          }
+        />
         <Route path="/management">
-          <Route path="classes" element={isAuthenticated ? <ManagementClassPage /> : <Navigate to="/auth" /> } />
-          <Route path="students" element={isAuthenticated ? <ManagementStudentPage /> : <Navigate to="/auth" />} />
+          <Route
+            path="classes"
+            element={
+              isAuthenticated
+                ? (
+                <ManagementContext>
+                  <ManagementClassPage />
+                </ManagementContext>
+                  )
+                : (
+                <Navigate to="/auth" />
+                  )
+            }
+          />
+          <Route
+            path="students"
+            element={
+              isAuthenticated
+                ? (
+                  <ManagementContext>
+                    <ManagementStudentPage />
+                  </ManagementContext>
+                  )
+                : (
+                <Navigate to="/auth" />
+                  )
+            }
+          />
           <Route index element={<NotFound />} />
         </Route>
         <Route path="/auth">
@@ -52,4 +83,8 @@ export default function AppRoutes () {
       </Routes>
     </BrowserRouter>
   )
+}
+
+const ManagementContext = ({ children }) => {
+  return <ManagementProvider>{children}</ManagementProvider>
 }
