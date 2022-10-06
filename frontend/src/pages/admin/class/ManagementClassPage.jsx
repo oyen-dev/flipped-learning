@@ -1,54 +1,101 @@
 import { useState, useEffect } from 'react'
 
-import classData from '../../../constants/classData'
 import tabData from '../../../constants/tabData'
 
+import { useManagement } from '../../../contexts/Management'
+import api from '../../../api'
 import Layout from '../../../components/layouts'
 import { BorderBottom } from '../../../components/buttons'
 import { FilterOption } from '../../../components/input'
 import { Class } from '../../../components/card'
 
-import { Input } from 'antd'
+import { Input, Pagination } from 'antd'
 
 const ManagementClassPage = () => {
+  // Management States
+  const { managementStates } = useManagement()
+  const { classList, setClassList } = managementStates
+
   // Local States
   const [tabKey, setTabKey] = useState('1')
-  const [clases, setClases] = useState(classData)
-  const [tempClasses, setTempClasses] = useState(classData)
   const [tabs] = useState(tabData)
+  const [totalClass, setTotalClass] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [limitClass, setLimitClass] = useState(10)
 
   // Control filter and search input
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('')
 
-  // Search classes
-  useEffect(() => {
-    setTempClasses(classData)
+  const onShowSizeChange = (current, pageSize) => {
+    // console.log('set limit to', pageSize)
+    setLimitClass(pageSize)
+  }
 
-    setClases(
-      classData.filter(({ name }) =>
-        name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-      )
-    )
-  }, [search])
+  const onChange = (page) => {
+    // console.log('move to page', page)
+    setCurrentPage(page)
+  }
+
+  const fetchClass = async (page, limit) => {
+    if (page === 0 || limit === 0) {
+      page = 1
+      limit = 10
+    }
+
+    await api
+      .get(`/classes?page=${page}&limit=${limit}`)
+      .then((res) => {
+        console.log(res)
+        // Destructure meta res
+        const { limit, totalPages, page } = res.data.meta
+
+        // Set management states
+        setTotalClass(limit * totalPages)
+        setCurrentPage(totalPages)
+        setCurrentPage(page)
+        setClassList(res.data.data)
+      })
+  }
+
+  // Initial fetch data
+  useEffect(() => {
+    fetchClass(1, 10)
+  }, [])
+
+  // Fetch data when page change or limit change
+  useEffect(() => {
+    fetchClass(currentPage, limitClass)
+  }, [currentPage, limitClass])
+
+  // Search classes
+  // useEffect(() => {
+  //   setTempClasses(classData)
+
+  //   setClases(
+  //     classData.filter(({ name }) =>
+  //       name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+  //     )
+  //   )
+  // }, [search])
 
   // Filter classes
-  useEffect(() => {
-    setTempClasses(classData)
+  // useEffect(() => {
+  //   setTempClasses(classData)
 
-    if (filter === undefined) return setClases(tempClasses)
-    else {
-      setClases(
-        classData.filter((kelas) =>
-          kelas.class.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-        )
-      )
-    }
-  }, [filter])
+  //   if (filter === undefined) return setClases(tempClasses)
+  //   else {
+  //     setClases(
+  //       classData.filter((kelas) =>
+  //         kelas.class.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+  //       )
+  //     )
+  //   }
+  // }, [filter])
   return (
     <Layout>
       <div className="flex flex-col w-full h-full items-start justify-start space-y-5">
-        <div className="flex flex-row w-full items-center justify-start lg:justify-center overflow-x-auto space-x-4 pb-5 lg:pb-0">
+        <div className="flex flex-row w-full items-center justify-start md:justify-center overflow-x-auto space-x-4 pb-5 lg:pb-0">
           {tabs.map((tab) => (
             <BorderBottom
               name={tab.name}
@@ -60,8 +107,8 @@ const ManagementClassPage = () => {
           ))}
         </div>
 
-        <div className="flex flex-col w-full items-end justify-center">
-          <div className="flex flex-col lg:flex-row w-full lg:w-2/5 space-x-0 lg:space-x-5 space-y-5 lg:space-y-0">
+        <div className="flex flex-col w-full items-center md:items-end justify-between space-y-4">
+          <div className="flex flex-col lg:flex-row w-full lg:w-2/5 space-x-0 lg:space-x-4 space-y-4 lg:space-y-0">
             <FilterOption setFilter={setFilter} />
             <Input
               placeholder="Cari Kelas"
@@ -69,9 +116,16 @@ const ManagementClassPage = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
+          <Pagination
+            showSizeChanger
+            onShowSizeChange={onShowSizeChange}
+            onChange={onChange}
+            defaultCurrent={currentPage}
+            total={totalClass}
+          />
         </div>
 
-        {clases.length === 0
+        {classList.length === 0
           ? (
           <div className="flex flex-col w-full items-center justify-center">
             <svg
@@ -90,13 +144,8 @@ const ManagementClassPage = () => {
             )
           : null}
         <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
-          {clases.map((kelas) => (
-            <Class
-              key={kelas.id}
-              title={kelas.name}
-              clases={kelas.class}
-              major={kelas.major}
-            />
+          {classList.map((kelas) => (
+            <Class key={kelas._id} title={kelas.name} clases={kelas.class} />
           ))}
         </div>
 

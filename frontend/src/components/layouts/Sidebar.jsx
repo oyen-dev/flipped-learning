@@ -11,15 +11,15 @@ const Sidebar = () => {
 
   return (
     <div className="fixed flex flex-col group top-0 left-0 w-14 group-hover:w-64 md:w-64 bg-[#accbe1] dark:bg-gray-900 h-full text-white transition-all ease-in-out duration-300 border-none z-10 sidebar">
-      <div className="flex flex-col overflow-y-auto overflow-x-hidden justify-between flex-grow">
+      <div className="flex flex-col overflow-y-auto overflow-x-hidden justify-between flex-grow pt-2">
         <ul className="flex flex-col py-2 space-y-1">
           <li className="flex w-full items-center justify-center">
             <div className="flex flex-col items-center justify-center w-10/12">
-              <div className="w-32 h-32 items-center justify-center rounded-full object-cover p-2 border-4 border-white">
+              <div className="flex items-center justify-center object-cove">
                 <img
                   src={user.picture ? user.picture : Pic}
                   alt="Profile"
-                  className="w-full h-full items-center justify-center rounded-full object-cover overflow-hidden border-8 border-indigo-600"
+                  className="w-[60%] items-center justify-center rounded-full md:p-2 object-cover overflow-hidden md:outline outline-offset-1 outline-white"
                 />
               </div>
               <p className="hidden md:block group-hover:block truncate w-full text-sm text-center text-gray-900 dark:text-white transition-all duration-300 ease-in-out font-medium tracking-wide mb-0 pt-2">

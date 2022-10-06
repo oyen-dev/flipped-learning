@@ -19,8 +19,8 @@ export const AuthProvider = ({ children }) => {
       }
     }
     await api.get('/auth/me', config).then((res) => {
-      console.log(res.data)
-      setUser(res.data)
+      // console.log(res.data)
+      setUser(res.data.data)
     })
   }
 

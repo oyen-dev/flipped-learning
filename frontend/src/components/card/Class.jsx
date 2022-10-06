@@ -1,5 +1,5 @@
 const Class = (props) => {
-  const { title, clases, major } = props
+  const { title, clases } = props
   return (
     <div className="flex flex-col w-full items-center justify-center bg-[#accbe1] text-black dark:bg-gray-900 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
       <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/class.jpg')] bg-center object-contain object-center px-3 py-3 rounded-md">
@@ -30,7 +30,7 @@ const Class = (props) => {
       <div className="flex flex-col w-full items-center justify-center space-y-1 pt-2">
         <p className="mb-0 text-center font-bold text-base">{title}</p>
         <p className="mb-0 text-center text-sm font-thin whitespace-nowrap">
-          {clases} - {major}
+          {clases}
         </p>
       </div>
     </div>

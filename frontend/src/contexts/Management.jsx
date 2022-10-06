@@ -6,13 +6,16 @@ export const ManagementProvider = ({ children }) => {
   // Management States
   const [studentList, setStudentList] = useState([])
   const [teacherList, setTeacherList] = useState([])
+  const [classList, setClassList] = useState([])
 
   // Export student state here
   const managementStates = {
     studentList,
     setStudentList,
     teacherList,
-    setTeacherList
+    setTeacherList,
+    classList,
+    setClassList
   }
 
   return (
