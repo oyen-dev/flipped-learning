@@ -31,7 +31,6 @@ const ManagementClassPage = () => {
 
   // Control filter and search input
   const [search, setSearch] = useState('')
-  const [filter, setFilter] = useState('')
 
   const onShowSizeChange = (current, pageSize) => {
     // console.log('set limit to', pageSize)
@@ -112,23 +111,11 @@ const ManagementClassPage = () => {
     }
   }, [search])
 
-  // Filter classes
-  // useEffect(() => {
-  //   setTempClasses(classData)
-
-  //   if (filter === undefined) return setClases(tempClasses)
-  //   else {
-  //     setClases(
-  //       classData.filter((kelas) =>
-  //         kelas.class.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-  //       )
-  //     )
-  //   }
-  // }, [filter])
+  // Todo : Filter class
   return (
     <Layout>
       <div className="flex flex-col w-full h-full items-start justify-start space-y-5">
-        <div className="flex flex-row w-full items-center justify-start md:justify-center overflow-x-auto space-x-4 pb-5 lg:pb-0">
+        <div className="flex flex-row w-full items-center justify-start md:justify-center overflow-x-auto space-x-4 pb-5 md:pb-0">
           {tabs.map((tab) => (
             <BorderBottom
               name={tab.name}
@@ -141,8 +128,7 @@ const ManagementClassPage = () => {
         </div>
 
         <div className="flex flex-col w-full items-center md:items-end justify-between space-y-4">
-          <div className="flex flex-col lg:flex-row w-full lg:w-2/5 space-x-0 lg:space-x-4 space-y-4 lg:space-y-0">
-            <FilterOption setFilter={setFilter} />
+          <div className="flex flex-col md:flex-row w-full md:w-2/5 space-x-0 md:space-x-4 space-y-4 md:space-y-0">
             <div className="flex space-x-4">
               <Input
                 placeholder="Cari Kelas"
@@ -158,14 +144,8 @@ const ManagementClassPage = () => {
                 Cari Kelas
               </Button>
             </div>
+            <FilterOption />
           </div>
-          <Pagination
-            showSizeChanger
-            onShowSizeChange={onShowSizeChange}
-            onChange={onChange}
-            defaultCurrent={currentPage}
-            total={totalClass}
-          />
         </div>
 
         {classList.length === 0
@@ -191,6 +171,16 @@ const ManagementClassPage = () => {
             <Class key={kelas._id} title={kelas.name} clases={kelas.class} />
           ))}
         </div>
+
+      <div className="flex w-full justify-center pb-5">
+        <Pagination
+            showSizeChanger
+            onShowSizeChange={onShowSizeChange}
+            onChange={onChange}
+            defaultCurrent={currentPage}
+            total={totalClass}
+          />
+      </div>
 
         <button
           title="Contact Us"
