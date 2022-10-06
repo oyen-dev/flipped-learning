@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import tabData from '../../../constants/tabData'
 
+import { useGlobal } from '../../../contexts/Global'
 import { useManagement } from '../../../contexts/Management'
 import api from '../../../api'
 import Layout from '../../../components/layouts'
@@ -9,9 +10,13 @@ import { BorderBottom } from '../../../components/buttons'
 import { FilterOption } from '../../../components/input'
 import { Class } from '../../../components/card'
 
-import { Input, Pagination } from 'antd'
+import { Button, Input, Pagination } from 'antd'
 
 const ManagementClassPage = () => {
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
   // Management States
   const { managementStates } = useManagement()
   const { classList, setClassList } = managementStates
@@ -22,6 +27,7 @@ const ManagementClassPage = () => {
   const [totalClass, setTotalClass] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [limitClass, setLimitClass] = useState(10)
+  const [isFetch, setIsFetch] = useState(false)
 
   // Control filter and search input
   const [search, setSearch] = useState('')
@@ -35,49 +41,76 @@ const ManagementClassPage = () => {
   const onChange = (page) => {
     // console.log('move to page', page)
     setCurrentPage(page)
+    setIsFetch(true)
+  }
+
+  const destructureMeta = (meta) => {
+    const { limit, totalPages, page } = meta
+    // Set management states
+    setTotalClass(limit * totalPages)
+    setCurrentPage(totalPages)
+    setCurrentPage(page)
   }
 
   const fetchClass = async (page, limit) => {
+    mySwal.fire({
+      html: 'Wait a moment...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
     if (page === 0 || limit === 0) {
       page = 1
       limit = 10
     }
 
-    await api
-      .get(`/classes?page=${page}&limit=${limit}`)
-      .then((res) => {
-        console.log(res)
-        // Destructure meta res
-        const { limit, totalPages, page } = res.data.meta
+    const endpoint = search !== ''
+      ? `/classes?q=${search}&page=${page}&limit=${limit}`
+      : `/classes?page=${page}&limit=${limit}`
 
-        // Set management states
-        setTotalClass(limit * totalPages)
-        setCurrentPage(totalPages)
-        setCurrentPage(page)
-        setClassList(res.data.data)
-      })
+    await api.get(endpoint).then((res) => {
+      console.log(res)
+      // Destructure meta
+      destructureMeta(res.data.meta)
+
+      // Set list of class
+      setClassList(res.data.data)
+    })
+    mySwal.close()
   }
 
   // Initial fetch data
   useEffect(() => {
     fetchClass(1, 10)
+    console.log('init')
   }, [])
 
   // Fetch data when page change or limit change
   useEffect(() => {
-    fetchClass(currentPage, limitClass)
-  }, [currentPage, limitClass])
+    if (isFetch) {
+      fetchClass(currentPage, limitClass)
+      setIsFetch(false)
+    }
+  }, [isFetch])
 
   // Search classes
-  // useEffect(() => {
-  //   setTempClasses(classData)
+  const searchClass = async () => {
+    mySwal.fire({
+      html: 'Wait a moment...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+    fetchClass(currentPage, limitClass)
+    mySwal.close()
+  }
 
-  //   setClases(
-  //     classData.filter(({ name }) =>
-  //       name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-  //     )
-  //   )
-  // }, [search])
+  // Fetch class when search input is empty
+  useEffect(() => {
+    if (search === '') {
+      fetchClass(1, 10)
+    }
+  }, [search])
 
   // Filter classes
   // useEffect(() => {
@@ -110,11 +143,21 @@ const ManagementClassPage = () => {
         <div className="flex flex-col w-full items-center md:items-end justify-between space-y-4">
           <div className="flex flex-col lg:flex-row w-full lg:w-2/5 space-x-0 lg:space-x-4 space-y-4 lg:space-y-0">
             <FilterOption setFilter={setFilter} />
-            <Input
-              placeholder="Cari Kelas"
-              prefix={<SearchIcon />}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+            <div className="flex space-x-4">
+              <Input
+                placeholder="Cari Kelas"
+                prefix={<SearchIcon />}
+                onChange={(e) => setSearch(e.target.value)}
+                allowClear={true}
+              />
+              <Button
+                type="primary"
+                disabled={!!(search === '' || search === null)}
+                onClick={searchClass}
+              >
+                Cari Kelas
+              </Button>
+            </div>
           </div>
           <Pagination
             showSizeChanger
