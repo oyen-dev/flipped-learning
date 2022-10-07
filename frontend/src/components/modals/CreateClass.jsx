@@ -3,7 +3,7 @@ import { AddClass } from '../forms'
 const CreateClass = () => {
   return (
     <div className="modal backdrop-blur-sm w-full h-screen" style={{ margin: 0 }}>
-      <div className="modal-box h-[70%] w-11/12 max-w-5xl bg-gray-900">
+      <div className="modal-box max-h-[70%] w-11/12 max-w-5xl bg-gray-900">
         <div className="flex w-full justify-center items-center h-10 sticky top-0 left-0 z-40">
           <label
             htmlFor="modal-create-class"

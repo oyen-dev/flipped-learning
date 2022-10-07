@@ -24,6 +24,7 @@ const ActiveClass = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [limitClass, setLimitClass] = useState(10)
   const [isFetch, setIsFetch] = useState(false)
+  const [currentSearchPage, setCurrentSearchPage] = useState(1)
 
   // Control filter and search input
   const [search, setSearch] = useState('')
@@ -37,6 +38,11 @@ const ActiveClass = () => {
     // console.log('move to page', page)
     setCurrentPage(page)
     setIsFetch(true)
+
+    // Reset search page
+    if (search !== '') {
+      setCurrentSearchPage(page)
+    }
   }
 
   const destructureMeta = (meta) => {
@@ -54,6 +60,7 @@ const ActiveClass = () => {
         mySwal.showLoading()
       }
     })
+
     if (page === 0 || limit === 0) {
       page = 1
       limit = 10
@@ -61,7 +68,7 @@ const ActiveClass = () => {
 
     const endpoint =
       search !== ''
-        ? `/classes?q=${search}&page=${page}&limit=${limit}`
+        ? `/classes?q=${search}&page=${currentSearchPage}&limit=${limit}`
         : `/classes?page=${page}&limit=${limit}`
 
     await api.get(endpoint).then((res) => {
@@ -70,9 +77,22 @@ const ActiveClass = () => {
       destructureMeta(res.data.meta)
 
       // Set list of class
-      setClassList(res.data.data)
+      setClassList(sortClass(res.data.data))
     })
     mySwal.close()
+  }
+
+  // Sort class by name
+  const sortClass = (classList) => {
+    return classList.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1
+      }
+      if (a.name > b.name) {
+        return 1
+      }
+      return 0
+    })
   }
 
   // Initial fetch data
@@ -105,6 +125,7 @@ const ActiveClass = () => {
   useEffect(() => {
     if (search === '') {
       fetchClass(1, 10)
+      setCurrentSearchPage(1)
     }
   }, [search])
 

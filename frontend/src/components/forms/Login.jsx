@@ -25,15 +25,13 @@ const Login = () => {
     // Show loadng
     mySwal.fire({
       title: 'Logging you in...',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
       }
     })
 
-    logIn(values)
+    await logIn(values)
   }
 
   const onFinishFailed = (errorInfo) => {
