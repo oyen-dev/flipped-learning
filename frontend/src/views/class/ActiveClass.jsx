@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 
 import { useGlobal } from '../../contexts/Global'
 import { useManagement } from '../../contexts/Management'
+import api from '../../api'
+
 import { FilterOption } from '../../components/input'
 import { Class } from '../../components/card'
-import api from '../../api'
+import { CreateClass } from '../../components/modals'
 
 import { Input, Button, Pagination } from 'antd'
 
@@ -63,7 +65,7 @@ const ActiveClass = () => {
         : `/classes?page=${page}&limit=${limit}`
 
     await api.get(endpoint).then((res) => {
-      console.log(res)
+      // console.log(res)
       // Destructure meta
       destructureMeta(res.data.meta)
 
@@ -76,7 +78,7 @@ const ActiveClass = () => {
   // Initial fetch data
   useEffect(() => {
     fetchClass(1, 10)
-    console.log('init')
+    // console.log('init')
   }, [])
 
   // Fetch data when page change or limit change
@@ -129,18 +131,17 @@ const ActiveClass = () => {
           <FilterOption />
         </div>
         {classList.length !== 0 && (
-        <div className="flex w-full justify-end">
-          <Pagination
-            showSizeChanger
-            onShowSizeChange={onShowSizeChange}
-            onChange={onChange}
-            defaultCurrent={currentPage}
-            total={totalClass}
-          />
-        </div>
+          <div className="flex w-full justify-end">
+            <Pagination
+              showSizeChanger
+              onShowSizeChange={onShowSizeChange}
+              onChange={onChange}
+              defaultCurrent={currentPage}
+              total={totalClass}
+            />
+          </div>
         )}
       </div>
-
       {classList.length === 0
         ? (
         <div className="flex flex-col w-full items-center justify-center">
@@ -165,9 +166,9 @@ const ActiveClass = () => {
         ))}
       </div>
 
-      <button
-        title="Contact Us"
-        className="fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-[#7C3AED] hover:drop-shadow-2xl duration-300"
+      <label
+        htmlFor="modal-create-class"
+        className="modal-button fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center cursor-pointer text-white text-4xl hover:bg-[#7C3AED] hover:drop-shadow-2xl duration-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +183,15 @@ const ActiveClass = () => {
             d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
           />
         </svg>
-      </button>
+      </label>
+
+      {/* Modal container */}
+      <input
+        type="checkbox"
+        id="modal-create-class"
+        className="modal-toggle"
+      />
+      <CreateClass />
     </>
   )
 }
