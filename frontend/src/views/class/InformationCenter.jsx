@@ -1,7 +1,9 @@
+import { PostTaskInfo } from '../../components/forms'
+
 const InformationCenter = (props) => {
   const { id } = props
   return (
-    <div className="w-full h-full flex flex-col items-center justify-between p-2 space-y-4 rounded-lg text-white z-10 bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300">
+    <div className="w-full h-full flex flex-col items-center justify-between py-2 px-4 space-y-4 rounded-lg text-white z-10 bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300">
 
       {/* Class Header Info */}
       <div className="w-full flex flex-col space-y-4">
@@ -24,6 +26,9 @@ const InformationCenter = (props) => {
           Buka Presensi
         </button>
       </div>
+
+      {/* Posting Informasi */}
+      <PostTaskInfo />
 
     </div>
   )
