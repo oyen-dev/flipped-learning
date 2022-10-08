@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import tabData from '../../../constants/tabData'
 import Layout from '../../../components/layouts'
 import { BorderBottom } from '../../../components/buttons'
 import { ActiveClass, ArchivedClass, DeletedClass } from '../../../views/class'
@@ -8,7 +7,20 @@ import { ActiveClass, ArchivedClass, DeletedClass } from '../../../views/class'
 const ManagementClassPage = () => {
   // Local States
   const [tabKey, setTabKey] = useState('1')
-  const [tabs] = useState(tabData)
+  const [tabs] = useState([
+    {
+      name: 'Daftar Kelas',
+      tabId: '1'
+    },
+    {
+      name: 'Arsip Kelas',
+      tabId: '2'
+    },
+    {
+      name: 'Kelas Dihapus',
+      tabId: '3'
+    }
+  ])
 
   // Todo : Filter class
   return (

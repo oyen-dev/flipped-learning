@@ -41,11 +41,11 @@ const AddClass = () => {
           icon: 'success',
           title: 'Created class successfully',
           text: "You'll be redirected to the class page",
-          timer: 2000,
+          timer: 4000,
           showConfirmButton: false
         }).then(async () => {
           // Todo : Redirect to class page
-          navigate('/dashboard')
+          navigate(res.data.data._id)
         })
       } else {
         // Show error message using mySwal
@@ -53,7 +53,7 @@ const AddClass = () => {
           icon: 'error',
           title: 'Oops...',
           text: res.data.message,
-          timer: 2000,
+          timer: 4000,
           showConfirmButton: false
         })
       }
@@ -63,7 +63,7 @@ const AddClass = () => {
         icon: 'error',
         title: 'Oops...',
         text: err.response.data.message,
-        timer: 2000,
+        timer: 4000,
         showConfirmButton: false
       })
     })

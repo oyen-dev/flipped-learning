@@ -9,7 +9,8 @@ import { NotFound } from '../pages/error'
 import {
   DashboardPage,
   ManagementClassPage,
-  ManagementStudentPage
+  ManagementStudentPage,
+  ClassDetailPage
 } from '../pages/admin'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
@@ -42,34 +43,11 @@ export default function AppRoutes () {
           }
         />
         <Route path="/management">
-          <Route
-            path="classes"
-            element={
-              isAuthenticated
-                ? (
-                <ManagementContext>
-                  <ManagementClassPage />
-                </ManagementContext>
-                  )
-                : (
-                <Navigate to="/auth" />
-                  )
-            }
-          />
-          <Route
-            path="students"
-            element={
-              isAuthenticated
-                ? (
-                  <ManagementContext>
-                    <ManagementStudentPage />
-                  </ManagementContext>
-                  )
-                : (
-                <Navigate to="/auth" />
-                  )
-            }
-          />
+          <Route path='classes'>
+            <Route path=':id' element={isAuthenticated ? (<ManagementContext> <ClassDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            <Route index element={isAuthenticated ? (<ManagementContext> <ManagementClassPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+          </Route>
+          <Route path="students" element={ isAuthenticated ? (<ManagementContext> <ManagementStudentPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
           <Route index element={<NotFound />} />
         </Route>
         <Route path="/auth">
