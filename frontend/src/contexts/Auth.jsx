@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 import Cookies from 'js-cookie'
 import api from '../api'
@@ -11,11 +11,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({})
 
   // fetch user data
-  const fetchUser = async (token) => {
+  const fetchUser = async () => {
     // Set header authorization
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
       }
     }
     await api.get('/auth/me', config).then((res) => {
@@ -23,6 +23,13 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data.data)
     })
   }
+
+  // Fetch user data when jwtToken changed
+  useEffect(() => {
+    if (jwtToken) {
+      fetchUser(jwtToken)
+    }
+  }, [jwtToken])
 
   // Export auth state here
   const authState = {

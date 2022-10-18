@@ -63,7 +63,7 @@ const Login = () => {
         setIsAuthenticated(true)
 
         // Fetch user data
-        await fetchUser(token)
+        await fetchUser()
 
         // Show success message using mySwal
         mySwal.fire({

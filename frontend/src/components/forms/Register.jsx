@@ -24,9 +24,21 @@ const Register = () => {
   const navigate = useNavigate()
 
   const register = async (values) => {
+    // Show loadng
+    mySwal.fire({
+      title: 'Registering you in...',
+      allowOutsideClick: true,
+      backdrop: true,
+      allowEscapeKey: true,
+      showConfirmButton: false,
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
     await api.post('/auth/register', values).then((res) => {
       // console.log(res.data)
-      if (res.data.statusCode === 201) {
+      if (res.data.status) {
         // Show success message using mySwal
         mySwal.fire({
           icon: 'success',
@@ -61,7 +73,7 @@ const Register = () => {
 
   const onFinish = (values) => {
     // Destrucutre values
-    const { email, fullName, gender, dateOfBorn, placeOfBorn, address, password, confirmPassword, agree } = values
+    const { email, fullName, gender, dateOfBirth, placeOfBirth, address, password, confirmPassword, agree } = values
 
     if (!agree) {
       message.error(
@@ -76,22 +88,12 @@ const Register = () => {
         email,
         fullName,
         gender,
-        dateOfBorn: moment(dateOfBorn).format('YYYY-MM-DD'),
-        placeOfBorn,
+        dateOfBirth: moment(dateOfBirth).format('YYYY-MM-DD'),
+        placeOfBirth,
         address,
-        password
+        password,
+        confirmPassword
       }
-
-      // Show loadng
-      mySwal.fire({
-        title: 'Registering you in...',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        showConfirmButton: false,
-        didOpen: () => {
-          mySwal.showLoading()
-        }
-      })
 
       register(payload)
     }
@@ -154,14 +156,14 @@ const Register = () => {
         ]}
       >
         <Select>
-          <Select.Option value="Male">Laki</Select.Option>
-          <Select.Option value="Female">Perempuan</Select.Option>
+          <Select.Option value={true}>Laki</Select.Option>
+          <Select.Option value={false}>Perempuan</Select.Option>
         </Select>
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Tanggal Lahir</p>
       <Form.Item
-        name="dateOfBorn"
+        name="dateOfBirth"
         rules={[
           {
             required: true,
@@ -178,7 +180,7 @@ const Register = () => {
 
       <p className="text-white text-base font-normal mb-0">Tempat Lahir</p>
       <Form.Item
-        name="placeOfBorn"
+        name="placeOfBirth"
         rules={[
           {
             required: true,
