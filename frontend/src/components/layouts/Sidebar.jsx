@@ -23,7 +23,7 @@ const Sidebar = () => {
                 />
               </div>
               <p className="hidden md:block group-hover:block truncate w-full text-sm text-center text-gray-900 dark:text-white transition-all duration-300 ease-in-out font-medium tracking-wide mb-0 pt-2">
-                {user.fullName}
+                {user.name}
               </p>
             </div>
           </li>

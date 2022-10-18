@@ -47,16 +47,23 @@ const Login = () => {
   const logIn = async (values) => {
     await api.post('/auth/login', {
       email: values.email,
-      password: values.password
-    }).then((res) => {
-      // console.log(res.data)
-      if (res.data.statusCode === 200) {
+      password: values.password,
+      remember: values.remember
+    }).then(async (res) => {
+      // console.log(res.data.data)
+      if (res.data.status) {
         // Set jwtToken to cookies
-        Cookies.set('jwtToken', res.data.data.accessToken, {
-          expires: 1 / 24
+        const token = res.data.data.accessToken
+        Cookies.set('jwtToken', token, {
+          expires: values.remember ? 7 : 1
         })
-        setJwtToken(res.data.data.accessToken)
+
+        // Set jwtToken to state
+        setJwtToken(token)
         setIsAuthenticated(true)
+
+        // Fetch user data
+        await fetchUser(token)
 
         // Show success message using mySwal
         mySwal.fire({
@@ -67,11 +74,6 @@ const Login = () => {
           showConfirmButton: false
         }).then(async () => {
           navigate('/dashboard')
-
-          // Fetch user data
-          await Promise.all([
-            await fetchUser()
-          ])
         })
       } else {
         // Show error message using mySwal
