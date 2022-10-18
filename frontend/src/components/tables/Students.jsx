@@ -3,6 +3,7 @@ import Actions from './Actions'
 
 const Students = (props) => {
   const { students } = props
+
   const columns = [
     {
       title: (
@@ -54,22 +55,14 @@ const Students = (props) => {
     }
   ]
 
-  const onShowSizeChange = (current, pageSize) => {
-    console.log(current, pageSize)
-  }
-
-  const onChange = (page, pageSize) => {
-    console.log(page, pageSize)
-  }
-
   return (
     <Table
       columns={columns}
       dataSource={students}
       tableLayout="auto"
       className="w-full"
-      pagination={{ position: ['bottomLeft'], showSizeChanger: true, onShowSizeChange, total: 24, onChange }}
-      rowClassName={() => 'text-gray-900 dark:text-white dark:hover:text-gray-900 bg-gray-100 dark:bg-[#17171A] transition-all duration-300 ease-in-out'}
+      pagination={false}
+      // rowClassName={() => 'text-gray-900 dark:text-white dark:hover:text-gray-900 bg-gray-100 dark:bg-[#17171A] transition-all duration-300 ease-in-out'}
     />
   )
 }

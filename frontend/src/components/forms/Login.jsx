@@ -86,7 +86,7 @@ const Login = () => {
         })
       }
     }).catch((error) => {
-      console.log(error)
+      // console.log(error)
       mySwal.fire({
         icon: 'error',
         title: 'Login Failed',
