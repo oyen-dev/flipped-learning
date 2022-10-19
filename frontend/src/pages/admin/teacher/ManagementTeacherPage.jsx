@@ -1,32 +1,35 @@
+import teacherData from '../../../constants/teacherData'
+
 import Layout from '../../../components/layouts'
+import { Teachers } from '../../../components/tables'
 import { CreateUser } from '../../../components/modals'
 
 import { Input } from 'antd'
 
 const ManagementTeacherPage = () => {
-  <Layout>
-    <div className="flex flex-col lg:flex-row w-full h-full items-end lg:items-center justify-between space-y-4 lg:space-y-0">
+  return (
+    <Layout>
+      <div className="flex flex-col lg:flex-row w-full h-full items-end lg:items-center justify-between space-y-4 lg:space-y-0">
         <label
           htmlFor="my-modal-create"
           className="btn btn-sm bg-[#34A0A4] modal-button border-none hover:bg-blue-700 hover:drop-shadow-2xl duration-300"
         >
           <p className="font-medium capitalize text-sm text-white mb-0">
-            Tambah Siswa
+            Tambah Guru
           </p>
         </label>
 
         <div className="flex flex-col items-end justify-center">
           <div className="flex flex-col lg:flex-row w-full lg:w-1/5 space-x-0 lg:space-x-5 space-y-5 lg:space-y-0">
             <Input
-              placeholder="Cari Data Siswa"
+              placeholder="Cari Data Guru"
               prefix={<SearchIcon />}
-              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </div>
 
         <input type="checkbox" id="my-modal-create" className="modal-toggle" />
-        <CreateUser mode='student' />
+        <CreateUser mode='teacher' />
       </div>
 
       <div className="flex flex-col w-full items-center lg:items-start justify-start bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300 px-5 py-5 rounded-lg">
@@ -34,11 +37,12 @@ const ManagementTeacherPage = () => {
           Daftar Siswa
         </p>
         <div className="flex flex-col w-full items-start justify-start overflow-x-auto">
-          <Students students={studentData} />
+          <Teachers teachers={teacherData} />
           <div className="flex w-full mt-5 lg:mt-0 justify-center items-center" />
         </div>
       </div>
-  </Layout>
+    </Layout>
+  )
 }
 
 const SearchIcon = () => {
