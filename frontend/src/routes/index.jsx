@@ -10,7 +10,8 @@ import {
   DashboardPage,
   ManagementClassPage,
   ManagementStudentPage,
-  ClassDetailPage
+  ClassDetailPage,
+  StudentDetailPage
 } from '../pages/admin'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
@@ -47,7 +48,10 @@ export default function AppRoutes () {
             <Route path=':id' element={isAuthenticated ? (<ManagementContext> <ClassDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route index element={isAuthenticated ? (<ManagementContext> <ManagementClassPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
           </Route>
-          <Route path="students" element={ isAuthenticated ? (<ManagementContext> <ManagementStudentPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+          <Route path="students">
+            <Route path=':id' element={isAuthenticated ? (<ManagementContext> <StudentDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            <Route index element={ isAuthenticated ? (<ManagementContext> <ManagementStudentPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+          </Route>
           <Route index element={<NotFound />} />
         </Route>
         <Route path="/auth">

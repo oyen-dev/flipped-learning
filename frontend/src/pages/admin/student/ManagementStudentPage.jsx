@@ -4,9 +4,11 @@ import { useManagement } from '../../../contexts/Management'
 import api from '../../../api'
 
 import Layout from '../../../components/layouts'
+import { Breadcrumb } from '../../../components/breadcrumb'
 import { Student } from '../../../components/tables'
 import { CreateUser } from '../../../components/modals'
 
+import { useNavigate } from 'react-router-dom'
 import { Input, Pagination, Button } from 'antd'
 import Cookies from 'js-cookie'
 
@@ -28,6 +30,21 @@ const ManagementStudentPage = () => {
   // Management States
   const { managementStates } = useManagement()
   const { studentList, setStudentList } = managementStates
+
+  // Navigator
+  const navigate = useNavigate()
+
+  // Breadcrumb Items
+  const paths = [
+    {
+      name: 'Dashboard',
+      destination: '/dashboard'
+    },
+    {
+      name: 'Manajemen Data Siswa',
+      destination: '/management/students'
+    }
+  ]
 
   // Fetch student data
   const fetchStudents = async (page, limit) => {
@@ -146,20 +163,7 @@ const ManagementStudentPage = () => {
   }, [search])
   return (
     <Layout>
-      <div className="flex flex-col lg:flex-row w-full h-full items-end lg:items-center justify-end space-y-4 lg:space-y-0">
-        <label
-          htmlFor="my-modal-create"
-          className="btn btn-sm bg-[#34A0A4] modal-button border-none hover:bg-blue-700 hover:drop-shadow-2xl duration-300"
-        >
-          <p className="font-medium capitalize text-sm text-white mb-0">
-            Tambah Siswa
-          </p>
-        </label>
-
-        <input type="checkbox" id="my-modal-create" className="modal-toggle" />
-        <CreateUser mode="student" />
-      </div>
-
+      <Breadcrumb paths={paths} navigate={navigate} />
       <div className="flex flex-col w-full items-center lg:items-start justify-start bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300 px-5 py-5 rounded-lg">
         <div className="flex flex-col w-full items-start justify-start overflow-x-auto space-y-4">
           <div className="flex flex-col md:flex-row w-full md:w-2/5 space-x-0 md:space-x-4 space-y-4 md:space-y-0"></div>
@@ -187,11 +191,34 @@ const ManagementStudentPage = () => {
               total={totalStudent}
             />
           </div>
-          {/* <Students students={studentList} /> */}
           <Student students={studentList} />
           <div className="flex w-full mt-5 lg:mt-0 justify-center items-center" />
         </div>
       </div>
+
+      {/* Button Add Student */}
+      <label
+        htmlFor="my-modal-create"
+        className="modal-button fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center cursor-pointer text-white text-4xl hover:bg-[#7C3AED] hover:drop-shadow-2xl duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          className="bi bi-plus-lg"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fillRule="evenodd"
+            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+          />
+        </svg>
+      </label>
+
+      {/* Container Modal */}
+      <input type="checkbox" id="my-modal-create" className="modal-toggle" />
+      <CreateUser mode="student" />
     </Layout>
   )
 }

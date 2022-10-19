@@ -3,7 +3,7 @@ import { AddStudent, AddTeacher } from '../forms'
 const CreateUser = (props) => {
   const { mode } = props
   return (
-    <div className="modal backdrop-blur-sm">
+    <div className="modal">
       <div className="modal-box relative bg-gray-800">
         <label
           htmlFor="my-modal-create"

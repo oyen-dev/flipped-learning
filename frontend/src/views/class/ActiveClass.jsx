@@ -4,11 +4,11 @@ import { useGlobal } from '../../contexts/Global'
 import { useManagement } from '../../contexts/Management'
 import api from '../../api'
 
-import { FilterOption } from '../../components/input'
 import { Class } from '../../components/card'
 import { CreateClass } from '../../components/modals'
 
 import { Input, Button, Pagination } from 'antd'
+import Cookies from 'js-cookie'
 
 const ActiveClass = () => {
   // Global Functions
@@ -68,17 +68,22 @@ const ActiveClass = () => {
 
     const endpoint =
       search !== ''
-        ? `/classes?q=${search}&page=${currentSearchPage}&limit=${limit}`
-        : `/classes?page=${page}&limit=${limit}`
+        ? `/class?q=${search}&page=${currentSearchPage}&limit=${limit}`
+        : `/class?page=${page}&limit=${limit}`
 
-    await api.get(endpoint).then((res) => {
-      // console.log(res)
-      // Destructure meta
-      destructureMeta(res.data.meta)
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+    const res = await api.get(endpoint, config)
+    console.log(res)
+    // Destructure meta
+    destructureMeta(res.data.meta)
 
-      // Set list of class
-      setClassList(sortClass(res.data.data))
-    })
+    // Set list of class
+    setClassList(sortClass(res.data.data))
+
     mySwal.close()
   }
 
@@ -134,7 +139,6 @@ const ActiveClass = () => {
     <>
       <div className="flex flex-col w-full items-center md:items-end justify-between space-y-4">
         <div className="flex flex-col md:flex-row w-full md:w-2/5 space-x-0 md:space-x-4 space-y-4 md:space-y-0">
-          <div className="flex space-x-4">
             <Input
               placeholder="Cari Kelas"
               prefix={<SearchIcon />}
@@ -148,8 +152,6 @@ const ActiveClass = () => {
             >
               Cari Kelas
             </Button>
-          </div>
-          <FilterOption />
         </div>
         {classList.length !== 0 && (
           <div className="flex w-full justify-end">
@@ -182,9 +184,12 @@ const ActiveClass = () => {
           )
         : null}
       <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
-        {classList.map((kelas) => (
-          <Class key={kelas._id} title={kelas.name} clases={kelas.class} />
-        ))}
+        {classList.map((kelas) => {
+          const { gradeId, name, schedule, _id } = kelas
+          return (
+            <Class key={_id} title={name} clases={gradeId.name} schedule={schedule} />
+          )
+        })}
       </div>
 
       <label

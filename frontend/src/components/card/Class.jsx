@@ -1,5 +1,8 @@
+import moment from 'moment'
+
 const Class = (props) => {
-  const { title, clases } = props
+  const { title, clases, schedule } = props
+
   return (
     <div className="flex flex-col w-full items-center justify-center bg-[#accbe1] text-black dark:bg-gray-900 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
       <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/class.jpg')] bg-center object-contain object-center px-3 py-3 rounded-md">
@@ -27,12 +30,20 @@ const Class = (props) => {
         </div>
 
         <div className="flex flex-col w-full items-start justify-start text-white">
-          <p className="mb-0 text-xs hover:font-semibold duration-150 ease-in">
-            Senin 07:00 AM - 08:30 AM
-          </p>
-          <p className="mb-0 text-xs hover:font-semibold duration-150 ease-in">
-            Rabu 09:15 AM - 11:30 AM
-          </p>
+          {schedule.map(item => {
+            const { start, end } = item
+
+            // Set moment locale to indonesia
+            moment.locale('id')
+            const formattedStart = moment(start).format('dddd')
+            const startTime = moment(start).format('HH:mm')
+            const endTime = moment(end).format('HH:mm')
+            return (
+              <p key={item._id} className="mb-0 text-xs hover:font-semibold duration-150 ease-in">
+                {formattedStart}, {startTime} - {endTime}
+              </p>
+            )
+          })}
         </div>
       </div>
 
