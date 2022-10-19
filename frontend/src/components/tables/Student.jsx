@@ -44,7 +44,7 @@ const TableRow = (props) => {
   return (
     <tr>
       <td className="py-3 px-5 text-left overflow-clip">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-start">
           <span className="font-medium whitespace-nowrap">
             {index + 1}
           </span>
@@ -52,15 +52,15 @@ const TableRow = (props) => {
       </td>
 
       <td className="py-3 px-5 text-left overflow-clip">
-        <div className="flex items-center justify-center">
-          <span className="font-medium whitespace-nowrap">
+        <div className="flex items-center justify-start">
+          <span className="font-medium text-left whitespace-nowrap">
             {name}
           </span>
         </div>
       </td>
 
       <td className="py-3 px-5 text-left overflow-clip">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-start">
           <span className="font-medium whitespace-nowrap">
             {email}
           </span>
