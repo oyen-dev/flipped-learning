@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react'
 import { useGlobal } from '../../contexts/Global'
 
 import api from '../../api'
 import { useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Select } from 'antd'
+import Cookies from 'js-cookie'
 
 const { Option } = Select
 
@@ -11,21 +13,50 @@ const AddClass = () => {
   const { globalFunctions } = useGlobal()
   const { mySwal } = globalFunctions
 
+  // Local States
+  const [teacherList, setTeacherList] = useState([])
+  const [fetchTeacher, setFetchTeacher] = useState(false)
+  const [search, setSearch] = useState('')
+
   // Navigator
   const navigate = useNavigate()
 
-  const onFinish = async (values) => {
-    // console.log('Success:', values)
-    // Show loading
-    mySwal.fire({
-      title: 'Creating class...',
-      showConfirmButton: false,
-      didOpen: () => {
-        mySwal.showLoading()
-      }
-    })
+  const onTeacherChange = (value) => {
+    if (value === '') {
+      setSearch('')
+    } if (value.length % 3 === 0) {
+      setSearch(value)
+      fetchTeacherList()
+    }
+  }
 
-    await createClass(values)
+  const onFinish = async (values) => {
+    console.log('Success:', values)
+    // Show loading
+    // mySwal.fire({
+    //   title: 'Creating class...',
+    //   showConfirmButton: false,
+    //   didOpen: () => {
+    //     mySwal.showLoading()
+    //   }
+    // })
+
+    // await createClass(values)
+  }
+
+  const fetchTeacherList = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+    setFetchTeacher(true)
+    await api.get(`/users/teachers?q=${search}&limit=20&page=1`, config).then((res) => {
+      setTeacherList(res.data.data)
+      setFetchTeacher(false)
+    }).catch(() => {
+      setFetchTeacher(false)
+    })
   }
 
   const createClass = async (values) => {
@@ -72,6 +103,18 @@ const AddClass = () => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
+
+  // Initial fetch teacher list
+  useEffect(() => {
+    fetchTeacherList()
+  }, [])
+
+  // Reset teacher list when search is empty
+  useEffect(() => {
+    if (search === '') {
+      fetchTeacherList()
+    }
+  }, [search])
 
   return (
     <Form
@@ -120,8 +163,11 @@ const AddClass = () => {
         ]}
       >
         <Select
+          mode='multiple'
           showSearch
           placeholder="Search to Select"
+          onSearch={onTeacherChange}
+          loading={false}
           optionFilterProp="children"
           filterOption={(input, option) =>
             option.children.toLowerCase().includes(input.toLocaleLowerCase())
@@ -132,11 +178,9 @@ const AddClass = () => {
               .localeCompare(optionB.children.toLowerCase())
           }
         >
-          <Option value="1">Reni Afrida, S.Pd.</Option>
-          <Option value="2">Meong Pus, S.Pd.</Option>
-          <Option value="3">Graita Sukma Febriansyah, S.Pd.</Option>
-          <Option value="4">Febri Sinaga, S.Pd.</Option>
-          <Option value="5">Anisa Laila, S.Pd.</Option>
+          {teacherList.map((teacher) => (
+            <Option key={teacher._id} value={teacher._id} >{teacher.fullName}</Option>
+          ))}
         </Select>
       </Form.Item>
 

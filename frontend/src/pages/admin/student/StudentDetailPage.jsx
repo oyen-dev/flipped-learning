@@ -1,9 +1,12 @@
-import Layout from '../../../components/layouts'
+import { useEffect, useState } from 'react'
 
+import api from '../../../api'
+import Layout from '../../../components/layouts'
 import { Breadcrumb } from '../../../components/breadcrumb'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { Image, Select } from 'antd'
+import moment from 'moment/moment'
 
 const StudentDetailPage = () => {
   // Use params
@@ -12,6 +15,9 @@ const StudentDetailPage = () => {
   // Navigator
   const navigate = useNavigate()
 
+  // Local States
+  const [student, setStudent] = useState({})
+
   // Breadcrumb Items
   const paths = [
     {
@@ -19,14 +25,28 @@ const StudentDetailPage = () => {
       destination: '/dashboard'
     },
     {
-      name: 'Management Students',
+      name: 'Manajemen Data Siswa',
       destination: '/management/students'
     },
     {
-      name: id,
+      name: 'Detail Siswa',
       destination: `/management/students/${id}`
     }
   ]
+
+  // Fetching student data
+  const getStudentDetails = async () => {
+    await api.get(`users/students/${id}`)
+      .then((res) => {
+        console.log(res)
+        setStudent(res.data.data)
+      })
+  }
+
+  // Initail fetch data
+  useEffect(() => {
+    getStudentDetails()
+  }, [])
 
   return (
     <Layout>
@@ -40,14 +60,15 @@ const StudentDetailPage = () => {
         <div className="flex flex-col w-full h-[90%]">
           <div className="flex flex-col lg:flex-row w-full text-white items-start justify-start py-5 space-y-4 lg:space-y-0 overflow-auto">
             <div className="flex w-full lg:w-1/3 items-center justify-center">
-              <Image src="/images/pass.png" className="h-[80%] w-[60%]" />
+              <Image src={student.picture} className="h-[80%] w-[60%]" />
             </div>
             <div className="flex flex-col items-start justify-start w-full lg:w-2/3 h-full p-2 space-y-4">
-              <Field label="Nama" value="Catharina Novi Putri" />
-              <Field label="Kelas" value="XI - Multimedia" />
-              <Field label="Email" value="riinnaa21@gmail.com" />
-              <Field label="No Telp" value="085 736 822 725" />
-              <Field label="Alamat" value="Jl. Durian 25" />
+              <Field label="Nama" value={student.fullName} />
+              <Field label="Email" value={student.email} />
+              <Field label="Tanggal Lahir" value={moment(student.dateOfBirth).format('LL')} />
+              <Field label="Jenis Kelamin" value={student.gender ? 'Lak-laki' : 'Perempuan'} />
+              <Field label="No Telp" value={student.phone} />
+              <Field label="Alamat" value={student.address} />
               <Enrolled
                 label="Kelas Diikuti"
                 value={[

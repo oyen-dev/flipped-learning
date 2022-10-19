@@ -10,7 +10,6 @@ import { CreateUser } from '../../../components/modals'
 
 import { useNavigate } from 'react-router-dom'
 import { Input, Pagination, Button } from 'antd'
-import Cookies from 'js-cookie'
 
 const ManagementStudentPage = () => {
   // Local States
@@ -65,14 +64,8 @@ const ManagementStudentPage = () => {
         ? `/users/students?q=${search}&page=${currentSearchPage}&limit=${limitStudent}`
         : `/users/students?page=${currentPage}&limit=${limitStudent}`
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('jwtToken')}`
-      }
-    }
-
     await api
-      .get(endpoint, config)
+      .get(endpoint)
       .then((res) => {
         const {
           data: {

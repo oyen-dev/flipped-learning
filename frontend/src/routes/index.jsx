@@ -25,8 +25,6 @@ export default function AppRoutes () {
   const { authState } = useAuth()
   const { isAuthenticated } = authState
 
-  console.log(isAuthenticated)
-
   useEffect(() => {
     if (theme) {
       document.documentElement.classList.add('dark')

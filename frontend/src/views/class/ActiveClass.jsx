@@ -77,7 +77,7 @@ const ActiveClass = () => {
       }
     }
     const res = await api.get(endpoint, config)
-    console.log(res)
+    // console.log(res)
     // Destructure meta
     destructureMeta(res.data.meta)
 
@@ -187,7 +187,7 @@ const ActiveClass = () => {
         {classList.map((kelas) => {
           const { gradeId, name, schedule, _id } = kelas
           return (
-            <Class key={_id} title={name} clases={gradeId.name} schedule={schedule} />
+            <Class key={_id} path={_id} title={name} clases={gradeId.name} schedule={schedule} />
           )
         })}
       </div>

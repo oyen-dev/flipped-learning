@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom'
+
 import moment from 'moment'
 
 const Class = (props) => {
-  const { title, clases, schedule } = props
+  const { path, title, clases, schedule } = props
 
   return (
     <div className="flex flex-col w-full items-center justify-center bg-[#accbe1] text-black dark:bg-gray-900 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
@@ -48,7 +50,9 @@ const Class = (props) => {
       </div>
 
       <div className="flex flex-col w-full items-center justify-center space-y-1 pt-2">
-        <p className="mb-0 text-center font-bold text-base">{title}</p>
+        <Link to={`/management/classes/${path}`}>
+          <p className="mb-0 text-gray-900 dark:text-white dark:hover:text-blue-500 text-center font-bold text-base duration-150 ease-in">{title}</p>
+        </Link>
         <p className="mb-0 text-center text-sm font-thin whitespace-nowrap">
           {clases}
         </p>
