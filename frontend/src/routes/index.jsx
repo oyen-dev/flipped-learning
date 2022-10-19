@@ -25,6 +25,8 @@ export default function AppRoutes () {
   const { authState } = useAuth()
   const { isAuthenticated } = authState
 
+  console.log(isAuthenticated)
+
   useEffect(() => {
     if (theme) {
       document.documentElement.classList.add('dark')
@@ -36,7 +38,7 @@ export default function AppRoutes () {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DashboardPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route
           path="/dashboard"
           element={
@@ -55,11 +57,11 @@ export default function AppRoutes () {
           <Route index element={<NotFound />} />
         </Route>
         <Route path="/auth">
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="forgot-password" element={<ForgotPage />} />
-          <Route path="verify" element={<VerifyPage />} />
-          <Route path="reset-password" element={<ResetPasswordPage />} />
-          <Route index element={<LoginPage />} />
+          <Route path="register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <RegisterPage /> } />
+          <Route path="forgot-password" element={isAuthenticated ? <Navigate to="/dashboard" /> : <ForgotPage />} />
+          <Route path="verify" element={isAuthenticated ? <Navigate to="/dashboard" /> : <VerifyPage />} />
+          <Route path="reset-password" element={isAuthenticated ? <Navigate to="/dashboard" /> : <ResetPasswordPage />} />
+          <Route index element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />} />
         </Route>
 
         {/* Handle page not found */}
