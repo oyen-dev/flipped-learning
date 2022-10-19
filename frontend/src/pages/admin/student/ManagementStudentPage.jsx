@@ -10,10 +10,10 @@ import { CreateUser } from '../../../components/modals'
 
 import { useNavigate } from 'react-router-dom'
 import { Input, Pagination, Button } from 'antd'
+import Cookies from 'js-cookie'
 
 const ManagementStudentPage = () => {
   // Local States
-  const [fetch, setFetch] = useState(false)
   const [totalStudent, setTotalStudent] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [limitStudent, setLimitStudent] = useState(10)
@@ -28,7 +28,7 @@ const ManagementStudentPage = () => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { studentList, setStudentList } = managementStates
+  const { studentList, setStudentList, isFetchStudent, setIsFetchStudent } = managementStates
 
   // Navigator
   const navigate = useNavigate()
@@ -59,13 +59,19 @@ const ManagementStudentPage = () => {
       limit = 10
     }
 
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
     const endpoint =
       search !== ''
         ? `/users/students?q=${search}&page=${currentSearchPage}&limit=${limitStudent}`
         : `/users/students?page=${currentPage}&limit=${limitStudent}`
 
     await api
-      .get(endpoint)
+      .get(endpoint, config)
       .then((res) => {
         const {
           data: {
@@ -113,7 +119,7 @@ const ManagementStudentPage = () => {
   const onChange = (page) => {
     console.log('move to page', page)
     setCurrentPage(page)
-    setFetch(true)
+    setIsFetchStudent(true)
 
     // Reset search page
     if (search !== '') {
@@ -136,16 +142,15 @@ const ManagementStudentPage = () => {
   // Initial fetch
   useEffect(() => {
     fetchStudents(1, 10)
-    console.log('init')
   }, [])
 
   // Fetch student data when fetch state is true
   useEffect(() => {
-    if (fetch) {
+    if (isFetchStudent) {
       fetchStudents(currentPage, limitStudent)
-      setFetch(false)
+      setIsFetchStudent(false)
     }
-  }, [fetch])
+  }, [isFetchStudent])
 
   // Fetch student when search is empty
   useEffect(() => {

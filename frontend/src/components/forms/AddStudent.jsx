@@ -1,29 +1,61 @@
-import { useState } from 'react'
-import { Form, Input, Button, Select, DatePicker, message } from 'antd'
+import { useGlobal } from '../../contexts/Global'
+import { useManagement } from '../../contexts/Management'
+
+import api from '../../api'
+import { Form, Input, Button, Select, DatePicker } from 'antd'
+import Cookies from 'js-cookie'
 
 const AddStudent = () => {
-  // Local State
-  const [addStudentForm, setAddStudentForm] = useState({
-    fullName: '',
-    email: '',
-    gender: '',
-    dob: '',
-    pob: '',
-    address: ''
-  })
+  // Management States
+  const { managementStates } = useManagement()
+  const { setIsFetchStudent } = managementStates
 
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
 
-    setAddStudentForm({
-      fullName: '',
-      email: '',
-      gender: '',
-      dob: '',
-      pob: '',
-      address: ''
+  // Form
+  const [form] = Form.useForm()
+
+  const onFinish = async (values) => {
+    // console.log('Success:', values)
+    mySwal.fire({
+      html: 'Wait a moment...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
     })
-    message.info('Siap Hit API')
+
+    // Configuration
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    await api.post('/users/students', values, config)
+      .then(res => {
+        console.log(res)
+        mySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Data siswa berhasil ditambahkan',
+          showConfirmButton: false,
+          timer: 2000
+        }).then(() => closeModal())
+      }).catch(err => {
+        console.log(err)
+        mySwal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Data siswa gagal ditambahkan',
+          showConfirmButton: false,
+          timer: 2000
+        }).then(() => closeModal())
+      })
+
+    form.resetFields()
+    // closeModal()
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -34,16 +66,32 @@ const AddStudent = () => {
     console.log(date, dateString)
   }
 
+  // Close daisy ui modal
+  const closeModal = () => {
+    const modal = document.getElementById('my-modal-create')
+    modal.checked = false
+    setIsFetchStudent(true)
+  }
+
   return (
     <Form
+      form={form}
       name="registerForm"
+      initialValues={{
+        fullName: '',
+        email: '',
+        gender: null,
+        dateOfBirth: '',
+        placeOfBirth: '',
+        address: ''
+      }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <p className="text-white text-base font-normal mb-0">Nama Lengkap</p>
       <Form.Item
-        name="name"
+        name="fullName"
         rules={[
           {
             required: true,
@@ -51,7 +99,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Input defaultValue={addStudentForm.fullName} />
+        <Input />
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Email</p>
@@ -68,7 +116,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Input defaultValue={addStudentForm.email} />
+        <Input />
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Jenis Kelamin</p>
@@ -81,15 +129,15 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Select defaultValue={addStudentForm.gender}>
-          <Select.Option value="Laki-laki">Laki</Select.Option>
-          <Select.Option value="Perempuan">Perempuan</Select.Option>
+        <Select>
+          <Select.Option value={true}>Laki</Select.Option>
+          <Select.Option value={false}>Perempuan</Select.Option>
         </Select>
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Tanggal Lahir</p>
       <Form.Item
-        name="dob"
+        name="dateOfBirth"
         rules={[
           {
             required: true,
@@ -102,7 +150,7 @@ const AddStudent = () => {
 
       <p className="text-white text-base font-normal mb-0">Tempat Lahir</p>
       <Form.Item
-        name="pob"
+        name="placeOfBirth"
         rules={[
           {
             required: true,
@@ -110,7 +158,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Input defaultValue={addStudentForm.pob} />
+        <Input />
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Alamat</p>
@@ -123,7 +171,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <Input defaultValue={addStudentForm.address} />
+        <Input />
       </Form.Item>
 
       <Form.Item>

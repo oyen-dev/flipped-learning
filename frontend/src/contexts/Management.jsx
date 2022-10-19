@@ -8,6 +8,11 @@ export const ManagementProvider = ({ children }) => {
   const [teacherList, setTeacherList] = useState([])
   const [classList, setClassList] = useState([])
 
+  // Fetcher
+  const [isFetchStudent, setIsFetchStudent] = useState(false)
+  const [isFetchTeacher, setIsFetchTeacher] = useState(false)
+  const [isFetchClass, setIsFetchClass] = useState(false)
+
   // Export student state here
   const managementStates = {
     studentList,
@@ -15,7 +20,13 @@ export const ManagementProvider = ({ children }) => {
     teacherList,
     setTeacherList,
     classList,
-    setClassList
+    setClassList,
+    isFetchStudent,
+    setIsFetchStudent,
+    isFetchTeacher,
+    setIsFetchTeacher,
+    isFetchClass,
+    setIsFetchClass
   }
 
   return (

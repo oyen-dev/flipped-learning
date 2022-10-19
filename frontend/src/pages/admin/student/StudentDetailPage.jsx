@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { Image, Select } from 'antd'
 import moment from 'moment/moment'
+import Cookies from 'js-cookie'
 
 const StudentDetailPage = () => {
   // Use params
@@ -36,9 +37,16 @@ const StudentDetailPage = () => {
 
   // Fetching student data
   const getStudentDetails = async () => {
-    await api.get(`users/students/${id}`)
+    // Configuration
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    await api.get(`users/students/${id}`, config)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setStudent(res.data.data)
       })
   }
