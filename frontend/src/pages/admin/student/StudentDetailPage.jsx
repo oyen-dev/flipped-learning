@@ -34,7 +34,7 @@ const StudentDetailPage = () => {
       <div className="flex flex-col w-full bg-gray-900 rounded-lg py-2 px-2">
         <div className="flex w-full justify-center items-center h-10 sticky top-0 left-0 z-40">
           <h5 className="font-semibold text-lg text-center mb-0 text-white">
-            Data Profil Siswa {id}
+            Data Profil Siswa
           </h5>
         </div>
         <div className="flex flex-col w-full h-[90%]">

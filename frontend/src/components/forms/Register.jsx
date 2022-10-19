@@ -61,10 +61,12 @@ const Register = () => {
       }
     }).catch((error) => {
       console.log(error)
+      const { response } = error
+
       mySwal.fire({
         icon: 'error',
         title: 'Register Failed',
-        text: 'Make sure you fill all the fields correctly',
+        text: response.data.message,
         timer: 5000,
         showConfirmButton: false
       })
