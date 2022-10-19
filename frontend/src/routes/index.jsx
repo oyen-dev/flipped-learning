@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/Auth'
 
 import { LoginPage, RegisterPage, ForgotPage } from '../pages/auth'
 import { NotFound } from '../pages/error'
-import { DashboardPage, ManagementClassPage, ManagementStudentPage } from '../pages/admin'
+import { DashboardPage, ManagementClassPage, ManagementStudentPage, ManagementTeacherPage } from '../pages/admin'
 
 import {
   BrowserRouter,
@@ -39,6 +39,7 @@ export default function AppRoutes () {
         <Route path="/management">
           <Route path="classes" element={isAuthenticated ? <ManagementClassPage /> : <Navigate to="/auth" /> } />
           <Route path="students" element={isAuthenticated ? <ManagementStudentPage /> : <Navigate to="/auth" />} />
+          <Route path="teachers" element={isAuthenticated ? <ManagementTeacherPage /> : <Navigate to="/auth" />} />
           <Route index element={<NotFound />} />
         </Route>
         <Route path="/auth">
