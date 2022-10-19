@@ -4,7 +4,7 @@ import { useGlobal } from '../contexts/Global'
 import { useAuth } from '../contexts/Auth'
 import { ManagementProvider } from '../contexts/Management'
 
-import { LoginPage, RegisterPage, ForgotPage, VerifyPage } from '../pages/auth'
+import { LoginPage, RegisterPage, ForgotPage, VerifyPage, ResetPasswordPage } from '../pages/auth'
 import { NotFound } from '../pages/error'
 import {
   DashboardPage,
@@ -58,6 +58,7 @@ export default function AppRoutes () {
           <Route path="register" element={<RegisterPage />} />
           <Route path="forgot-password" element={<ForgotPage />} />
           <Route path="verify" element={<VerifyPage />} />
+          <Route path="reset-password" element={<ResetPasswordPage />} />
           <Route index element={<LoginPage />} />
         </Route>
 
