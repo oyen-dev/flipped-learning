@@ -147,7 +147,7 @@ const TableRow = (props) => {
 
           <button
             className="btn bg-emerald-600 border-none"
-            onClick={() => navigate(`/management/students/${key}`)}
+            onClick={() => navigate(`/management/students/${key}/edit`)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

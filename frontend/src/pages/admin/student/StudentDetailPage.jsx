@@ -9,6 +9,8 @@ import { Image, Select } from 'antd'
 import moment from 'moment/moment'
 import Cookies from 'js-cookie'
 
+import FallBack from '../../../assets/images/profile.png'
+
 const StudentDetailPage = () => {
   // Use params
   const { id } = useParams()
@@ -68,7 +70,7 @@ const StudentDetailPage = () => {
         <div className="flex flex-col w-full h-[90%]">
           <div className="flex flex-col lg:flex-row w-full text-white items-start justify-start py-5 space-y-4 lg:space-y-0 overflow-auto">
             <div className="flex w-full lg:w-1/3 items-center justify-center">
-              <Image src={student.picture} className="h-[80%] w-[60%]" />
+              <Image src={student.picture} className="h-[80%] w-[60%]" fallback={FallBack}/>
             </div>
             <div className="flex flex-col items-start justify-start w-full lg:w-2/3 h-full p-2 space-y-4">
               <Field label="Nama" value={student.fullName} />
