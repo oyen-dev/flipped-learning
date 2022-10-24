@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react'
 
+import { useGlobal } from '../../contexts/Global'
+
 import api from '../../api'
 
 import moment from 'moment'
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button, Select, DatePicker, message } from 'antd'
+import { Form, Input, Button, Select, DatePicker, Skeleton } from 'antd'
 import Cookies from 'js-cookie'
 
 const EditStudent = () => {
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
   // Use params
   const { id } = useParams()
 
+  // Local States
   const [student, setStudent] = useState(null)
+  const [fetch, setFetch] = useState(false)
 
   // Fetching student data
   const getStudentDetails = async () => {
@@ -22,16 +30,42 @@ const EditStudent = () => {
       }
     }
 
-    await api.get(`users/students/${id}`, config)
-      .then((res) => {
-        // console.log(res)
-        setStudent(res.data.data)
-      })
+    const res = await api.get(`/users/students/${id}`, config)
+    // console.log(res)
+    setStudent(res.data.data)
   }
-  const onFinish = (values) => {
-    console.log('Success:', values)
 
-    message.info('Siap Hit API')
+  const onFinish = async (values) => {
+    // Show loading
+    mySwal.fire({
+      title: 'Updating student data...',
+      allowOutsideClick: true,
+      backdrop: true,
+      allowEscapeKey: true,
+      showConfirmButton: false,
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Configuration
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    await api.put(`/users/students/${id}`, values, config)
+    setFetch(true)
+
+    // Show success
+    mySwal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: 'Student data has been updated',
+      timer: 3000,
+      showConfirmButton: false
+    })
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -47,9 +81,18 @@ const EditStudent = () => {
     getStudentDetails()
   }, [])
 
+  // Fetch student when update
+  useEffect(() => {
+    if (fetch) {
+      getStudentDetails()
+      setFetch(false)
+    }
+  }, [fetch])
+
   return (
     <>
-      {student && (
+      {student
+        ? (
         <Form
         name="registerForm"
         onFinish={onFinish}
@@ -57,18 +100,18 @@ const EditStudent = () => {
         autoComplete="off"
         className="w-full"
         initialValues={{
-          name: student.fullName,
+          fullName: student.fullName,
           email: student.email,
           phone: student.phone,
           gender: student.gender,
-          dob: moment(student.dateOfBirth),
-          pob: student.placeOfBirth,
+          dateOfBirth: moment(student.dateOfBirth),
+          placeOfBirth: student.placeOfBirth,
           address: student.address
         }}
       >
         <p className="text-white text-base font-normal mb-0">Nama Lengkap</p>
         <Form.Item
-          name="name"
+          name="fullName"
           rules={[
             {
               required: true,
@@ -76,24 +119,7 @@ const EditStudent = () => {
             }
           ]}
         >
-          <Input defaultValue={student.fullName} />
-        </Form.Item>
-
-        <p className="text-white text-base font-normal mb-0">Email</p>
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              type: 'email',
-              message: 'Mohon masukkan email yang valid!'
-            },
-            {
-              required: true,
-              message: 'Mohon masukkan email aktif!'
-            }
-          ]}
-        >
-          <Input defaultValue={student.email} />
+          <Input />
         </Form.Item>
 
         <p className="text-white text-base font-normal mb-0">Phone</p>
@@ -106,7 +132,7 @@ const EditStudent = () => {
             }
           ]}
         >
-          <Input defaultValue={student.phone} />
+          <Input />
         </Form.Item>
 
         <p className="text-white text-base font-normal mb-0">Jenis Kelamin</p>
@@ -119,7 +145,7 @@ const EditStudent = () => {
             }
           ]}
         >
-          <Select defaultValue={student.gender}>
+          <Select >
             <Select.Option value={true}>Laki</Select.Option>
             <Select.Option value={false}>Perempuan</Select.Option>
           </Select>
@@ -127,7 +153,7 @@ const EditStudent = () => {
 
         <p className="text-white text-base font-normal mb-0">Tanggal Lahir</p>
         <Form.Item
-          name="dob"
+          name="dateOfBirth"
           rules={[
             {
               required: true,
@@ -143,7 +169,7 @@ const EditStudent = () => {
 
         <p className="text-white text-base font-normal mb-0">Tempat Lahir</p>
         <Form.Item
-          name="pob"
+          name="placeOfBirth"
           rules={[
             {
               required: true,
@@ -151,7 +177,7 @@ const EditStudent = () => {
             }
           ]}
         >
-          <Input defaultValue={student.placeOfBirth} />
+          <Input />
         </Form.Item>
 
         <p className="text-white text-base font-normal mb-0">Alamat</p>
@@ -164,7 +190,7 @@ const EditStudent = () => {
             }
           ]}
         >
-          <Input defaultValue={student.address} />
+          <Input />
         </Form.Item>
 
         <Form.Item>
@@ -173,7 +199,13 @@ const EditStudent = () => {
           </Button>
         </Form.Item>
       </Form>
-      )}
+          )
+        : (
+          <Skeleton
+            active
+            paragraph={{ rows: 5 }}
+          />
+          )}
     </>
   )
 }

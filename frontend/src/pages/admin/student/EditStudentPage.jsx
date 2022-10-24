@@ -6,7 +6,7 @@ import { EditStudent } from '../../../components/forms'
 import { Breadcrumb } from '../../../components/breadcrumb'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { Image, Button, message, Upload } from 'antd'
+import { Image, Button, message, Upload, Skeleton } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { UploadOutlined } from '@ant-design/icons'
 import Cookies from 'js-cookie'
@@ -21,7 +21,7 @@ const EditStudentPage = () => {
   const navigate = useNavigate()
 
   // Local States
-  const [student, setStudent] = useState({})
+  const [student, setStudent] = useState(null)
   const [fileList, setFileList] = useState([])
   const [fetch, setFetch] = useState(false)
 
@@ -139,12 +139,20 @@ const EditStudentPage = () => {
         <div className="flex flex-col w-full h-[90%]">
           <div className="flex flex-col lg:flex-row w-full text-white items-center justify-start py-5 space-y-4 lg:space-y-0 overflow-auto">
             <div className="flex flex-col space-y-5 w-full lg:w-1/3 h-full items-center justify-center">
-              <Image src={student.picture} className="h-[80%] w-[60%]" fallback={FallBack}/>
-              <ImgCrop rotate>
-                <Upload {...uploadProps}>
-                  <Button icon={<UploadOutlined />}>Update Picture Profile</Button>
-                </Upload>
-              </ImgCrop>
+              {student
+                ? (
+                <>
+                  <Image src={student.picture} className="h-[80%] w-[60%]" fallback={FallBack}/>
+                  <ImgCrop rotate>
+                    <Upload {...uploadProps}>
+                      <Button icon={<UploadOutlined />}>Update Picture Profile</Button>
+                    </Upload>
+                  </ImgCrop>
+                </>
+                  )
+                : (
+                  <Skeleton.Image active className='w-full h-full' />
+                  )}
             </div>
             <div className="flex flex-col items-start justify-start w-full lg:w-2/3 h-full p-2 space-y-4">
               <EditStudent student={student} />
