@@ -5,11 +5,11 @@ import api from '../../../api'
 
 import Layout from '../../../components/layouts'
 import { Breadcrumb } from '../../../components/breadcrumb'
-import { Student } from '../../../components/tables'
+import { Students } from '../../../components/tables'
 import { CreateUser } from '../../../components/modals'
 
 import { useNavigate } from 'react-router-dom'
-import { Input, Pagination, Button } from 'antd'
+import { Input, Pagination, Button, Select } from 'antd'
 import Cookies from 'js-cookie'
 
 const ManagementStudentPage = () => {
@@ -18,6 +18,7 @@ const ManagementStudentPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [limitStudent, setLimitStudent] = useState(10)
   const [currentSearchPage, setCurrentSearchPage] = useState(1)
+  const [filterStudent, setFilterStudent] = useState(false)
 
   // Control filter and search input
   const [search, setSearch] = useState('')
@@ -68,7 +69,9 @@ const ManagementStudentPage = () => {
     const endpoint =
       search !== ''
         ? `/users/students?q=${search}&page=${currentSearchPage}&limit=${limitStudent}`
-        : `/users/students?page=${currentPage}&limit=${limitStudent}`
+        : filterStudent
+          ? `/users/students?page=${currentPage}&limit=${limitStudent}&deleted=true`
+          : `/users/students?page=${currentPage}&limit=${limitStudent}`
 
     await api
       .get(endpoint, config)
@@ -101,12 +104,14 @@ const ManagementStudentPage = () => {
 
   const mapStudentData = (students) => {
     return students.map((student, index) => {
-      const { _id, fullName, email } = student
+      const { _id, fullName, email, isDeleted, willBeDeletedAt } = student
       return {
         key: _id,
         no: index + 1,
         name: fullName,
-        email
+        email,
+        isDeleted,
+        willBeDeletedAt
       }
     })
   }
@@ -125,6 +130,11 @@ const ManagementStudentPage = () => {
     if (search !== '') {
       setCurrentSearchPage(page)
     }
+  }
+
+  const handleFilterChange = (value) => {
+    if (value === undefined) setFilterStudent(false)
+    else setFilterStudent(value)
   }
 
   // Search classes
@@ -151,6 +161,11 @@ const ManagementStudentPage = () => {
       setIsFetchStudent(false)
     }
   }, [isFetchStudent])
+
+  // Fetch teacher data when filter state change
+  useEffect(() => {
+    fetchStudents(1, 10)
+  }, [filterStudent])
 
   // Fetch student when search is empty
   useEffect(() => {
@@ -181,6 +196,10 @@ const ManagementStudentPage = () => {
                 Cari Siswa
               </Button>
             </div>
+            <Select allowClear placeholder='Filter Data Siswa' onChange={(e) => handleFilterChange(e)}>
+              <Select.Option value={false}>Aktif</Select.Option>
+              <Select.Option value={true}>Dihapus</Select.Option>
+            </Select>
             {studentList.length > 0 && (
               <Pagination
               showSizeChanger
@@ -208,7 +227,7 @@ const ManagementStudentPage = () => {
             <p className="text-gray-500 pt-3">Tidak ada siswa ditemukan.</p>
           </div>
               )
-            : <Student students={studentList} />}
+            : <Students students={studentList} />}
           <div className="flex w-full mt-5 lg:mt-0 justify-center items-center" />
         </div>
       </div>
