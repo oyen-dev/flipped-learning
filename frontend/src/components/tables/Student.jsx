@@ -3,7 +3,6 @@ import { useGlobal } from '../../contexts/Global'
 import api from '../../api'
 
 import { useNavigate } from 'react-router-dom'
-
 import Cookies from 'js-cookie'
 
 const Student = (props) => {

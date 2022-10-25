@@ -178,9 +178,9 @@ const AddClass = () => {
               .localeCompare(optionB.children.toLowerCase())
           }
         >
-          {teacherList.map((teacher) => (
+          {/* {teacherList.map((teacher) => (
             <Option key={teacher._id} value={teacher._id} >{teacher.fullName}</Option>
-          ))}
+          ))} */}
         </Select>
       </Form.Item>
 

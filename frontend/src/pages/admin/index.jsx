@@ -4,3 +4,5 @@ export { default as ManagementStudentPage } from './student/ManagementStudentPag
 export { default as ClassDetailPage } from './class/ClassDetailPage'
 export { default as StudentDetailPage } from './student/StudentDetailPage'
 export { default as EditStudentPage } from './student/EditStudentPage'
+export { default as ManagementTeacherPage } from './teacher/ManagementTeacherPage'
+export { default as TeacherDetailPage } from './teacher/TeacherDetailPage'
