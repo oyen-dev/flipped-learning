@@ -15,7 +15,6 @@ const AddClass = () => {
 
   // Local States
   const [teacherList, setTeacherList] = useState([])
-  const [fetchTeacher, setFetchTeacher] = useState(false)
   const [search, setSearch] = useState('')
 
   // Navigator
@@ -31,55 +30,41 @@ const AddClass = () => {
   }
 
   const onFinish = async (values) => {
-    console.log('Success:', values)
+    // console.log('Success:', values)
+    const payload = {
+      ...values,
+      schedule: []
+    }
+
     // Show loading
-    // mySwal.fire({
-    //   title: 'Creating class...',
-    //   showConfirmButton: false,
-    //   didOpen: () => {
-    //     mySwal.showLoading()
-    //   }
-    // })
+    mySwal.fire({
+      title: 'Creating class...',
+      showConfirmButton: false,
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
 
-    // await createClass(values)
-  }
-
-  const fetchTeacherList = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${Cookies.get('jwtToken')}`
       }
     }
-    setFetchTeacher(true)
-    await api.get(`/users/teachers?q=${search}&limit=20&page=1`, config).then((res) => {
-      setTeacherList(res.data.data)
-      setFetchTeacher(false)
-    }).catch(() => {
-      setFetchTeacher(false)
-    })
-  }
 
-  const createClass = async (values) => {
-    await api.post('/classes', {
-      name: values.name,
-      class: values.class
-    }).then((res) => {
-      console.log(res.data)
+    try {
+      const res = await api.post('/class', payload, config)
+      // console.log(res)
+      const { data } = res
 
-      if (res.data.statusCode === 201) {
-        // Show success message using mySwal
+      if (data.status) {
         mySwal.fire({
           icon: 'success',
-          title: 'Created class successfully',
+          title: 'Class successfully created',
           text: "You'll be redirected to the class page",
           timer: 4000,
           showConfirmButton: false
-        }).then(async () => {
-          // Todo : Redirect to class page
-          navigate(res.data.data._id)
-        })
+        }).then(() => navigate(data.data._id))
       } else {
-        // Show error message using mySwal
         mySwal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -88,16 +73,24 @@ const AddClass = () => {
           showConfirmButton: false
         })
       }
-    }).catch((err) => {
-      console.log(err)
-      mySwal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: err.response.data.message,
-        timer: 4000,
-        showConfirmButton: false
-      })
-    })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const fetchTeacherList = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    try {
+      const res = await api.get(`/users/teachers?q=${search}&limit=20&page=1`, config)
+      setTeacherList(res.data.data.teachers)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -141,7 +134,7 @@ const AddClass = () => {
 
       <p className="text-white text-base font-normal mb-0">Kelas/Jenjang</p>
       <Form.Item
-        name="class"
+        name="grade"
         rules={[
           {
             required: true,
@@ -154,7 +147,7 @@ const AddClass = () => {
 
       <p className="text-white text-base font-normal mb-0">Guru/Pengajar</p>
       <Form.Item
-        name="teacher"
+        name="teachers"
         rules={[
           {
             required: true,
@@ -178,9 +171,9 @@ const AddClass = () => {
               .localeCompare(optionB.children.toLowerCase())
           }
         >
-          {/* {teacherList.map((teacher) => (
+          {teacherList.map((teacher) => (
             <Option key={teacher._id} value={teacher._id} >{teacher.fullName}</Option>
-          ))} */}
+          ))}
         </Select>
       </Form.Item>
 

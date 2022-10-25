@@ -180,7 +180,6 @@ const ManagementStudentPage = () => {
       <Breadcrumb paths={paths} navigate={navigate} />
       <div className="flex flex-col w-full items-center lg:items-start justify-start bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300 px-5 py-5 rounded-lg">
         <div className="flex flex-col w-full items-start justify-start overflow-x-auto space-y-4">
-          <div className="flex flex-col md:flex-row w-full md:w-2/5 space-x-0 md:space-x-4 space-y-4 md:space-y-0"></div>
           <div className="flex flex-col w-full items-end justify-center space-y-4">
             <div className="flex flex-row space-x-4">
               <Input
