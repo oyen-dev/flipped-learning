@@ -1,26 +1,76 @@
-import { useState } from 'react'
+// import { useState } from 'react'
+import { useGlobal } from '../../contexts/Global'
+import { useManagement } from '../../contexts/Management'
+import api from '../../api'
 
+import Cookies from 'js-cookie'
 import {
   Form,
   Input,
   Button,
   Select,
-  DatePicker,
-  Checkbox,
-  message
+  DatePicker
+  // Checkbox,
 } from 'antd'
 
 const AddTeacher = () => {
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
+  // Management States
+  const { managementStates } = useManagement()
+  const { setIsFetchTeacher } = managementStates
+
+  // Form
+  const [form] = Form.useForm()
+
   // Local state
-  const [assignClass, setAssignClass] = useState(false)
+  // const [assignClass, setAssignClass] = useState(false)
 
   // Option for select
-  const { Option } = Select
+  // const { Option } = Select
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Success:', values)
 
-    message.info('Siap Hit API')
+    // Show loading modal
+    mySwal.fire({
+      html: 'Wait a moment...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Configuration
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    await api.post('/users/teachers', values, config)
+      .then(res => {
+        console.log(res)
+        mySwal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Data guru berhasil ditambahkan',
+          showConfirmButton: false,
+          timer: 3000
+        }).then(() => closeModal())
+      }).catch(err => {
+        console.log(err)
+        mySwal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Data guru gagal ditambahkan',
+          showConfirmButton: false,
+          timer: 3000
+        }).then(() => closeModal())
+      })
+
+    form.resetFields()
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -31,16 +81,24 @@ const AddTeacher = () => {
     console.log(date, dateString)
   }
 
-  const changeAssign = (e) => {
-    setAssignClass(e.target.checked)
+  // Close daisy ui modal
+  const closeModal = () => {
+    const modal = document.getElementById('my-modal-create')
+    modal.checked = false
+    setIsFetchTeacher(true)
   }
 
-  const assignClasses = (value) => {
-    console.log(`selected ${value}`)
-  }
+  // const changeAssign = (e) => {
+  //   setAssignClass(e.target.checked)
+  // }
+
+  // const assignClasses = (value) => {
+  //   console.log(`selected ${value}`)
+  // }
 
   return (
     <Form
+      form={form}
       name="registerForm"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -48,7 +106,7 @@ const AddTeacher = () => {
     >
       <p className="text-white text-base font-normal mb-0">Nama Lengkap</p>
       <Form.Item
-        name="name"
+        name="fullName"
         rules={[
           {
             required: true,
@@ -87,14 +145,14 @@ const AddTeacher = () => {
         ]}
       >
         <Select>
-          <Select.Option value="Laki-laki">Laki</Select.Option>
-          <Select.Option value="Perempuan">Perempuan</Select.Option>
+          <Select.Option value={true}>Laki</Select.Option>
+          <Select.Option value={false}>Perempuan</Select.Option>
         </Select>
       </Form.Item>
 
       <p className="text-white text-base font-normal mb-0">Tanggal Lahir</p>
       <Form.Item
-        name="dob"
+        name="dateOfBirth"
         rules={[
           {
             required: true,
@@ -107,7 +165,7 @@ const AddTeacher = () => {
 
       <p className="text-white text-base font-normal mb-0">Tempat Lahir</p>
       <Form.Item
-        name="pob"
+        name="placeOfBirth"
         rules={[
           {
             required: true,
@@ -131,7 +189,7 @@ const AddTeacher = () => {
         <Input />
       </Form.Item>
 
-      {assignClass && (
+      {/* {assignClass && (
         <>
           <p className="text-white text-base font-normal mb-0">Kelas Diampu</p>
           <Form.Item
@@ -155,9 +213,9 @@ const AddTeacher = () => {
             </Select>
           </Form.Item>
         </>
-      )}
+      )} */}
 
-      <div className="flex flex-row items-start justify-start space-x-4 text-white">
+      {/* <div className="flex flex-row items-start justify-start space-x-4 text-white">
         <Form.Item name="agree" valuePropName="checked">
           <div className="flex flex-row space-x-4">
             <Checkbox onChange={changeAssign} />
@@ -166,7 +224,7 @@ const AddTeacher = () => {
             </p>
           </div>
         </Form.Item>
-      </div>
+      </div> */}
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">

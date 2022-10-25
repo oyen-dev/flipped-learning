@@ -247,7 +247,7 @@ const ManagementTeacherPage = () => {
 
       {/* Container Modal */}
       <input type="checkbox" id="my-modal-create" className="modal-toggle" />
-      <CreateUser mode="student" />
+      <CreateUser mode="teacher" />
     </Layout>
   )
 }
