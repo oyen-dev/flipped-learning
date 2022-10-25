@@ -9,7 +9,7 @@ import { Teachers } from '../../../components/tables'
 import { CreateUser } from '../../../components/modals'
 
 import { useNavigate } from 'react-router-dom'
-import { Input, Pagination, Button } from 'antd'
+import { Input, Pagination, Button, Select } from 'antd'
 import Cookies from 'js-cookie'
 
 const ManagementTeacherPage = () => {
@@ -18,6 +18,7 @@ const ManagementTeacherPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [limitTeacher, setLimitTeacher] = useState(10)
   const [currentSearchPage, setCurrentSearchPage] = useState(1)
+  const [filterTeacher, setFilterTeacher] = useState(false)
 
   // Control filter and search input
   const [search, setSearch] = useState('')
@@ -68,7 +69,9 @@ const ManagementTeacherPage = () => {
     const endpoint =
       search !== ''
         ? `/users/teachers?q=${search}&page=${currentSearchPage}&limit=${limitTeacher}`
-        : `/users/teachers?page=${currentPage}&limit=${limitTeacher}`
+        : filterTeacher
+          ? `/users/teachers?page=${currentPage}&limit=${limitTeacher}&deleted=true`
+          : `/users/teachers?page=${currentPage}&limit=${limitTeacher}`
 
     const res = await api.get(endpoint, config)
     // console.log(res)
@@ -121,6 +124,11 @@ const ManagementTeacherPage = () => {
     }
   }
 
+  const handleFilterChange = (value) => {
+    if (value === undefined) setFilterTeacher(false)
+    else setFilterTeacher(value)
+  }
+
   // Search classes
   const searchTeacher = async () => {
     mySwal.fire({
@@ -145,6 +153,11 @@ const ManagementTeacherPage = () => {
       setIsFetchTeacher(false)
     }
   }, [isFetchTeacher])
+
+  // Fetch teacher data when filter state change
+  useEffect(() => {
+    fetchTeachers(1, 10)
+  }, [filterTeacher])
 
   // Fetch teacher when search is empty
   useEffect(() => {
@@ -174,6 +187,10 @@ const ManagementTeacherPage = () => {
                 Cari Guru
               </Button>
             </div>
+            <Select allowClear placeholder='Filter Data Guru' onChange={(e) => handleFilterChange(e)}>
+              <Select.Option value={false}>Aktif</Select.Option>
+              <Select.Option value={true}>Dihapus</Select.Option>
+            </Select>
             {teacherList.length > 0 && (
               <Pagination
               showSizeChanger
