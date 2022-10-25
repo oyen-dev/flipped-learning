@@ -66,8 +66,9 @@ const ManagementTeacherPage = () => {
       }
     }
 
-    const endpoint =
-      search !== ''
+    const endpoint = search !== '' && filterTeacher
+      ? `/users/teachers?q=${search}&page=${currentSearchPage}&limit=${limitTeacher}&deleted=true`
+      : search !== ''
         ? `/users/teachers?q=${search}&page=${currentSearchPage}&limit=${limitTeacher}`
         : filterTeacher
           ? `/users/teachers?page=${currentPage}&limit=${limitTeacher}&deleted=true`
@@ -177,6 +178,7 @@ const ManagementTeacherPage = () => {
                 placeholder="Nama Guru"
                 prefix={<SearchIcon />}
                 onChange={(e) => setSearch(e.target.value)}
+                onPressEnter={searchTeacher}
                 allowClear={true}
               />
               <Button

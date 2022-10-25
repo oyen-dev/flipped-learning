@@ -109,7 +109,7 @@ const Teachers = (props) => {
     }
 
     await api
-      .post(`/users/teachers/${id}`, config)
+      .post(`/users/teachers/${id}`, {}, config)
       .then((res) => {
         // console.log(res)
         mySwal

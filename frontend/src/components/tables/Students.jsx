@@ -91,12 +91,13 @@ const Students = (props) => {
     // Configuration
     const config = {
       headers: {
-        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
       }
     }
+    console.log(config)
 
     await api
-      .post(`/users/students/${id}`, config)
+      .post(`/users/students/${id}`, {}, config)
       .then((res) => {
         // console.log(res)
         mySwal
