@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { useGlobal } from '../../contexts/Global'
 
 import api from '../../api'
-import { useNavigate } from 'react-router-dom'
-import { Form, Input, Button, Select } from 'antd'
-import Cookies from 'js-cookie'
 
-const { Option } = Select
+import { debounce } from 'lodash'
+import { useNavigate } from 'react-router-dom'
+import { Form, Input, Button, Select, Spin } from 'antd'
+import Cookies from 'js-cookie'
 
 const AddClass = () => {
   // Global Functions
@@ -15,24 +15,16 @@ const AddClass = () => {
 
   // Local States
   const [teacherList, setTeacherList] = useState([])
-  const [search, setSearch] = useState('')
 
   // Navigator
   const navigate = useNavigate()
 
-  const onTeacherChange = (value) => {
-    if (value === '') {
-      setSearch('')
-    } if (value.length % 3 === 0) {
-      setSearch(value)
-      fetchTeacherList()
-    }
-  }
-
   const onFinish = async (values) => {
     // console.log('Success:', values)
     const payload = {
-      ...values,
+      name: values.name,
+      grade: values.grade,
+      teachers: values.teachers.map((teacher) => teacher.value),
       schedule: []
     }
 
@@ -78,36 +70,26 @@ const AddClass = () => {
     }
   }
 
-  const fetchTeacherList = async () => {
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo)
+  }
+
+  // Usage of debounce
+  async function fetchTeachers (name) {
     const config = {
       headers: {
         Authorization: `Bearer ${Cookies.get('jwtToken')}`
       }
     }
 
-    try {
-      const res = await api.get(`/users/teachers?q=${search}&limit=20&page=1`, config)
-      setTeacherList(res.data.data.teachers)
-    } catch (error) {
-      console.log(error)
-    }
+    return await api.get(`/users/teachers?q=${name}&limit=20&page=1`, config)
+      .then((res) => {
+        return res.data.data.teachers.map((teacher) => ({
+          label: teacher.fullName,
+          value: teacher._id
+        }))
+      })
   }
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
-
-  // Initial fetch teacher list
-  useEffect(() => {
-    fetchTeacherList()
-  }, [])
-
-  // Reset teacher list when search is empty
-  useEffect(() => {
-    if (search === '') {
-      fetchTeacherList()
-    }
-  }, [search])
 
   return (
     <Form
@@ -147,7 +129,7 @@ const AddClass = () => {
 
       <p className="text-white text-base font-normal mb-0">Guru/Pengajar</p>
       <Form.Item
-        name="teachers"
+        name='teachers'
         rules={[
           {
             required: true,
@@ -155,26 +137,15 @@ const AddClass = () => {
           }
         ]}
       >
-        <Select
-          mode='multiple'
-          showSearch
-          placeholder="Search to Select"
-          onSearch={onTeacherChange}
-          loading={false}
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            option.children.toLowerCase().includes(input.toLocaleLowerCase())
-          }
-          filterSort={(optionA, optionB) =>
-            optionA.children
-              .toLowerCase()
-              .localeCompare(optionB.children.toLowerCase())
-          }
-        >
-          {teacherList.map((teacher) => (
-            <Option key={teacher._id} value={teacher._id} >{teacher.fullName}</Option>
-          ))}
-        </Select>
+        <DebounceSelect
+          mode="multiple"
+          value={teacherList}
+          placeholder="Nama Guru/Pengajar"
+          fetchOptions={fetchTeachers}
+          onChange={(newValue) => {
+            setTeacherList(newValue)
+          }}
+        />
       </Form.Item>
 
       <Form.Item>
@@ -183,6 +154,39 @@ const AddClass = () => {
         </Button>
       </Form.Item>
     </Form>
+  )
+}
+
+const DebounceSelect = ({ fetchOptions, debounceTimeout = 800, ...props }) => {
+  const [fetching, setFetching] = useState(false)
+  const [options, setOptions] = useState([])
+  const fetchRef = useRef(0)
+  const debounceFetcher = useMemo(() => {
+    const loadOptions = (value) => {
+      fetchRef.current += 1
+      const fetchId = fetchRef.current
+      setOptions([])
+      setFetching(true)
+      fetchOptions(value).then((newOptions) => {
+        if (fetchId !== fetchRef.current) {
+          // for fetch callback order
+          return
+        }
+        setOptions(newOptions)
+        setFetching(false)
+      })
+    }
+    return debounce(loadOptions, debounceTimeout)
+  }, [fetchOptions, debounceTimeout])
+  return (
+    <Select
+      labelInValue
+      filterOption={false}
+      onSearch={debounceFetcher}
+      notFoundContent={fetching ? <Spin size="small" /> : null}
+      {...props}
+      options={options}
+    />
   )
 }
 
