@@ -82,22 +82,9 @@ const ActiveClass = () => {
     destructureMeta(res.data.meta)
 
     // Set list of class
-    setClassList(sortClass(res.data.data))
+    setClassList(res.data.data)
 
     mySwal.close()
-  }
-
-  // Sort class by name
-  const sortClass = (classList) => {
-    return classList.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1
-      }
-      if (a.name > b.name) {
-        return 1
-      }
-      return 0
-    })
   }
 
   // Initial fetch data

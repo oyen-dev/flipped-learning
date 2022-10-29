@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
 import Layout from '../../../components/layouts'
+import { Breadcrumb } from '../../../components/breadcrumb'
 import { BorderBottom } from '../../../components/buttons'
 import { InformationCenter } from '../../../views/class'
 
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 const ClassDetailPage = () => {
   // Use params
@@ -27,8 +28,28 @@ const ClassDetailPage = () => {
     }
   ])
 
+  // Navigator
+  const navigate = useNavigate()
+
+  // Breadcrumb Items
+  const paths = [
+    {
+      name: 'Dashboard',
+      destination: '/dashboard'
+    },
+    {
+      name: 'Manajemen Kelas',
+      destination: '/management/classes'
+    },
+    {
+      name: 'Detail Kelas',
+      destination: `/management/classes/${id}`
+    }
+  ]
+
   return (
     <Layout>
+      <Breadcrumb paths={paths} navigate={navigate} />
       {/* Class Navigation */}
       <div className="flex flex-row w-full items-center justify-start md:justify-center overflow-x-auto space-x-4 pb-5 md:pb-0">
         {tabs.map((tab) => (
