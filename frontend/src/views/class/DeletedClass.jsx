@@ -125,7 +125,7 @@ const DeletedClass = () => {
 
   // Todo : Filter class
   return (
-    <div className="flex flex-col px-4 py-4 w-full items-center bg-gray-900 md:items-end justify-between space-y-4">
+    <div className="flex flex-col px-4 py-4 w-full items-center bg-[#accbe1] dark:bg-gray-900 md:items-end rounded-lg justify-between space-y-4 transition-all ease-in-out duration-300">
       <div className="flex flex-col w-full items-end justify-center space-y-4">
         <div className="flex flex-row space-x-4">
           <Input
@@ -166,6 +166,7 @@ const DeletedClass = () => {
                   title={name}
                   clases={gradeId.name}
                   schedule={schedule}
+                  mode="deleted"
                 />
               )
             })}

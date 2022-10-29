@@ -4,20 +4,33 @@ import { BsGear } from 'react-icons/bs'
 import moment from 'moment'
 
 const Class = (props) => {
-  const { path, title, clases, schedule } = props
+  const { path, title, clases, schedule, mode } = props
 
   return (
-    <div key={path} className="flex flex-col w-full items-center justify-center bg-[#accbe1] text-black dark:bg-gray-700 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
+    <div key={path} className="flex flex-col w-full items-center justify-center bg-[#e9ecef] text-black dark:bg-gray-700 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
       <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/class.jpg')] bg-center object-contain object-center px-3 py-3 rounded-md">
         <div className="flex w-full items-center justify-end">
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="">
               <BsGear className="w-6 h-6 cursor-pointer fill-white hover:fill-blue-500 duration-150" />
             </label>
-            <ul tabIndex={0} className="dropdown-content menu rounded-md p-2 shadow text-white bg-gray-700">
-              <li className="whitespace-nowrap hover:bg-gray-700"><a>Edit Kelas</a></li>
-              <li className="whitespace-nowrap hover:bg-gray-700"><a>Arsipkan Kelas</a></li>
-              <li className="whitespace-nowrap hover:bg-gray-700 text-red-500"><a>Hapus Kelas</a></li>
+            <ul tabIndex={0} className="dropdown-content menu rounded-md p-2 shadow text-black dark:text-white bg-[#e9ecef] dark:bg-gray-700">
+              {mode === 'active' &&
+              <>
+                <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"><a>Edit Kelas</a></li>
+                <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"><a>Arsipkan Kelas</a></li>
+              </>
+              }
+
+              {mode === 'archived' || mode === 'deleted'
+                ? <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"><a>Kembalikan Kelas</a></li>
+                : null
+              }
+
+              {mode === 'active' || mode === 'archived'
+                ? <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700 text-red-500"><a>Hapus Kelas</a></li>
+                : null
+              }
             </ul>
           </div>
         </div>
