@@ -6,7 +6,9 @@ import api from '../../api'
 
 import { Class } from '../../components/card'
 import { CreateClass } from '../../components/modals'
+import { Empty } from '../../pages/error'
 
+import { BsPlus, BsSearch } from 'react-icons/bs'
 import { Input, Button, Pagination } from 'antd'
 import Cookies from 'js-cookie'
 
@@ -123,88 +125,64 @@ const ActiveClass = () => {
 
   // Todo : Filter class
   return (
-    <>
-      <div className="flex flex-col w-full items-center md:items-end justify-between space-y-4">
-        <div className="flex flex-col w-full items-end justify-center space-y-4">
-            <div className="flex flex-row space-x-4">
-              <Input
-                placeholder="Nama Kelas"
-                prefix={<SearchIcon />}
-                onChange={(e) => setSearch(e.target.value)}
-                onPressEnter={searchClass}
-                allowClear={true}
-              />
-              <Button
-                type="primary"
-                disabled={!!(search === '' || search === null)}
-                onClick={searchClass}
-              >
-                Cari Kelas
-              </Button>
-            </div>
-            {classList.length > 0 && (
-              <Pagination
-              showSizeChanger
-              onShowSizeChange={onShowSizeChange}
-              onChange={onChange}
-              defaultCurrent={currentPage}
-              total={totalClass}
-            />
-            )}
-          </div>
+    <div className="flex flex-col px-4 py-4 w-full items-center bg-gray-900 md:items-end justify-between space-y-4">
+      <div className="flex flex-col w-full items-end justify-center space-y-4">
+        <div className="flex flex-row space-x-4">
+          <Input
+            placeholder="Nama Kelas"
+            prefix={<BsSearch />}
+            onChange={(e) => setSearch(e.target.value)}
+            onPressEnter={searchClass}
+            allowClear={true}
+          />
+          <Button
+            type="primary"
+            disabled={!!(search === '' || search === null)}
+            onClick={searchClass}
+          >
+            Cari Kelas
+          </Button>
+        </div>
+        {classList.length > 0 && (
+          <Pagination
+            showSizeChanger
+            onShowSizeChange={onShowSizeChange}
+            onChange={onChange}
+            defaultCurrent={currentPage}
+            total={totalClass}
+          />
+        )}
       </div>
 
-      <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
-        {classList.map((kelas) => {
-          const { gradeId, name, schedule, _id } = kelas
-          return (
-            <Class key={_id} path={_id} title={name} clases={gradeId.name} schedule={schedule} />
-          )
-        })}
-      </div>
+      {classList.length === 0
+        ? <Empty message="Tidak ada data kelas ditemukan." />
+        : <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
+            {classList.map((kelas) => {
+              const { gradeId, name, schedule, _id } = kelas
+              return (
+                <Class
+                  key={_id}
+                  path={_id}
+                  title={name}
+                  clases={gradeId.name}
+                  schedule={schedule}
+                />
+              )
+            })}
+          </div>
+      }
 
       <label
         htmlFor="modal-create-class"
         className="modal-button fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center cursor-pointer text-white text-4xl hover:bg-[#7C3AED] hover:drop-shadow-2xl duration-300"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          className="bi bi-plus-lg"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-          />
-        </svg>
+        <BsPlus />
       </label>
 
       {/* Modal container */}
-      <input
-        type="checkbox"
-        id="modal-create-class"
-        className="modal-toggle"
-      />
+      <input type="checkbox" id="modal-create-class" className="modal-toggle" />
       <CreateClass />
-    </>
-  )
-}
-
-const SearchIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      className="bi bi-search"
-      viewBox="0 0 16 16"
-    >
-      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-    </svg>
+    </div>
   )
 }
 

@@ -7,7 +7,7 @@ const Class = (props) => {
   const { path, title, clases, schedule } = props
 
   return (
-    <div key={path} className="flex flex-col w-full items-center justify-center bg-[#accbe1] text-black dark:bg-gray-900 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
+    <div key={path} className="flex flex-col w-full items-center justify-center bg-[#accbe1] text-black dark:bg-gray-700 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
       <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/class.jpg')] bg-center object-contain object-center px-3 py-3 rounded-md">
         <div className="flex w-full items-center justify-end">
           <div className="dropdown dropdown-end">
