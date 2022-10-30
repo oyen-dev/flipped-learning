@@ -17,6 +17,7 @@ import {
   TeacherDetailPage,
   EditTeacherPage
 } from '../pages/admin'
+import { Classes } from '../pages/user'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
@@ -40,13 +41,9 @@ export default function AppRoutes () {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            isAuthenticated ? <DashboardPage /> : <Navigate to="/auth" />
-          }
-        />
+        <Route path="/" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/auth" />} />
+        <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/auth" />} />
+
         <Route path="/management">
           <Route path='classes'>
             <Route path=':id' element={isAuthenticated ? (<ManagementContext> <ClassDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
@@ -64,6 +61,7 @@ export default function AppRoutes () {
           </Route>
           <Route index element={<NotFound />} />
         </Route>
+
         <Route path="/auth">
           <Route path="register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <RegisterPage /> } />
           <Route path="forgot-password" element={isAuthenticated ? <Navigate to="/dashboard" /> : <ForgotPage />} />
@@ -71,6 +69,8 @@ export default function AppRoutes () {
           <Route path="reset-password" element={isAuthenticated ? <Navigate to="/dashboard" /> : <ResetPasswordPage />} />
           <Route index element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />} />
         </Route>
+
+        <Route path="/classes" element={isAuthenticated ? <ManagementContext> <Classes /> </ManagementContext> : <Navigate to="/auth" />} />
 
         {/* Handle page not found */}
         <Route path="*" element={<NotFound />} />

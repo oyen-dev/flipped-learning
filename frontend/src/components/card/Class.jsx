@@ -18,7 +18,7 @@ const Class = (props) => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { setIsFetchTeacher } = managementStates
+  const { setIsFetchClass } = managementStates
 
   // Archive class
   const archiveClass = async (id, archive) => {
@@ -56,7 +56,7 @@ const Class = (props) => {
           showConfirmButton: false,
           timer: 2000
         })
-        .then(() => setIsFetchTeacher(true))
+        .then(() => setIsFetchClass(true))
     } catch (error) {
       console.log(error)
       // Show error message
@@ -68,7 +68,7 @@ const Class = (props) => {
           showConfirmButton: false,
           timer: 2000
         })
-        .then(() => setIsFetchTeacher(true))
+        .then(() => setIsFetchClass(true))
     }
   }
 
@@ -108,7 +108,7 @@ const Class = (props) => {
           showConfirmButton: false,
           timer: 2000
         })
-        .then(() => setIsFetchTeacher(true))
+        .then(() => setIsFetchClass(true))
     } catch (error) {
       console.log(error)
       // Show error message
@@ -120,7 +120,7 @@ const Class = (props) => {
           showConfirmButton: false,
           timer: 2000
         })
-        .then(() => setIsFetchTeacher(true))
+        .then(() => setIsFetchClass(true))
     }
   }
 

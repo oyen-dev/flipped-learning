@@ -1,21 +1,28 @@
 import { useState, useEffect } from 'react'
-
 import { useGlobal } from '../../contexts/Global'
+import { useAuth } from '../../contexts/Auth'
 import { useManagement } from '../../contexts/Management'
-import api from '../../api'
 
+import api from '../../api'
+import Layout from '../../components/layouts'
+import { Breadcrumb } from '../../components/breadcrumb'
 import { Class } from '../../components/card'
 import { CreateClass } from '../../components/modals'
 import { Empty } from '../../pages/error'
 
+import { useNavigate } from 'react-router-dom'
 import { BsPlus, BsSearch } from 'react-icons/bs'
 import { Input, Button, Pagination } from 'antd'
 import Cookies from 'js-cookie'
 
-const DeletedClass = () => {
+const Classes = () => {
   // Global Functions
   const { globalFunctions } = useGlobal()
   const { mySwal } = globalFunctions
+
+  // Auth States
+  const { authState } = useAuth()
+  const { user } = authState
 
   // Management States
   const { managementStates } = useManagement()
@@ -25,8 +32,22 @@ const DeletedClass = () => {
   const [totalClass, setTotalClass] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [limitClass, setLimitClass] = useState(10)
-  // const [isFetchClass, setIsFetchClass] = useState(false)
   const [currentSearchPage, setCurrentSearchPage] = useState(1)
+
+  // Navigator
+  const navigate = useNavigate()
+
+  // Breadcrumb Items
+  const paths = [
+    {
+      name: 'Dashboard',
+      destination: '/dashboard'
+    },
+    {
+      name: 'Daftar Kelas',
+      destination: '/classes'
+    }
+  ]
 
   // Control filter and search input
   const [search, setSearch] = useState('')
@@ -55,6 +76,18 @@ const DeletedClass = () => {
     setCurrentPage(page)
   }
 
+  const defineUrl = (page, limit) => {
+    let endpoint =
+      search !== ''
+        ? `/class?q=${search}&page=${currentSearchPage}&limit=${limit}&archived=false&deleted=false`
+        : `/class?page=${page}&limit=${limit}&archived=false&deleted=false`
+
+    if (user.role === 'STUDENT') endpoint = `${endpoint}&sId=${user._id}`
+    if (user.role === 'TEACHER') endpoint = `${endpoint}&tId=${user._id}`
+
+    return endpoint
+  }
+
   const fetchClass = async (page, limit) => {
     mySwal.fire({
       html: 'Wait a moment...',
@@ -68,10 +101,7 @@ const DeletedClass = () => {
       limit = 10
     }
 
-    const endpoint =
-      search !== ''
-        ? `/class?q=${search}&page=${currentSearchPage}&limit=${limit}&deleted=true&archived=true`
-        : `/class?page=${page}&limit=${limit}&deleted=true&archived=true`
+    const endpoint = defineUrl(page, limit)
 
     const config = {
       headers: {
@@ -125,7 +155,10 @@ const DeletedClass = () => {
 
   // Todo : Filter class
   return (
-    <div className="flex flex-col px-4 py-4 w-full items-center bg-[#accbe1] dark:bg-gray-900 md:items-end rounded-lg justify-between space-y-4 transition-all ease-in-out duration-300">
+    <Layout>
+      <Breadcrumb paths={paths} navigate={navigate} />
+
+      <div className="flex flex-col px-4 py-4 w-full items-center bg-[#accbe1] dark:bg-gray-900 md:items-end rounded-lg justify-between space-y-4 transition-all ease-in-out duration-300">
       <div className="flex flex-col w-full items-end justify-center space-y-4">
         <div className="flex flex-row space-x-4">
           <Input
@@ -166,7 +199,7 @@ const DeletedClass = () => {
                   title={name}
                   clases={gradeId.name}
                   schedule={schedule}
-                  mode="deleted"
+                  mode="active"
                 />
               )
             })}
@@ -184,7 +217,8 @@ const DeletedClass = () => {
       <input type="checkbox" id="modal-create-class" className="modal-toggle" />
       <CreateClass />
     </div>
+    </Layout>
   )
 }
 
-export default DeletedClass
+export default Classes

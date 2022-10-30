@@ -19,7 +19,7 @@ const ActiveClass = () => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { classList, setClassList, isFetchTeacher, setIsFetchTeacher } = managementStates
+  const { classList, setClassList, isFetchClass, setIsFetchClass } = managementStates
 
   // Local States
   const [totalClass, setTotalClass] = useState(0)
@@ -38,7 +38,7 @@ const ActiveClass = () => {
   const onChange = (page) => {
     // console.log('move to page', page)
     setCurrentPage(page)
-    setIsFetchTeacher(true)
+    setIsFetchClass(true)
 
     // Reset search page
     if (search !== '') {
@@ -96,11 +96,11 @@ const ActiveClass = () => {
 
   // Fetch data when page change or limit change
   useEffect(() => {
-    if (isFetchTeacher) {
+    if (isFetchClass) {
       fetchClass(currentPage, limitClass)
-      setIsFetchTeacher(false)
+      setIsFetchClass(false)
     }
-  }, [isFetchTeacher])
+  }, [isFetchClass])
 
   // Search classes
   const searchClass = async () => {
