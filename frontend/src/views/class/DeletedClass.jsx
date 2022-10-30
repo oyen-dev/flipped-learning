@@ -167,6 +167,7 @@ const DeletedClass = () => {
                   clases={gradeId.name}
                   schedule={schedule}
                   mode="deleted"
+                  admin={true}
                 />
               )
             })}

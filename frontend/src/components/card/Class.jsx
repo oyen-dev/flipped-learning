@@ -10,7 +10,7 @@ import moment from 'moment'
 
 const Class = (props) => {
   // Props destructure
-  const { path, title, clases, schedule, mode } = props
+  const { path, title, clases, schedule, mode, admin } = props
 
   // Global Functions
   const { globalFunctions } = useGlobal()
@@ -275,7 +275,7 @@ const Class = (props) => {
       </div>
 
       <div className="flex flex-col w-full items-center justify-center space-y-1 pt-2">
-        <Link to={`/management/classes/${path}`}>
+        <Link to={admin ? `/management/classes/${path}` : `/classes/${path}`}>
           <p className="mb-0 text-gray-900 dark:text-white dark:hover:text-blue-500 text-center font-bold text-base duration-150 ease-in">
             {title}
           </p>

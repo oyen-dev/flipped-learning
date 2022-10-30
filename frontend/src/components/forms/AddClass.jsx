@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef } from 'react'
+import { useAuth } from '../../contexts/Auth'
 import { useGlobal } from '../../contexts/Global'
 
 import api from '../../api'
@@ -13,6 +14,10 @@ const AddClass = () => {
   const { globalFunctions } = useGlobal()
   const { mySwal } = globalFunctions
 
+  // Auth States
+  const { authState } = useAuth()
+  const { user } = authState
+
   // Local States
   const [teacherList, setTeacherList] = useState([])
 
@@ -24,7 +29,7 @@ const AddClass = () => {
     const payload = {
       name: values.name,
       grade: values.grade,
-      teachers: values.teachers.map((teacher) => teacher.value),
+      teachers: user.role === 'TEACHER' ? [user._id] : values.teachers.map((teacher) => teacher.value),
       schedule: []
     }
 
@@ -49,13 +54,15 @@ const AddClass = () => {
       const { data } = res
 
       if (data.status) {
-        mySwal.fire({
-          icon: 'success',
-          title: 'Class successfully created',
-          text: "You'll be redirected to the class page",
-          timer: 4000,
-          showConfirmButton: false
-        }).then(() => navigate(data.data._id))
+        mySwal
+          .fire({
+            icon: 'success',
+            title: 'Class successfully created',
+            text: "You'll be redirected to the class page",
+            timer: 4000,
+            showConfirmButton: false
+          })
+          .then(() => navigate(data.data._id))
       } else {
         mySwal.fire({
           icon: 'error',
@@ -67,6 +74,13 @@ const AddClass = () => {
       }
     } catch (error) {
       console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response.data.message,
+        timer: 4000,
+        showConfirmButton: false
+      })
     }
   }
 
@@ -82,7 +96,8 @@ const AddClass = () => {
       }
     }
 
-    return await api.get(`/users/teachers?q=${name}&limit=20&page=1`, config)
+    return await api
+      .get(`/users/teachers?q=${name}&limit=20&page=1`, config)
       .then((res) => {
         return res.data.data.teachers.map((teacher) => ({
           label: teacher.fullName,
@@ -127,26 +142,30 @@ const AddClass = () => {
         <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Guru/Pengajar</p>
-      <Form.Item
-        name='teachers'
-        rules={[
-          {
-            required: true,
-            message: 'Mohon masukkan guru/pengajar!'
-          }
-        ]}
-      >
-        <DebounceSelect
-          mode="multiple"
-          value={teacherList}
-          placeholder="Nama Guru/Pengajar"
-          fetchOptions={fetchTeachers}
-          onChange={(newValue) => {
-            setTeacherList(newValue)
-          }}
-        />
-      </Form.Item>
+      {user.role === 'ADMIN' && (
+        <>
+          <p className="text-white text-base font-normal mb-0">Guru/Pengajar</p>
+          <Form.Item
+            name="teachers"
+            rules={[
+              {
+                required: true,
+                message: 'Mohon masukkan guru/pengajar!'
+              }
+            ]}
+          >
+            <DebounceSelect
+              mode="multiple"
+              value={teacherList}
+              placeholder="Nama Guru/Pengajar"
+              fetchOptions={fetchTeachers}
+              onChange={(newValue) => {
+                setTeacherList(newValue)
+              }}
+            />
+          </Form.Item>
+        </>
+      )}
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">

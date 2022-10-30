@@ -1,6 +1,6 @@
 const PrivacyPolicy = () => {
   return (
-    <div className="modal w-full backdrop-blur-sm">
+    <div className="modal w-full">
       <div className="modal-box w-11/12 max-w-5xl relative bg-gray-800">
         <label
           htmlFor="modal-privacy-policy"

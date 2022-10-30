@@ -166,6 +166,7 @@ const ActiveClass = () => {
                   clases={gradeId.name}
                   schedule={schedule}
                   mode="active"
+                  admin={true}
                 />
               )
             })}

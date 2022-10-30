@@ -166,6 +166,7 @@ const ArchivedClass = () => {
                   clases={gradeId.name}
                   schedule={schedule}
                   mode="archived"
+                  admin={true}
                 />
               )
             })}

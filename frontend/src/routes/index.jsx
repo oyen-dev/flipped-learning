@@ -17,7 +17,7 @@ import {
   TeacherDetailPage,
   EditTeacherPage
 } from '../pages/admin'
-import { Classes } from '../pages/user'
+import { Classes, ClassDetail } from '../pages/user'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
@@ -70,7 +70,10 @@ export default function AppRoutes () {
           <Route index element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />} />
         </Route>
 
-        <Route path="/classes" element={isAuthenticated ? <ManagementContext> <Classes /> </ManagementContext> : <Navigate to="/auth" />} />
+        <Route path="/classes">
+          <Route path=':id' element={isAuthenticated ? <ClassDetail /> : <Navigate to="/auth" />} />
+          <Route index element={isAuthenticated ? <ManagementContext> <Classes /> </ManagementContext> : <Navigate to="/auth" />} />
+        </Route>
 
         {/* Handle page not found */}
         <Route path="*" element={<NotFound />} />

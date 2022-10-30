@@ -26,7 +26,8 @@ const Classes = () => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { classList, setClassList, isFetchClass, setIsFetchClass } = managementStates
+  const { classList, setClassList, isFetchClass, setIsFetchClass } =
+    managementStates
 
   // Local States
   const [totalClass, setTotalClass] = useState(0)
@@ -159,37 +160,40 @@ const Classes = () => {
       <Breadcrumb paths={paths} navigate={navigate} />
 
       <div className="flex flex-col px-4 py-4 w-full items-center bg-[#accbe1] dark:bg-gray-900 md:items-end rounded-lg justify-between space-y-4 transition-all ease-in-out duration-300">
-      <div className="flex flex-col w-full items-end justify-center space-y-4">
-        <div className="flex flex-row space-x-4">
-          <Input
-            placeholder="Nama Kelas"
-            prefix={<BsSearch />}
-            onChange={(e) => setSearch(e.target.value)}
-            onPressEnter={searchClass}
-            allowClear={true}
-          />
-          <Button
-            type="primary"
-            disabled={!!(search === '' || search === null)}
-            onClick={searchClass}
-          >
-            Cari Kelas
-          </Button>
+        <div className="flex flex-col w-full items-end justify-center space-y-4">
+          <div className="flex flex-row space-x-4">
+            <Input
+              placeholder="Nama Kelas"
+              prefix={<BsSearch />}
+              onChange={(e) => setSearch(e.target.value)}
+              onPressEnter={searchClass}
+              allowClear={true}
+            />
+            <Button
+              type="primary"
+              disabled={!!(search === '' || search === null)}
+              onClick={searchClass}
+            >
+              Cari Kelas
+            </Button>
+          </div>
+          {classList.length > 0 && (
+            <Pagination
+              showSizeChanger
+              onShowSizeChange={onShowSizeChange}
+              onChange={onChange}
+              defaultCurrent={currentPage}
+              total={totalClass}
+            />
+          )}
         </div>
-        {classList.length > 0 && (
-          <Pagination
-            showSizeChanger
-            onShowSizeChange={onShowSizeChange}
-            onChange={onChange}
-            defaultCurrent={currentPage}
-            total={totalClass}
-          />
-        )}
-      </div>
 
-      {classList.length === 0
-        ? <Empty message="Tidak ada data kelas ditemukan." />
-        : <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
+        {classList.length === 0
+          ? (
+          <Empty message="Tidak ada data kelas ditemukan." />
+            )
+          : (
+          <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
             {classList.map((kelas) => {
               const { gradeId, name, schedule, _id } = kelas
               return (
@@ -200,23 +204,28 @@ const Classes = () => {
                   clases={gradeId.name}
                   schedule={schedule}
                   mode="active"
+                  admin={false}
                 />
               )
             })}
           </div>
-      }
+            )}
 
-      <label
-        htmlFor="modal-create-class"
-        className="modal-button fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center cursor-pointer text-white text-4xl hover:bg-[#7C3AED] hover:drop-shadow-2xl duration-300"
-      >
-        <BsPlus />
-      </label>
+        <label
+          htmlFor="modal-create-class"
+          className="modal-button fixed z-40 bottom-8 right-8 bg-[#34A0A4] w-12 h-12 rounded-full drop-shadow-lg flex justify-center items-center cursor-pointer text-white text-4xl hover:bg-[#7C3AED] hover:drop-shadow-2xl duration-300"
+        >
+          <BsPlus />
+        </label>
 
-      {/* Modal container */}
-      <input type="checkbox" id="modal-create-class" className="modal-toggle" />
-      <CreateClass />
-    </div>
+        {/* Modal container */}
+        <input
+          type="checkbox"
+          id="modal-create-class"
+          className="modal-toggle"
+        />
+        <CreateClass />
+      </div>
     </Layout>
   )
 }
