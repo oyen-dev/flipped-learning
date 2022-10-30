@@ -19,13 +19,12 @@ const ArchivedClass = () => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { classList, setClassList } = managementStates
+  const { classList, setClassList, isFetchTeacher, setIsFetchTeacher } = managementStates
 
   // Local States
   const [totalClass, setTotalClass] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [limitClass, setLimitClass] = useState(10)
-  const [isFetch, setIsFetch] = useState(false)
   const [currentSearchPage, setCurrentSearchPage] = useState(1)
 
   // Control filter and search input
@@ -39,7 +38,7 @@ const ArchivedClass = () => {
   const onChange = (page) => {
     // console.log('move to page', page)
     setCurrentPage(page)
-    setIsFetch(true)
+    setIsFetchTeacher(true)
 
     // Reset search page
     if (search !== '') {
@@ -97,11 +96,11 @@ const ArchivedClass = () => {
 
   // Fetch data when page change or limit change
   useEffect(() => {
-    if (isFetch) {
+    if (isFetchTeacher) {
       fetchClass(currentPage, limitClass)
-      setIsFetch(false)
+      setIsFetchTeacher(false)
     }
-  }, [isFetch])
+  }, [isFetchTeacher])
 
   // Search classes
   const searchClass = async () => {
