@@ -65,7 +65,7 @@ const PostTaskInfo = () => {
     }
   }
   return (
-    <div className="w-full flex flex-col bg-gray-700 justify-start py-2 px-4 rounded-lg space-y-2">
+    <div className="w-full flex flex-col bg-[#e9ecef] text-black dark:bg-gray-700 dark:text-white justify-start py-2 px-4 rounded-lg space-y-2">
       <p className="mb-0 text-center md:text-left">
         Tulis informasi kelas atau penugasan:
       </p>
@@ -137,13 +137,13 @@ const PostTaskInfo = () => {
                 setTask(!task)
               }}
             >
-              <p className="mb-0 text-white whitespace-nowrap">
+              <p className="mb-0 text-black dark:text-white whitespace-nowrap">
                 Jadikan tugas?
               </p>
             </Checkbox>
 
           <Form.Item className="w-full flex justify-end">
-            <button className="py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-[#34A0A4] rounded-lg">
+            <button className="py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-black dark:text-white bg-[#fcfff7] dark:bg-[#34A0A4] rounded-lg">
               Posting
             </button>
           </Form.Item>
