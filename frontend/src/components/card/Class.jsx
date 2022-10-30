@@ -72,44 +72,124 @@ const Class = (props) => {
     }
   }
 
+  // Delete class
+  const deleteClass = async (id, deleted) => {
+    // Show loading
+    mySwal.fire({
+      html: 'Wait a moment...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Configuration
+    const config = {
+      headers: {
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    const payload = {
+      id,
+      deleted
+    }
+
+    // Archive class
+    try {
+      const { data } = await api.post('/class/delete', payload, config)
+      // console.log(res)
+
+      // Show success message
+      mySwal
+        .fire({
+          icon: 'success',
+          title: 'Success',
+          text: data.message,
+          showConfirmButton: false,
+          timer: 2000
+        })
+        .then(() => setIsFetchTeacher(true))
+    } catch (error) {
+      console.log(error)
+      // Show error message
+      mySwal
+        .fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.response.data.message,
+          showConfirmButton: false,
+          timer: 2000
+        })
+        .then(() => setIsFetchTeacher(true))
+    }
+  }
+
   // Dialog for archive class
   const archiveClassDialog = () => {
-    mySwal
-      .fire({
-        title: 'Apakah Anda yakin?',
-        text: 'Kelas yang diarsipkan tidak akan ditampilkan di halaman utama',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, arsipkan!',
-        cancelButtonText: 'Batal'
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          archiveClass(path, true)
-        }
-      })
+    mySwal.fire({
+      title: 'Apakah Anda yakin?',
+      text: 'Kelas yang diarsipkan tidak akan ditampilkan di halaman utama',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, arsipkan!',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        archiveClass(path, true)
+      }
+    })
   }
 
   // Dialog for restore archived class
   const restoreArchivedClassDialog = () => {
-    mySwal
-      .fire({
-        title: 'Apakah Anda yakin?',
-        text: 'Kelas yang kembalikan akan ditampilkan di halaman utama',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, kembalikan!',
-        cancelButtonText: 'Batal'
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          archiveClass(path, false)
-        }
-      })
+    mySwal.fire({
+      title: 'Apakah Anda yakin?',
+      text: 'Kelas yang kembalikan akan ditampilkan di halaman utama',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, kembalikan!',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        archiveClass(path, false)
+      }
+    })
+  }
+
+  // Dialog for delete class
+  const deleteClassDialog = () => {
+    mySwal.fire({
+      title: 'Apakah Anda yakin?',
+      text: 'Kelas akan dihapus secara permanen dalam jangka waktu 90 hari setelah aksi ini',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, hapus!',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) deleteClass(path, true)
+    })
+  }
+
+  // Dialog for restore deleted class
+  const restoreDeletedClassDialog = () => {
+    mySwal.fire({
+      title: 'Apakah Anda yakin?',
+      text: 'Kelas ini akan ditampilkan lagi di halaman utama',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, kembalikan!',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) deleteClass(path, false)
+    })
   }
 
   return (
@@ -141,21 +221,31 @@ const Class = (props) => {
                 </>
               )}
 
-              {mode === 'archived' || mode === 'deleted'
-                ? (
+              {mode === 'archived' &&
                 <li
                   className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"
                   onClick={() => restoreArchivedClassDialog()}
                 >
                   <span>Kembalikan Kelas</span>
                 </li>
-                  )
-                : null}
+              }
+
+              {mode === 'deleted' &&
+                <li
+                  className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"
+                  onClick={() => restoreDeletedClassDialog()}
+                >
+                  <span>Kembalikan Kelas</span>
+                </li>
+              }
 
               {mode === 'active' || mode === 'archived'
                 ? (
-                <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700 text-red-500">
-                  <a>Hapus Kelas</a>
+                <li
+                  className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700 text-red-500"
+                  onClick={() => deleteClassDialog()}
+                  >
+                  <span>Hapus Kelas</span>
                 </li>
                   )
                 : null}

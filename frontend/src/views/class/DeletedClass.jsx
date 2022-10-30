@@ -19,13 +19,13 @@ const DeletedClass = () => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { classList, setClassList } = managementStates
+  const { classList, setClassList, isFetchTeacher, setIsFetchTeacher } = managementStates
 
   // Local States
   const [totalClass, setTotalClass] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   const [limitClass, setLimitClass] = useState(10)
-  const [isFetch, setIsFetch] = useState(false)
+  // const [isFetchTeacher, setIsFetchTeacher] = useState(false)
   const [currentSearchPage, setCurrentSearchPage] = useState(1)
 
   // Control filter and search input
@@ -39,7 +39,7 @@ const DeletedClass = () => {
   const onChange = (page) => {
     // console.log('move to page', page)
     setCurrentPage(page)
-    setIsFetch(true)
+    setIsFetchTeacher(true)
 
     // Reset search page
     if (search !== '') {
@@ -70,8 +70,8 @@ const DeletedClass = () => {
 
     const endpoint =
       search !== ''
-        ? `/class?q=${search}&page=${currentSearchPage}&limit=${limit}&deleted=true`
-        : `/class?page=${page}&limit=${limit}&deleted=true`
+        ? `/class?q=${search}&page=${currentSearchPage}&limit=${limit}&deleted=true&archived=true`
+        : `/class?page=${page}&limit=${limit}&deleted=true&archived=true`
 
     const config = {
       headers: {
@@ -97,11 +97,11 @@ const DeletedClass = () => {
 
   // Fetch data when page change or limit change
   useEffect(() => {
-    if (isFetch) {
+    if (isFetchTeacher) {
       fetchClass(currentPage, limitClass)
-      setIsFetch(false)
+      setIsFetchTeacher(false)
     }
-  }, [isFetch])
+  }, [isFetchTeacher])
 
   // Search classes
   const searchClass = async () => {
