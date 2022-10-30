@@ -1,10 +1,90 @@
-import { Link } from 'react-router-dom'
+import { useGlobal } from '../../contexts/Global'
+import { useManagement } from '../../contexts/Management'
 
+import api from '../../api'
+
+import { Link } from 'react-router-dom'
+import Cookies from 'js-cookie'
 import { BsGear } from 'react-icons/bs'
 import moment from 'moment'
 
 const Class = (props) => {
+  // Props destructure
   const { path, title, clases, schedule, mode } = props
+
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
+  // Management States
+  const { managementStates } = useManagement()
+  const { setIsFetchTeacher } = managementStates
+
+  // Archive class
+  const archiveClass = async (id, archive) => {
+    // Show loading
+    mySwal.fire({
+      html: 'Wait a moment...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Configuration
+    const config = {
+      headers: {
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    const payload = {
+      id,
+      archive
+    }
+
+    // Archive class
+    try {
+      const { data } = await api.post('/class/archive', payload, config)
+      // console.log(res)
+
+      // Show success message
+      mySwal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: data.message,
+        showConfirmButton: false,
+        timer: 2000
+      }).then(() => setIsFetchTeacher(true))
+    } catch (error) {
+      console.log(error)
+      // Show error message
+      mySwal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response.data.message,
+        showConfirmButton: false,
+        timer: 2000
+      }).then(() => setIsFetchTeacher(true))
+    }
+  }
+
+  // Dialog for archive class
+  const archiveClassDialog = () => {
+    mySwal.fire({
+      title: 'Apakah Anda yakin?',
+      text: 'Kelas yang diarsipkan tidak akan ditampilkan di halaman utama',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, arsipkan!',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        archiveClass(path, true)
+      }
+    })
+  }
 
   return (
     <div key={path} className="flex flex-col w-full items-center justify-center bg-[#e9ecef] text-black dark:bg-gray-700 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300">
@@ -17,8 +97,13 @@ const Class = (props) => {
             <ul tabIndex={0} className="dropdown-content menu rounded-md p-2 shadow text-black dark:text-white bg-[#e9ecef] dark:bg-gray-700">
               {mode === 'active' &&
               <>
-                <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"><a>Edit Kelas</a></li>
-                <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"><a>Arsipkan Kelas</a></li>
+                <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"><span>Edit Kelas</span></li>
+                <li
+                  className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"
+                  onClick={() => archiveClassDialog()}
+                >
+                  <span>Arsipkan Kelas</span>
+                </li>
               </>
               }
 

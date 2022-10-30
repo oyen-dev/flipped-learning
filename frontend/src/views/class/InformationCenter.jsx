@@ -58,15 +58,19 @@ const InformationCenter = (props) => {
           {/* Class Header Info */}
           <div className="w-full flex flex-col space-y-4">
             <div className="flex w-full justify-center">
-              <di className="text-center font-semibold text-lg md:text-2xl mb-0">
+              <div className="text-center font-semibold text-lg md:text-2xl mb-0">
                 {classData.name} - {classData.gradeId.name}
-              </di>
+              </div>
             </div>
             <div className="w-full flex flex-col justify-start">
-              <p className="mb-0 text-xs md:text-base">
-                Pengajar:
-                <span className="ml-3 font-bold">Budi Tono, S.Pd.</span>
-              </p>
+              <div className="flex flex-row mb-0 text-xs md:text-base">
+                <p className='mb-0'>Pengajar</p>
+                <div className="flex flex-col w-full">
+                  {classData.teachers.map((teacher, index) => (
+                    <a key={index} href={teacher._id} className="ml-3 font-bold">{teacher.fullName}</a>
+                  ))}
+                </div>
+              </div>
               <p className="mb-0 text-xs md:text-base">
                 Kode Kelas: <span className="ml-3 font-bold tracking-wide">{classData.invitationCode}</span>
               </p>
