@@ -6,18 +6,20 @@ import { ManagementProvider } from '../contexts/Management'
 
 import { LoginPage, RegisterPage, ForgotPage, VerifyPage, ResetPasswordPage } from '../pages/auth'
 import { NotFound } from '../pages/error'
+
 import {
   DashboardPage,
   ManagementClassPage,
   ManagementStudentPage,
-  ClassDetailPage,
+  ClassDetailPage as AdminClassDetailPage,
   StudentDetailPage,
   EditStudentPage,
   ManagementTeacherPage,
   TeacherDetailPage,
   EditTeacherPage
 } from '../pages/admin'
-import { Classes, ClassDetail, TeacherList } from '../pages/user'
+
+import { Classes, ClassDetailPage, TeacherList } from '../pages/user'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
@@ -48,7 +50,7 @@ export default function AppRoutes () {
           <Route path='classes'>
             <Route path=':id'>
               <Route path='teachers/:id' element={isAuthenticated ? (<ManagementContext> <TeacherDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
-              <Route index element={isAuthenticated ? (<ManagementContext> <ClassDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+              <Route index element={isAuthenticated ? (<ManagementContext> <AdminClassDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             </Route>
             <Route index element={isAuthenticated ? (<ManagementContext> <ManagementClassPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
           </Route>
@@ -76,7 +78,7 @@ export default function AppRoutes () {
         <Route path="/classes">
           <Route path=':id'>
             <Route path='teachers/:id' element={isAuthenticated ? (<ManagementContext> <TeacherList /> </ManagementContext>) : (<Navigate to="/auth" />)} />
-            <Route index element={isAuthenticated ? <ClassDetail /> : <Navigate to="/auth" />}/>
+            <Route index element={isAuthenticated ? <ClassDetailPage /> : <Navigate to="/auth" />}/>
           </Route>
           <Route index element={isAuthenticated ? <ManagementContext> <Classes /> </ManagementContext> : <Navigate to="/auth" />} />
         </Route>

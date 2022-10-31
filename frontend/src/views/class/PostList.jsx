@@ -6,11 +6,7 @@ const PostList = (props) => {
   console.log(posts)
 
   return (
-    <>
-        {posts.length === 0 && (
-            <Empty message="Belum ada postingan di kelas ini." />
-        )}
-    </>
+    <Empty message="Belum ada postingan di kelas ini." />
   )
 }
 
