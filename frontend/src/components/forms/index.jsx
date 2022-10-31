@@ -10,4 +10,5 @@ export { default as AddTeacher } from './AddTeacher'
 export { default as EditTeacher } from './EditTeacher'
 
 export { default as AddClass } from './AddClass'
+export { default as JoinClass } from './JoinClass'
 export { default as PostTaskInfo } from './PostTaskInfo'
