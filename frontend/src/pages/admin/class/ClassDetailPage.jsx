@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Layout from '../../../components/layouts'
 import { Breadcrumb } from '../../../components/breadcrumb'
 import { BorderBottom } from '../../../components/buttons'
-import { InformationCenter } from '../../../views/class'
+import { InformationCenter, ClassStudents, ClassTasks, ClassEvaluations } from '../../../views/class'
 
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -25,6 +25,10 @@ const ClassDetailPage = () => {
     {
       name: 'Penugasan',
       tabId: '3'
+    },
+    {
+      name: 'Evaluasi',
+      tabId: '4'
     }
   ])
 
@@ -63,7 +67,11 @@ const ClassDetailPage = () => {
         ))}
       </div>
 
-      <InformationCenter id={id} />
+      {/* Class Content */}
+      {tabKey === '1' && <InformationCenter id={id} />}
+      {tabKey === '2' && <ClassStudents />}
+      {tabKey === '3' && <ClassTasks />}
+      {tabKey === '4' && <ClassEvaluations />}
     </Layout>
   )
 }
