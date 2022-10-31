@@ -17,7 +17,7 @@ import {
   TeacherDetailPage,
   EditTeacherPage
 } from '../pages/admin'
-import { Classes, ClassDetail } from '../pages/user'
+import { Classes, ClassDetail, TeacherList } from '../pages/user'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
@@ -46,7 +46,10 @@ export default function AppRoutes () {
 
         <Route path="/management">
           <Route path='classes'>
-            <Route path=':id' element={isAuthenticated ? (<ManagementContext> <ClassDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            <Route path=':id'>
+              <Route path='teachers/:id' element={isAuthenticated ? (<ManagementContext> <TeacherDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+              <Route index element={isAuthenticated ? (<ManagementContext> <ClassDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            </Route>
             <Route index element={isAuthenticated ? (<ManagementContext> <ManagementClassPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
           </Route>
           <Route path="students">
@@ -72,7 +75,7 @@ export default function AppRoutes () {
 
         <Route path="/classes">
           <Route path=':id'>
-            <Route path='teachers/:id' element={isAuthenticated ? (<ManagementContext> <TeacherDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            <Route path='teachers/:id' element={isAuthenticated ? (<ManagementContext> <TeacherList /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route index element={isAuthenticated ? <ClassDetail /> : <Navigate to="/auth" />}/>
           </Route>
           <Route index element={isAuthenticated ? <ManagementContext> <Classes /> </ManagementContext> : <Navigate to="/auth" />} />

@@ -27,6 +27,7 @@ const InformationCenter = (props) => {
 
   // Get current path using router
   const { pathname } = useLocation()
+  console.log(pathname)
 
   // Local States
   const [classData, setClassData] = useState(null)
@@ -142,7 +143,7 @@ const InformationCenter = (props) => {
             <div className="w-full flex flex-col space-y-2 justify-start">
               <div className="flex flex-row mb-0 text-xs md:text-base">
                 <p className='mb-0'>Pengajar</p>
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col">
                   {classData.teachers.map((teacher, index) => (
                     <Link key={index} to={`${pathname}/teachers/${teacher._id}`} className="mb-0 ml-3 font-bold">{teacher.fullName}</Link>
                   ))}

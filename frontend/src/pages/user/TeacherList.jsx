@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 
-import api from '../../../api'
-import Layout from '../../../components/layouts'
-import { Breadcrumb } from '../../../components/breadcrumb'
+import api from '../../api'
+import Layout from '../../components/layouts'
+import { Breadcrumb } from '../../components/breadcrumb'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
 import { Image, Select, Skeleton } from 'antd'
 import moment from 'moment/moment'
 import Cookies from 'js-cookie'
 
-import FallBack from '../../../assets/images/profile.png'
+import FallBack from '../../assets/images/profile.png'
 
-const TeacherDetailPage = () => {
+const TeacherList = () => {
   // Use params
   const { id } = useParams()
 
@@ -21,45 +21,29 @@ const TeacherDetailPage = () => {
   // Location
   const { pathname } = useLocation()
   const classLocation = pathname.split('/teachers')[0]
-  const location = pathname.includes('classes')
 
   // Local States
   const [teacher, setTeacher] = useState(null)
 
   // Breadcrumb Items
-  const paths = location
-    ? [
-        {
-          name: 'Dashboard',
-          destination: '/dashboard'
-        },
-        {
-          name: 'Manajemen Kelas',
-          destination: '/management/classes'
-        },
-        {
-          name: 'Detail Kelas',
-          destination: `${classLocation}`
-        },
-        {
-          name: 'Detail Guru',
-          destination: `${pathname}`
-        }
-      ]
-    : [
-        {
-          name: 'Dashboard',
-          destination: '/dashboard'
-        },
-        {
-          name: 'Manajemen Data Guru',
-          destination: '/management/teachers'
-        },
-        {
-          name: 'Detail Guru',
-          destination: `/management/teachers/${id}`
-        }
-      ]
+  const paths = [
+    {
+      name: 'Dashboard',
+      destination: '/dashboard'
+    },
+    {
+      name: 'Daftar Kelas',
+      destination: '/classes'
+    },
+    {
+      name: 'Detail Kelas',
+      destination: `${classLocation}`
+    },
+    {
+      name: 'Detail Guru',
+      destination: `${pathname}`
+    }
+  ]
 
   // Fetching teacher data
   const getTeacherDetails = async () => {
@@ -179,4 +163,4 @@ const Enrolled = ({ label, value }) => {
   )
 }
 
-export default TeacherDetailPage
+export default TeacherList
