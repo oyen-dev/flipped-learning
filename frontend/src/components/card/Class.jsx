@@ -1,4 +1,5 @@
 import { useGlobal } from '../../contexts/Global'
+import { useAuth } from '../../contexts/Auth'
 import { useManagement } from '../../contexts/Management'
 
 import api from '../../api'
@@ -19,6 +20,10 @@ const Class = (props) => {
   // Management States
   const { managementStates } = useManagement()
   const { setIsFetchClass } = managementStates
+
+  // Auth State
+  const { authState } = useAuth()
+  const { user } = authState
 
   // Archive class
   const archiveClass = async (id, archive) => {
@@ -199,7 +204,8 @@ const Class = (props) => {
     >
       <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/class.jpg')] bg-center object-contain object-center px-3 py-3 rounded-md">
         <div className="flex w-full items-center justify-end">
-          <div className="dropdown dropdown-end">
+          {user.role !== 'STUDENT' && (
+            <div className="dropdown dropdown-end">
             <label tabIndex={0} className="">
               <BsGear className="w-6 h-6 cursor-pointer fill-white hover:fill-blue-500 duration-150" />
             </label>
@@ -251,6 +257,7 @@ const Class = (props) => {
                 : null}
             </ul>
           </div>
+          )}
         </div>
 
         <div className="flex flex-col w-full items-start justify-start text-white">
