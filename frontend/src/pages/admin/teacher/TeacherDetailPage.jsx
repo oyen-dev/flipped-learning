@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useAuth } from '../../../contexts/Auth'
 
 import api from '../../../api'
 import Layout from '../../../components/layouts'
 import { Breadcrumb } from '../../../components/breadcrumb'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
 import { Image, Select, Skeleton } from 'antd'
 import moment from 'moment/moment'
@@ -15,30 +16,57 @@ const TeacherDetailPage = () => {
   // Use params
   const { id } = useParams()
 
+  // Auth state
+  const { authState } = useAuth()
+  const { user } = authState
+
   // Navigator
   const navigate = useNavigate()
+
+  // Location
+  const { pathname } = useLocation()
+  const classLocation = pathname.split('/teachers')[0]
 
   // Local States
   const [teacher, setTeacher] = useState(null)
 
   // Breadcrumb Items
-  const paths = [
-    {
-      name: 'Dashboard',
-      destination: '/dashboard'
-    },
-    {
-      name: 'Manajemen Data Guru',
-      destination: '/management/teachers'
-    },
-    {
-      name: 'Detail Guru',
-      destination: `/management/teachers/${id}`
-    }
-  ]
+  const paths = user.role === 'TEACHER'
+    ? [
+        {
+          name: 'Dashboard',
+          destination: '/dashboard'
+        },
+        {
+          name: 'Manajemen Data Guru',
+          destination: '/management/teachers'
+        },
+        {
+          name: 'Detail Guru',
+          destination: `/management/teachers/${id}`
+        }
+      ]
+    : [
+        {
+          name: 'Dashboard',
+          destination: '/dashboard'
+        },
+        {
+          name: 'Daftar Kelas',
+          destination: '/classes'
+        },
+        {
+          name: 'Detail Kelas',
+          destination: `${classLocation}`
+        },
+        {
+          name: 'Detail Guru',
+          destination: `${pathname}`
+        }
+      ]
 
   // Fetching teacher data
-  const getStudentDetails = async () => {
+  const getTeacherDetails = async () => {
     // Configuration
     const config = {
       headers: {
@@ -52,7 +80,7 @@ const TeacherDetailPage = () => {
 
   // Initail fetch data
   useEffect(() => {
-    getStudentDetails()
+    getTeacherDetails()
   }, [])
 
   return (

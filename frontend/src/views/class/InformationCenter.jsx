@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/Auth'
 import { PostTaskInfo } from '../../components/forms'
 import PostList from './PostList'
 
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { Spin } from 'antd'
 import api from '../../api'
 import Cookies from 'js-cookie'
@@ -24,6 +24,9 @@ const InformationCenter = (props) => {
 
   // Navigator
   const navigate = useNavigate()
+
+  // Get current path using router
+  const { pathname } = useLocation()
 
   // Local States
   const [classData, setClassData] = useState(null)
@@ -141,7 +144,7 @@ const InformationCenter = (props) => {
                 <p className='mb-0'>Pengajar</p>
                 <div className="flex flex-col w-full">
                   {classData.teachers.map((teacher, index) => (
-                    <p key={index} href={teacher._id} className="mb-0 ml-3 font-bold">{teacher.fullName}</p>
+                    <Link key={index} to={`${pathname}/teachers/${teacher._id}`} className="mb-0 ml-3 font-bold">{teacher.fullName}</Link>
                   ))}
                 </div>
               </div>

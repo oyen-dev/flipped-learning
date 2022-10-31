@@ -71,7 +71,10 @@ export default function AppRoutes () {
         </Route>
 
         <Route path="/classes">
-          <Route path=':id' element={isAuthenticated ? <ClassDetail /> : <Navigate to="/auth" />} />
+          <Route path=':id'>
+            <Route path='teachers/:id' element={isAuthenticated ? (<ManagementContext> <TeacherDetailPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            <Route index element={isAuthenticated ? <ClassDetail /> : <Navigate to="/auth" />}/>
+          </Route>
           <Route index element={isAuthenticated ? <ManagementContext> <Classes /> </ManagementContext> : <Navigate to="/auth" />} />
         </Route>
 
