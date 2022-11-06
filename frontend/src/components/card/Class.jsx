@@ -1,6 +1,7 @@
 import { useGlobal } from '../../contexts/Global'
 import { useAuth } from '../../contexts/Auth'
 import { useManagement } from '../../contexts/Management'
+import momentId from '../../constants/momentId'
 
 import api from '../../api'
 
@@ -8,6 +9,7 @@ import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { BsGear } from 'react-icons/bs'
 import moment from 'moment'
+moment.defineLocale('id', momentId)
 
 const Class = (props) => {
   // Props destructure
@@ -264,8 +266,6 @@ const Class = (props) => {
           {schedule.map((item, index) => {
             const { start, end } = item
 
-            // Set moment locale to indonesia
-            moment.locale('id')
             const formattedStart = moment(start).format('dddd')
             const startTime = moment(start).format('HH:mm')
             const endTime = moment(end).format('HH:mm')

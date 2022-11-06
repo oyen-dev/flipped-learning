@@ -1,22 +1,14 @@
-const ActiveClass = () => {
-  const data = [
-    {
-      key: '1',
-      nomor: 1,
-      nama: 'Teknik Pengolahan Audio Video',
-      kelas: 'XI IPA',
-      guru: 'Budi Tono, S.Pd., M.Pd.',
-      jumlah: 34
-    },
-    {
-      key: '2',
-      nomor: 2,
-      nama: 'Pengolahan Makan',
-      kelas: 'X - APHP',
-      guru: 'Budi Tono, S.Pd., M.Pd.',
-      jumlah: 28
-    }
-  ]
+import { useAuth } from '../../contexts/Auth'
+
+import { Spin } from 'antd'
+
+const ActiveClass = (props) => {
+  const { classes } = props
+
+  // Auth States
+  const { authState } = useAuth()
+  const { user } = authState
+
   return (
     <table className="w-full table-auto">
       <thead>
@@ -39,50 +31,92 @@ const ActiveClass = () => {
         </tr>
       </thead>
       <tbody className="text-black text-xs font-light ">
-        {data.map((item) => {
-          return (
+        {classes === null
+          ? (
+            <tr
+            className="border-b border-gray-200 bg-gray-50 hover:bg-gray-300"
+          >
+            <td className="py-3 px-5 text-left overflow-clip">
+              <div className="flex items-center justify-center">
+                <div className="font-medium whitespace-nowrap">
+                  <Spin size="small" />
+                </div>
+              </div>
+            </td>
+            <td className="py-3 px-5 text-left overflow-clip">
+              <div className="flex items-center justify-start">
+                <div className="font-medium whitespace-nowrap">
+                  <Spin size='small' />
+                </div>
+              </div>
+            </td>
+            <td className="py-3 px-5 text-left overflow-clip">
+              <div className="flex items-center justify-start">
+                <div className="font-medium whitespace-nowrap">
+                  <Spin size='small' />
+                </div>
+              </div>
+            </td>
+            <td className="py-3 px-5 text-left overflow-clip">
+              <div className="flex items-center justify-start">
+                <div className="font-medium whitespace-nowrap">
+                  <Spin size='small' />
+                </div>
+              </div>
+            </td>
+            <td className="py-3 px-5 text-left overflow-clip">
+              <div className="flex items-center justify-center">
+                <div className="font-medium whitespace-nowrap">
+                  <Spin size='small' />
+                </div>
+              </div>
+            </td>
+          </tr>
+            )
+          : classes.map((item, index) => {
+            return (
             <tr
               className="border-b border-gray-200 bg-gray-50 hover:bg-gray-300"
-              key={item.key}
+              key={index}
             >
               <td className="py-3 px-5 text-left overflow-clip">
                 <div className="flex items-center justify-center">
                   <span className="font-medium whitespace-nowrap">
-                    {item.nomor}
+                    {(index + 1)}
                   </span>
                 </div>
               </td>
               <td className="py-3 px-5 text-left overflow-clip">
                 <div className="flex items-center justify-start">
                   <span className="font-medium whitespace-nowrap">
-                    {item.nama}
+                    {item.name}
                   </span>
                 </div>
               </td>
               <td className="py-3 px-5 text-left overflow-clip">
                 <div className="flex items-center justify-start">
                   <span className="font-medium whitespace-nowrap">
-                    {item.kelas}
+                    {item.gradeId.name}
                   </span>
                 </div>
               </td>
               <td className="py-3 px-5 text-left overflow-clip">
                 <div className="flex items-center justify-start">
                   <span className="font-medium whitespace-nowrap">
-                    {item.guru}
+                    {user.role === 'TEACHER' ? user.name : item.teachers[0].fullName}
                   </span>
                 </div>
               </td>
               <td className="py-3 px-5 text-left overflow-clip">
                 <div className="flex items-center justify-center">
                   <span className="font-medium whitespace-nowrap">
-                    {item.jumlah}
+                    {item.students[0]}
                   </span>
                 </div>
               </td>
             </tr>
-          )
-        })}
+            )
+          }) }
       </tbody>
     </table>
   )
