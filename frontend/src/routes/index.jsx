@@ -30,8 +30,9 @@ export default function AppRoutes () {
 
   // Auth States
   const { authState } = useAuth()
-  const { isAuthenticated } = authState
+  const { isAuthenticated, socket, user, singleEmit, setSingleEmit } = authState
 
+  // Dark switcher
   useEffect(() => {
     if (theme) {
       document.documentElement.classList.add('dark')
@@ -39,6 +40,18 @@ export default function AppRoutes () {
       document.documentElement.classList.remove('dark')
     }
   }, [theme])
+
+  // Emit user online when socketReady and userReady
+  useEffect(() => {
+    if (singleEmit) {
+      if (user._id !== undefined) {
+        socket.emit('req_onlineUser', { userId: user._id })
+        setSingleEmit(false)
+      } else {
+        console.log('No user')
+      }
+    }
+  }, [socket, user])
 
   return (
     <BrowserRouter>
