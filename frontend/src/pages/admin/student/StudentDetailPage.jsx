@@ -61,9 +61,9 @@ const StudentDetailPage = () => {
   return (
     <Layout>
         <Breadcrumb paths={paths} navigate={navigate} />
-      <div className="flex flex-col w-full bg-gray-900 rounded-lg py-2 px-2">
+      <div className="flex flex-col w-full rounded-lg py-2 px-2 text-black dark:text-white bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300">
         <div className="flex w-full justify-center items-center h-10 sticky top-0 left-0 z-40">
-          <h5 className="font-semibold text-lg text-center mb-0 text-white">
+          <h5 className="font-semibold text-lg text-center mb-0 text-black dark:text-white transition-all ease-in-out duration-300">
             Data Profil Siswa
           </h5>
         </div>
@@ -98,7 +98,7 @@ const StudentDetailPage = () => {
 
 const Field = ({ label, value }) => {
   return (
-      <div className="flex flex-col lg:flex-row w-full items-center justify-center">
+      <div className="flex flex-col lg:flex-row w-full items-center justify-center text-black dark:text-white transition-all ease-in-out duration-300">
         <div className="flex w-full lg:w-1/6 justify-center lg:justify-start">
           <p className="text-base mb-0">{label}</p>
         </div>
@@ -114,7 +114,7 @@ const Field = ({ label, value }) => {
 
 const Enrolled = ({ label, value }) => {
   return (
-      <div className="flex flex-col lg:flex-row w-full justify-center">
+      <div className="flex flex-col lg:flex-row w-full justify-center text-black dark:text-white transition-all ease-in-out duration-300">
         <div className="flex w-full lg:w-1/6 justify-center lg:justify-start">
           <p className="text-base mb-0">{label}</p>
         </div>

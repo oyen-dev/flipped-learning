@@ -1,27 +1,29 @@
 import { useEffect, useState } from 'react'
+import { useAuth } from '../../contexts/Auth'
 
-import api from '../../../api'
-import Layout from '../../../components/layouts'
-import { EditStudent } from '../../../components/forms'
-import { Breadcrumb } from '../../../components/breadcrumb'
-import { useNavigate, useParams } from 'react-router-dom'
+import api from '../../api'
+import Layout from '../../components/layouts'
+import { EditUser } from '../../components/forms'
+import { Breadcrumb } from '../../components/breadcrumb'
+import { useNavigate } from 'react-router-dom'
 
 import { Image, Button, message, Upload, Skeleton } from 'antd'
 import ImgCrop from 'antd-img-crop'
 import { UploadOutlined } from '@ant-design/icons'
 import Cookies from 'js-cookie'
 
-import FallBack from '../../../assets/images/profile.png'
+import FallBack from '../../assets/images/profile.png'
 
-const EditStudentPage = () => {
-  // Use params
-  const { id } = useParams()
-
+const EditProfilePage = () => {
   // Navigator
   const navigate = useNavigate()
 
+  // Auth Functions
+  const { authFunctions } = useAuth()
+  const { fetchUser } = authFunctions
+
   // Local States
-  const [student, setStudent] = useState(null)
+  const [userData, setUserData] = useState(null)
   const [fileList, setFileList] = useState([])
   const [fetch, setFetch] = useState(false)
 
@@ -32,17 +34,13 @@ const EditStudentPage = () => {
       destination: '/dashboard'
     },
     {
-      name: 'Manajemen Data Siswa',
-      destination: '/management/students'
-    },
-    {
-      name: 'Detail Siswa',
-      destination: `/management/students/${id}`
+      name: 'Edit Profile',
+      destination: '/profile'
     }
   ]
 
   // Fetching student data
-  const getStudentDetails = async () => {
+  const getUserDetails = async () => {
     // Configuration
     const config = {
       headers: {
@@ -50,10 +48,10 @@ const EditStudentPage = () => {
       }
     }
 
-    await api.get(`users/students/${id}`, config)
+    await api.get('/users/profile', config)
       .then((res) => {
         // console.log(res)
-        setStudent(res.data.data)
+        setUserData(res.data.data)
       })
   }
 
@@ -70,9 +68,10 @@ const EditStudentPage = () => {
     }
     fmData.append('files', file)
     try {
-      await api.post(`/users/students/picture/${id}`, fmData, config)
+      await api.post('/users/picture', fmData, config)
       onSuccess('Ok')
       setFetch(true)
+      fetchUser()
     } catch (err) {
       console.log('Eroor: ', err)
       onError({ err })
@@ -116,13 +115,13 @@ const EditStudentPage = () => {
 
   // Initail fetch data
   useEffect(() => {
-    getStudentDetails()
+    getUserDetails()
   }, [])
 
   // Fetch data after update
   useEffect(() => {
     if (fetch) {
-      getStudentDetails()
+      getUserDetails()
       setFetch(false)
     }
   }, [fetch])
@@ -133,16 +132,16 @@ const EditStudentPage = () => {
       <div className="flex flex-col w-full rounded-lg py-2 px-2 text-black dark:text-white bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300">
         <div className="flex w-full justify-center items-center h-10 sticky top-0 left-0 z-40">
           <h5 className="font-semibold text-lg text-center mb-0 text-black dark:text-white transition-all ease-in-out duration-300">
-            Edit Profil Siswa
+            Edit Profil
           </h5>
         </div>
         <div className="flex flex-col w-full h-[90%]">
           <div className="flex flex-col lg:flex-row w-full text-white items-center justify-start py-5 space-y-4 lg:space-y-0 overflow-auto">
             <div className="flex flex-col space-y-5 w-full lg:w-1/3 h-full items-center justify-center">
-              {student
+              {userData
                 ? (
                 <>
-                  <Image src={student.picture} className="h-[80%] w-[60%]" fallback={FallBack}/>
+                  <Image src={userData.picture} className="h-[80%] w-[60%]" fallback={FallBack}/>
                   <ImgCrop rotate>
                     <Upload {...uploadProps}>
                       <Button icon={<UploadOutlined />}>Update Picture Profile</Button>
@@ -155,7 +154,7 @@ const EditStudentPage = () => {
                   )}
             </div>
             <div className="flex flex-col items-start justify-start w-full lg:w-2/3 h-full p-2 space-y-4">
-              <EditStudent student={student} />
+              <EditUser student={userData} />
             </div>
           </div>
         </div>
@@ -164,4 +163,4 @@ const EditStudentPage = () => {
   )
 }
 
-export default EditStudentPage
+export default EditProfilePage

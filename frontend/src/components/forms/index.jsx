@@ -3,6 +3,8 @@ export { default as Register } from './Register'
 export { default as ForgotPassword } from './ForgotPassword'
 export { default as ResetPassword } from './ResetPassword'
 
+export { default as EditUser } from './EditUser'
+
 export { default as AddStudent } from './AddStudent'
 export { default as EditStudent } from './EditStudent'
 

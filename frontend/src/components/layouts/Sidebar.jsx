@@ -13,7 +13,7 @@ const Sidebar = () => {
       <div className="flex flex-col overflow-y-auto overflow-x-hidden justify-between flex-grow pt-2">
         <ul className="flex flex-col py-2 space-y-1">
           <li className="flex w-full items-center justify-center">
-            <div className="flex flex-col items-center justify-center w-10/12">
+            <Link to='/profile' className="flex flex-col items-center justify-center w-10/12">
               <div className="flex items-center justify-center object-cove">
                 <img
                   src={picture}
@@ -24,7 +24,7 @@ const Sidebar = () => {
               <p className="hidden md:block group-hover:block truncate w-full text-sm text-center text-gray-900 dark:text-white transition-all duration-300 ease-in-out font-medium tracking-wide mb-0 pt-2">
                 {name}
               </p>
-            </div>
+            </Link>
           </li>
 
           <Link to="/dashboard">

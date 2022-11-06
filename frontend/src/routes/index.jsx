@@ -16,7 +16,8 @@ import {
   EditStudentPage,
   ManagementTeacherPage,
   TeacherDetailPage,
-  EditTeacherPage
+  EditTeacherPage,
+  EditProfilePage
 } from '../pages/admin'
 
 import { Classes, ClassDetailPage, TeacherList } from '../pages/user'
@@ -58,6 +59,7 @@ export default function AppRoutes () {
       <Routes>
         <Route path="/" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/auth" />} />
         <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/auth" />} />
+        <Route path="/profile" element={isAuthenticated ? <ManagementContext> <EditProfilePage /> </ManagementContext> : <Navigate to="/auth" />} />
 
         <Route path="/management">
           <Route path='classes'>

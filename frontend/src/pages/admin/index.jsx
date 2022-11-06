@@ -1,4 +1,5 @@
 export { default as DashboardPage } from './DashboardPage'
+export { default as EditProfilePage } from './EditProfilePage'
 export { default as ManagementClassPage } from './class/ManagementClassPage'
 export { default as ManagementStudentPage } from './student/ManagementStudentPage'
 export { default as ClassDetailPage } from './class/ClassDetailPage'
