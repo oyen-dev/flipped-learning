@@ -15,7 +15,7 @@ const Header = ({ children }) => {
 
   // Auth States
   const { authState } = useAuth()
-  const { setIsAuthenticated, setJwtToken, setUser } = authState
+  const { setIsAuthenticated, setJwtToken, setUser, setSingleEmit, socket } = authState
 
   const handleTheme = () => {
     setTheme(!theme)
@@ -40,6 +40,8 @@ const Header = ({ children }) => {
         setJwtToken(null)
         setIsAuthenticated(false)
         setUser({})
+        setSingleEmit(true)
+        socket.emit('req_offlineUser')
 
         mySwal.fire({
           title: 'See you again!',
