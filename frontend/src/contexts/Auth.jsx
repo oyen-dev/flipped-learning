@@ -46,7 +46,6 @@ export const AuthProvider = ({ children }) => {
   // Fetch user data when jwtToken changed
   useEffect(() => {
     if (jwtToken) {
-      console.log('Is authenticated')
       const asyncFetchUser = async () => {
         await fetchUser()
       }

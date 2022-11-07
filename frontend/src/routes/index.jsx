@@ -48,8 +48,6 @@ export default function AppRoutes () {
       if (user._id !== undefined) {
         socket.emit('req_onlineUser', { userId: user._id })
         setSingleEmit(false)
-      } else {
-        console.log('No user')
       }
     }
   }, [socket, user])

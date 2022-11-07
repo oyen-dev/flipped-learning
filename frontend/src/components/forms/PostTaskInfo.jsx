@@ -1,5 +1,9 @@
 import { useState } from 'react'
+import { useGlobal } from '../../contexts/Global'
 
+import api from '../../api'
+
+import Cookies from 'js-cookie'
 import moment from 'moment/moment'
 import {
   Form,
@@ -11,29 +15,79 @@ import {
   DatePicker
 } from 'antd'
 import { InboxOutlined } from '@ant-design/icons'
-const { Dragger } = Upload
+import { useLocation } from 'react-router-dom'
 
+const { Dragger } = Upload
 const { Panel } = Collapse
 
 const PostTaskInfo = () => {
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
   // Local States
   const [task, setTask] = useState(false)
+  const [fileList, setFileList] = useState([])
+  const [attachments, setAttachments] = useState([])
+  const tempAttachments = []
 
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  // Use location
+  const { pathname } = useLocation()
+  const id = `cls-${pathname.split('cls-')[1]}`
+
+  const onFinish = async (values) => {
+    const payload = {
+      title: values.title,
+      description: values.description,
+      attachments,
+      isTask: task,
+      deadline: {
+        start: moment().format(),
+        end: moment(values.deadline).format()
+      }
+    }
+
+    // Show loading
+    mySwal.fire({
+      title: 'Creating post...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Configuration
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    // Create post
+    try {
+      const res = await api.post(`/class/${id}/post`, payload, config)
+      console.log(res)
+
+      mySwal.fire({
+        icon: 'success',
+        title: 'Create post success',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      })
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: error.response.data.message,
+        timer: 2000,
+        showConfirmButton: false
+      })
+    }
   }
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
-  }
-
-  const changeDate = (value, dateString) => {
-    console.log('Selected Time: ', value)
-    console.log('Formatted Selected Time: ', dateString)
-  }
-
-  const onOk = (value) => {
-    console.log('onOk: ', value)
   }
 
   const disabledDate = (current) => {
@@ -41,27 +95,65 @@ const PostTaskInfo = () => {
     return current && current <= moment().endOf('days')
   }
 
-  const props = {
-    name: 'file',
+  // Custom upload image request
+  const uploadAttachment = async options => {
+    const { onSuccess, onError, file } = options
+
+    const fmData = new FormData()
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+    fmData.append('files', file)
+    try {
+      const { data } = await api.post('/attachment/multiple', fmData, config)
+      tempAttachments.push(data.data.attachments[0]._id)
+      console.log(tempAttachments)
+      setAttachments(tempAttachments)
+
+      onSuccess('Ok')
+    } catch (err) {
+      console.log('Eroor: ', err)
+      onError({ err })
+    }
+  }
+
+  const uploadAttachmentProps = {
+    name: 'attachmentForm',
     multiple: true,
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    customRequest: uploadAttachment,
 
-    onChange (info) {
-      const { status } = info.file
+    beforeUpload: (file) => {
+      const listOfAcceptFiles = [
+        'image/jpeg',
+        'image/png',
+        'image/svg+xml',
+        'video/mp4',
+        'video/quicktime',
+        'video/webm',
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+      ]
 
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList)
+      const acceptFiles = listOfAcceptFiles.includes(file.type)
+
+      if (!acceptFiles) {
+        message.error('You can only upload image, video, pdf, ms word, and ppt file!')
       }
 
-      if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`)
-      } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`)
+      const limitFileSize = file.size / 1024 / 1024 < 25
+      if (!limitFileSize) {
+        message.error('Image must smaller than 25MB!')
       }
+      return acceptFiles && limitFileSize
     },
-
-    onDrop (e) {
-      console.log('Dropped files', e.dataTransfer.files)
+    onChange: ({ fileList: newFileList }) => {
+      setFileList(newFileList)
     }
   }
   return (
@@ -97,7 +189,7 @@ const PostTaskInfo = () => {
         <Collapse>
           <Panel header="Lampiran" key="1">
             <Form.Item name="lampiran">
-              <Dragger {...props}>
+              <Dragger {...uploadAttachmentProps}>
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>
@@ -125,7 +217,7 @@ const PostTaskInfo = () => {
             ]}
             className="w-full"
           >
-            <DatePicker placeholder='Tengat penugasan' disabledDate={disabledDate} showTime onChange={changeDate} onOk={onOk} className='w-full' />
+            <DatePicker placeholder='Tengat penugasan' disabledDate={disabledDate} showTime className='w-full' />
           </Form.Item>
         )}
 

@@ -60,7 +60,7 @@ const InformationCenter = (props) => {
         ? <Spin />
         : <>
             {/* Posting Informasi */}
-            {user.role === 'TEACHER' || user.role === 'ADMIN' ? <PostTaskInfo /> : null}
+            {user.role === 'TEACHER' ? <PostTaskInfo /> : null}
 
             {/* Class Posts */}
             <PostList posts={classData.posts}/>
