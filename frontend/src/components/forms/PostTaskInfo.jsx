@@ -20,7 +20,10 @@ import { useLocation } from 'react-router-dom'
 const { Dragger } = Upload
 const { Panel } = Collapse
 
-const PostTaskInfo = () => {
+const PostTaskInfo = (props) => {
+  // Destrcuture props
+  const { setFetchPosts } = props
+
   // Global Functions
   const { globalFunctions } = useGlobal()
   const { mySwal } = globalFunctions
@@ -35,6 +38,9 @@ const PostTaskInfo = () => {
   // Use location
   const { pathname } = useLocation()
   const id = `cls-${pathname.split('cls-')[1]}`
+
+  // UseForm
+  const [form] = Form.useForm()
 
   const onFinish = async (values) => {
     const payload = {
@@ -75,7 +81,10 @@ const PostTaskInfo = () => {
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false
-      })
+      }).then(() => setFetchPosts(true))
+
+      // Reset form
+      form.resetFields()
     } catch (error) {
       console.log(error)
       mySwal.fire({
@@ -84,7 +93,7 @@ const PostTaskInfo = () => {
         text: error.response.data.message,
         timer: 2000,
         showConfirmButton: false
-      })
+      }).then(() => setFetchPosts(true))
     }
   }
 
@@ -181,6 +190,7 @@ const PostTaskInfo = () => {
       </p>
       <Form
         name="postTaskInfoForm"
+        form={form}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         className="space-y-4"

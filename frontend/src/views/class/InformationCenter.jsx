@@ -23,36 +23,40 @@ const InformationCenter = (props) => {
 
   // Local States
   const [classData, setClassData] = useState(null)
+  const [fetchPosts, setFetchPosts] = useState(true)
 
-  // Initial fetch data
-  useEffect(() => {
-    const getClassDetail = async () => {
-      // Show Loading
-      mySwal.fire({
-        html: 'Wait a moment...',
-        didOpen: () => {
-          mySwal.showLoading()
-        }
-      })
-
-      const config = {
-        headers: {
-          authorization: `Bearer ${Cookies.get('jwtToken')}`
-        }
+  const getClassPosts = async () => {
+    // Show Loading
+    mySwal.fire({
+      html: 'Wait a moment...',
+      didOpen: () => {
+        mySwal.showLoading()
       }
-      try {
-        const { data } = await api.get(`/class/${id}`, config)
-        // console.log(data)
-        setClassData(data.data)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        mySwal.close()
+    })
+
+    const config = {
+      headers: {
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
       }
     }
+    try {
+      const { data } = await api.get(`/class/${id}/posts`, config)
+      // console.log(data.data)
+      setClassData(data.data)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      mySwal.close()
+    }
+  }
 
-    getClassDetail()
-  }, [])
+  // Fetch data when fetchPosts state changed
+  useEffect(() => {
+    if (fetchPosts) {
+      getClassPosts()
+      setFetchPosts(false)
+    }
+  }, [fetchPosts])
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-between py-4 px-4 space-y-4 rounded-lg text-black dark:text-white z-10 bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300">
@@ -60,12 +64,12 @@ const InformationCenter = (props) => {
         ? <Spin />
         : <>
             {/* Posting Informasi */}
-            {user.role === 'TEACHER' ? <PostTaskInfo /> : null}
+            {user.role === 'TEACHER' ? <PostTaskInfo setFetchPosts={setFetchPosts}/> : null}
 
             <Divider />
 
             {/* Class Posts */}
-            <PostList posts={classData.posts}/>
+            <PostList posts={classData.posts} />
           </>
           }
     </div>
