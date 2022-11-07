@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/Auth'
 import { PostTaskInfo } from '../../components/forms'
 import { PostList } from './index'
 
-import { Spin } from 'antd'
+import { Spin, Divider } from 'antd'
 import api from '../../api'
 import Cookies from 'js-cookie'
 
@@ -61,6 +61,8 @@ const InformationCenter = (props) => {
         : <>
             {/* Posting Informasi */}
             {user.role === 'TEACHER' ? <PostTaskInfo /> : null}
+
+            <Divider />
 
             {/* Class Posts */}
             <PostList posts={classData.posts}/>

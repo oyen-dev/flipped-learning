@@ -73,18 +73,18 @@ const Header = ({ children }) => {
             <button onClick={handleTheme}>
               {theme
                 ? (
-                  <BsSun className="w-6 h-6 dark:hover:fill-blue-500 fill-gray-900 dark:fill-white duration-300 ease-in-out"/>
+                  <BsSun className="w-6 h-6 hover:fill-blue-500 dark:hover:fill-blue-500 fill-gray-900 dark:fill-white duration-300 ease-in-out"/>
                   )
                 : (
-                <BsMoonStars className="w-6 h-6 dark:hover:fill-blue-500 fill-gray-900 dark:fill-white duration-300 ease-in-out"/>
+                <BsMoonStars className="w-6 h-6 hover:fill-blue-500 dark:hover:fill-blue-500 fill-gray-900 dark:fill-white duration-300 ease-in-out"/>
                   )}
             </button>
 
             <button className="flex flex-row items-center space-x-2 group" onClick={handleLogout}>
-              <BsBoxArrowInRight className="w-6 h-6 dark:hover:fill-blue-500 fill-gray-900 dark:fill-white duration-300 ease-in-out"/>
-              <p className="mb-0 text-gray-900 dark:text-white group-hover:text-blue-500 duration-300">
+              <BsBoxArrowInRight className="w-6 h-6 fill-gray-900 dark:fill-white group-hover:fill-blue-500 duration-300 ease-in-out"/>
+              <span className="mb-0 text-gray-900 dark:text-white hover:fill-blue-500 duration-300 ease-in-out">
                 Log Out
-              </p>
+              </span>
             </button>
           </div>
         </div>

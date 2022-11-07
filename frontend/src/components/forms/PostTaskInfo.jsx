@@ -27,9 +27,10 @@ const PostTaskInfo = () => {
 
   // Local States
   const [task, setTask] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [fileList, setFileList] = useState([])
   const [attachments, setAttachments] = useState([])
-  const tempAttachments = []
+  let tempAttachments = []
 
   // Use location
   const { pathname } = useLocation()
@@ -39,13 +40,14 @@ const PostTaskInfo = () => {
     const payload = {
       title: values.title,
       description: values.description,
-      attachments,
+      attachments: attachments.map((attachment) => attachment.id),
       isTask: task,
       deadline: {
         start: moment().format(),
         end: moment(values.deadline).format()
       }
     }
+    console.log(payload)
 
     // Show loading
     mySwal.fire({
@@ -109,8 +111,13 @@ const PostTaskInfo = () => {
     fmData.append('files', file)
     try {
       const { data } = await api.post('/attachment/multiple', fmData, config)
-      tempAttachments.push(data.data.attachments[0]._id)
-      console.log(tempAttachments)
+      // console.log(data)
+
+      const attachment = {
+        url: data.data.attachments[0].url,
+        id: data.data.attachments[0]._id
+      }
+      tempAttachments.push(attachment)
       setAttachments(tempAttachments)
 
       onSuccess('Ok')
@@ -154,6 +161,17 @@ const PostTaskInfo = () => {
     },
     onChange: ({ fileList: newFileList }) => {
       setFileList(newFileList)
+    },
+    onRemove: (file) => {
+      console.log(file)
+
+      const deletedFileName = file.name.replace(/\s/g, '')
+      console.log(deletedFileName)
+
+      // Remove attachment from tempAttachments using include of property url
+      tempAttachments = attachments.filter(attachment => !attachment.url.includes(deletedFileName))
+      // console.log(tempAttachments)
+      setAttachments(tempAttachments)
     }
   }
   return (
@@ -235,7 +253,7 @@ const PostTaskInfo = () => {
             </Checkbox>
 
           <Form.Item className="w-full flex justify-end">
-            <button className="py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-black dark:text-white bg-[#fcfff7] dark:bg-[#34A0A4] rounded-lg">
+            <button className="py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-black dark:text-white bg-[#fcfff7] dark:bg-[#34A0A4] hover:bg-gray-300 dark:hover:bg-[#3484a4] rounded-lg duration-150">
               Posting
             </button>
           </Form.Item>

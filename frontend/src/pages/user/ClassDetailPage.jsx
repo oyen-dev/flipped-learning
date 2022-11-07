@@ -59,8 +59,8 @@ const ClassDetailPage = () => {
       destination: '/dashboard'
     },
     {
-      name: 'Manajemen Kelas',
-      destination: '/management/classes'
+      name: 'Daftar Kelas',
+      destination: '/classes'
     },
     {
       name: 'Detail Kelas',
@@ -217,7 +217,7 @@ const ClassDetailPage = () => {
 
                 {/* Presensi  */}
                 <div className="flex w-full justify-end">
-                  <button className="py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium bg-[#fcfff7] dark:bg-[#34A0A4] rounded-lg">
+                  <button className="py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium bg-[#fcfff7] dark:bg-[#34A0A4] hover:bg-gray-300 dark:hover:bg-[#3484a4] rounded-lg duration-150">
                     {user.role === 'STUDENT' ? 'Presensi Sekarang' : 'Buka Presensi'}
                   </button>
                 </div>
