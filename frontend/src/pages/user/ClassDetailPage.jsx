@@ -63,8 +63,8 @@ const ClassDetailPage = () => {
       destination: '/classes'
     },
     {
-      name: 'Detail Kelas',
-      destination: `/management/classes/${id}`
+      name: 'Beranda Kelas',
+      destination: `/classes/${id}`
     }
   ]
 

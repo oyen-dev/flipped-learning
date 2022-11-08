@@ -38,7 +38,7 @@ const PostTaskInfo = (props) => {
 
   // Use location
   const { pathname } = useLocation()
-  const id = `cls-${pathname.split('cls-')[1]}`
+  const id = `cls-${pathname.split('/cls-')[1]}`
 
   // UseForm
   const [form] = Form.useForm()

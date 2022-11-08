@@ -40,7 +40,8 @@ const PostList = (props) => {
 
               const postProps = {
                 description: post.description,
-                attachments: post.attachments
+                attachments: post.attachments,
+                postId: post._id
               }
               return (
                 <Panel
