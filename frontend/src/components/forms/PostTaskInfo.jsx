@@ -30,6 +30,7 @@ const PostTaskInfo = (props) => {
 
   // Local States
   const [task, setTask] = useState(false)
+  const [waitUpload, setWaitUpload] = useState(false)
   // eslint-disable-next-line no-unused-vars
   const [fileList, setFileList] = useState([])
   const [attachments, setAttachments] = useState([])
@@ -53,7 +54,6 @@ const PostTaskInfo = (props) => {
         end: moment(values.deadline).format()
       }
     }
-    console.log(payload)
 
     // Show loading
     mySwal.fire({
@@ -110,6 +110,9 @@ const PostTaskInfo = (props) => {
   const uploadAttachment = async options => {
     const { onSuccess, onError, file } = options
 
+    // Set waitUpload to true
+    setWaitUpload(true)
+
     const fmData = new FormData()
     const config = {
       headers: {
@@ -133,6 +136,8 @@ const PostTaskInfo = (props) => {
     } catch (err) {
       console.log('Eroor: ', err)
       onError({ err })
+    } finally {
+      setWaitUpload(false)
     }
   }
 
@@ -263,7 +268,10 @@ const PostTaskInfo = (props) => {
             </Checkbox>
 
           <Form.Item className="w-full flex justify-end">
-            <button className="py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-black dark:text-white bg-[#fcfff7] dark:bg-[#34A0A4] hover:bg-gray-300 dark:hover:bg-[#3484a4] rounded-lg duration-150">
+            <button
+              disabled={waitUpload}
+              className={`py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-black dark:text-white ${waitUpload ? 'bg-gray-400 dark:bg-gray-400 cursor-wait' : 'bg-[#fcfff7] dark:bg-[#34A0A4] hover:bg-gray-300 dark:hover:bg-[#3484a4]'} rounded-lg duration-300 ease-in-out`}
+            >
               Posting
             </button>
           </Form.Item>

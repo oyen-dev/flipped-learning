@@ -41,7 +41,7 @@ const InformationCenter = (props) => {
     }
     try {
       const { data } = await api.get(`/class/${id}/posts`, config)
-      // console.log(data.data)
+      console.log(data.data)
       setClassData(data.data)
     } catch (error) {
       console.log(error)

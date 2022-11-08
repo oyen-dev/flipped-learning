@@ -14,7 +14,7 @@ const Post = (props) => {
 }
 
 const Attachment = (props) => {
-  const { type, name } = props
+  const { type, name, url } = props
 
   const listOfAcceptFiles = [
     'image/jpeg',
@@ -39,7 +39,7 @@ const Attachment = (props) => {
       {indexofType > 6 && indexofType <= 8 && <BsFileWord className="w-5 h-5 fill-black" />}
       {indexofType > 8 && indexofType <= 10 && <BsFilePpt className="w-5 h-5 fill-black" />}
       {indexofType > 10 && <BsFileEarmark className="w-5 h-5 fill-black" />}
-      <span className="mb-0 text-black ">{name}</span>
+      <a href={url} target='_blank' rel='noreferrer' className="mb-0 text-black" download={name}>{name}</a>
     </div>
   )
 }

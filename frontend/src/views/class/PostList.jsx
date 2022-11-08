@@ -16,7 +16,7 @@ const PostList = (props) => {
         ? <Empty message="Belum ada informasi atau postingan di kelas." />
         : <Collapse
             className="flex flex-col w-full space-y-10 site-collapse-custom-collapse"
-            expandIconPosition="right"
+            expandIconPosition="end"
             expandIcon={({ isActive }) =>
               isActive
                 ? (
@@ -32,7 +32,10 @@ const PostList = (props) => {
             {posts.map((post, index) => {
               const headerProps = {
                 picture: post.teacherId.picture,
-                title: post.title
+                title: post.title,
+                createdAt: post.createdAt,
+                isUpdated: post.createdAt !== post.updatedAt,
+                updatedAt: post.updatedAt
               }
 
               const postProps = {
