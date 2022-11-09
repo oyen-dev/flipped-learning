@@ -8,7 +8,7 @@ const { Panel } = Collapse
 
 const PostList = (props) => {
   // Destructure props
-  const { posts } = props
+  const { posts, setFetchPosts } = props
 
   return (
     <div className="flex w-full">
@@ -41,7 +41,8 @@ const PostList = (props) => {
               const postProps = {
                 description: post.description,
                 attachments: post.attachments,
-                postId: post._id
+                postId: post._id,
+                setFetchPosts
               }
               return (
                 <Panel

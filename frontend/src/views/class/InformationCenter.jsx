@@ -64,12 +64,15 @@ const InformationCenter = (props) => {
         ? <Spin />
         : <>
             {/* Posting Informasi */}
-            {user.role === 'TEACHER' ? <PostTaskInfo setFetchPosts={setFetchPosts}/> : null}
-
-            <Divider />
+            {user.role === 'TEACHER'
+              ? <>
+                  <PostTaskInfo setFetchPosts={setFetchPosts}/>
+                  <Divider />
+                </>
+              : null}
 
             {/* Class Posts */}
-            <PostList posts={classData.posts} />
+            <PostList posts={classData.posts} setFetchPosts={setFetchPosts} />
           </>
           }
     </div>

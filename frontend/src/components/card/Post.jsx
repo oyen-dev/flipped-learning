@@ -1,11 +1,14 @@
 import { useGlobal } from '../../contexts/Global'
 import { useAuth } from '../../contexts/Auth'
 
-import { Link } from 'react-router-dom'
+import api from '../../api'
+
+import Cookies from 'js-cookie'
+import { Link, useLocation } from 'react-router-dom'
 import { BsCameraVideo, BsFileImage, BsFilePdf, BsFileWord, BsFilePpt, BsFileEarmark, BsPencilSquare, BsTrash } from 'react-icons/bs'
 
 const Post = (props) => {
-  const { description, attachments, postId } = props
+  const { description, attachments, postId, setFetchPosts } = props
 
   // Global Functions
   const { globalFunctions } = useGlobal()
@@ -14,6 +17,53 @@ const Post = (props) => {
   // Auth States
   const { authState } = useAuth()
   const { user } = authState
+
+  // use Location
+  const { pathname } = useLocation()
+  const classId = `cls-${pathname.split('/cls-')[1]}`
+
+  // Delete Post
+  const deletePost = async () => {
+    // Config
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    // Show loading
+    mySwal.fire({
+      title: 'Deleting post...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Delete post
+    try {
+      await api.delete(`/class/${classId}/posts/${postId}`, config)
+      // console.log(res)
+
+      // Show success
+      mySwal.fire({
+        title: 'Success delete post!',
+        icon: 'success',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      }).then(() => setFetchPosts(true))
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        timer: 2000,
+        showConfirmButton: false,
+        timerProgressBar: true
+      }).then(() => setFetchPosts(true))
+    }
+  }
 
   // Handle delete dialog
   const deletePostDialog = () => {
@@ -27,7 +77,7 @@ const Post = (props) => {
       confirmButtonColor: '#3085d6'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('delete')
+        deletePost()
       }
     })
   }
