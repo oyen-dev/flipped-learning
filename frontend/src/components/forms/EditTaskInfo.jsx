@@ -15,30 +15,50 @@ import {
   DatePicker
 } from 'antd'
 import { InboxOutlined } from '@ant-design/icons'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 
 const { Dragger } = Upload
 const { Panel } = Collapse
 
-const PostTaskInfo = (props) => {
+const EditTaskInfo = (props) => {
   // Destrcuture props
-  const { setFetchPosts } = props
+  const { post } = props
+  console.log(post)
 
   // Global Functions
   const { globalFunctions } = useGlobal()
   const { mySwal } = globalFunctions
 
   // Local States
-  const [task, setTask] = useState(false)
+  const [task, setTask] = useState(post.isTask)
+  const [uploadedAttachments, setUploadedAttachments] = useState(
+    post.attachments.map((attachment, index) => {
+      return {
+        uid: index + 1,
+        name: attachment.name,
+        status: 'done',
+        url: attachment.url
+      }
+    })
+  )
   const [waitUpload, setWaitUpload] = useState(false)
   // eslint-disable-next-line no-unused-vars
-  const [fileList, setFileList] = useState([])
-  const [attachments, setAttachments] = useState([])
-  let tempAttachments = []
+  const [fileList, setFileList] = useState([...uploadedAttachments])
+  let tempAttachments = post.attachments.map((attachment) => {
+    return {
+      url: attachment.url,
+      id: attachment._id
+    }
+  })
+  tempAttachments = [...tempAttachments]
+  const [attachments, setAttachments] = useState(tempAttachments)
 
   // Use location
   const { pathname } = useLocation()
-  const id = `cls-${pathname.split('/cls-')[1]}`
+  const endpoint = `cls-${pathname.split('/cls-')[1].split('/edit')[0]}`
+
+  // Use Navigate
+  const navigate = useNavigate()
 
   // UseForm
   const [form] = Form.useForm()
@@ -50,7 +70,7 @@ const PostTaskInfo = (props) => {
       attachments: attachments.map((attachment) => attachment.id),
       isTask: task,
       deadline: {
-        start: moment().format(),
+        start: post.isTask ? moment(post.taskId.deadline.start).format() : moment().format(),
         end: moment(values.deadline).format()
       }
     }
@@ -70,18 +90,18 @@ const PostTaskInfo = (props) => {
       }
     }
 
-    // Create post
+    // Update post
     try {
-      const { data } = await api.post(`/class/${id}/post`, payload, config)
-      // console.log(res)
+      const res = await api.put(`/class/${endpoint}`, payload, config)
+      console.log(res)
 
       mySwal.fire({
         icon: 'success',
-        title: data.message,
+        title: 'Update post success',
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false
-      }).then(() => setFetchPosts(true))
+      }).then(() => navigate(-1))
 
       // Reset form
       form.resetFields()
@@ -93,7 +113,7 @@ const PostTaskInfo = (props) => {
         text: error.response.data.message,
         timer: 2000,
         showConfirmButton: false
-      }).then(() => setFetchPosts(true))
+      })
     }
   }
 
@@ -123,14 +143,25 @@ const PostTaskInfo = (props) => {
     fmData.append('files', file)
     try {
       const { data } = await api.post('/attachment/multiple', fmData, config)
-      // console.log(data)
+      const attach = data.data.attachments[0]
 
-      const attachment = {
-        url: data.data.attachments[0].url,
-        id: data.data.attachments[0]._id
+      // Insert attachment to tempAttachments
+      const willBePushAttachment = {
+        url: attach.url,
+        id: attach._id
       }
-      tempAttachments.push(attachment)
-      setAttachments(tempAttachments)
+
+      tempAttachments = [...attachments, willBePushAttachment]
+      setAttachments([...tempAttachments])
+
+      // Insert attachment to uploadedAttachments
+      const uploadedAttachment = {
+        uid: uploadedAttachments.length + 1,
+        name: attach.name,
+        status: 'done',
+        url: attach._id
+      }
+      setUploadedAttachments([...uploadedAttachments, uploadedAttachment])
 
       onSuccess('Ok')
     } catch (err) {
@@ -145,7 +176,6 @@ const PostTaskInfo = (props) => {
     name: 'attachmentForm',
     multiple: true,
     customRequest: uploadAttachment,
-
     beforeUpload: (file) => {
       const listOfAcceptFiles = [
         'image/jpeg',
@@ -173,12 +203,11 @@ const PostTaskInfo = (props) => {
       }
       return acceptFiles && limitFileSize
     },
+    defaultFileList: uploadedAttachments,
     onChange: ({ fileList: newFileList }) => {
       setFileList(newFileList)
     },
     onRemove: (file) => {
-      console.log(file)
-
       const deletedFileName = file.name.replace(/\s/g, '')
       console.log(deletedFileName)
 
@@ -191,11 +220,16 @@ const PostTaskInfo = (props) => {
   return (
     <div className="w-full flex flex-col bg-[#e9ecef] text-black dark:bg-gray-700 dark:text-white justify-start py-2 px-4 rounded-lg space-y-2">
       <p className="mb-0 text-center md:text-left">
-        Tulis informasi kelas atau penugasan:
+        Perbarui informasi kelas atau penugasan:
       </p>
       <Form
-        name="postTaskInfoForm"
+        name="editTaskInfoForm"
         form={form}
+        initialValues={{
+          title: post.title ? post.title : '',
+          description: post.description ? post.description : '',
+          deadline: post.isTask ? moment(post.taskId.deadline.end) : ''
+        }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         className="space-y-4"
@@ -267,13 +301,21 @@ const PostTaskInfo = (props) => {
               </p>
             </Checkbox>
 
-          <Form.Item className="w-full flex justify-end">
-            <button
-              disabled={waitUpload}
-              className={`py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-black dark:text-white ${waitUpload ? 'bg-gray-400 dark:bg-gray-400 cursor-wait' : 'bg-[#fcfff7] dark:bg-[#34A0A4] hover:bg-gray-300 dark:hover:bg-[#3484a4]'} rounded-lg duration-300 ease-in-out`}
-            >
-              Posting
-            </button>
+          <Form.Item className="flex w-full items-center justify-end">
+            <div className="flex flex-row w-full space-x-4">
+              <Link
+                to={-1}
+                disabled={waitUpload}
+                className={`flex py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white ${waitUpload ? 'bg-gray-400 dark:bg-gray-400 cursor-wait' : 'bg-gray-600 hover:bg-gray-800'} rounded-lg duration-300 ease-in-out`}>
+                Batal
+              </Link>
+
+              <button
+                disabled={waitUpload}
+                className={`flex py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-black dark:text-white ${waitUpload ? 'bg-gray-400 dark:bg-gray-400 cursor-wait' : 'bg-[#fcfff7] dark:bg-[#34A0A4] hover:bg-gray-300 dark:hover:bg-[#3484a4]'} rounded-lg duration-300 ease-in-out`}>
+                Perbarui
+              </button>
+            </div>
           </Form.Item>
         </div>
       </Form>
@@ -281,4 +323,4 @@ const PostTaskInfo = (props) => {
   )
 }
 
-export default PostTaskInfo
+export default EditTaskInfo

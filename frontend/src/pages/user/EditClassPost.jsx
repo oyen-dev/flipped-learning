@@ -1,15 +1,19 @@
-// import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 // import { useGlobal } from '../../contexts/Global'
 // import { useAuth } from '../../contexts/Auth'
 
+import api from '../../api'
 import Layout from '../../components/layouts'
 import { Breadcrumb } from '../../components/breadcrumb'
+import { EditTaskInfo } from '../../components/forms'
 
+import { Spin } from 'antd'
 import { useParams, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 const EditClassPost = () => {
   // Use params
-  const { id, postId } = useParams()
+  const { id: classId, postId } = useParams()
 
   // Navigator
   const navigate = useNavigate()
@@ -26,19 +30,55 @@ const EditClassPost = () => {
     },
     {
       name: 'Beranda Kelas',
-      destination: `/classes/${id}`
+      destination: `/classes/${classId}`
     },
     {
       name: 'Edit Postingan',
-      destination: `/classes/${id}/posts/${postId}/edit`
+      destination: `/classes/${classId}/posts/${postId}/edit`
     }
   ]
 
+  // Local states
+  const [post, setPost] = useState({
+    title: null,
+    description: null,
+    isTask: null,
+    taskId: {
+      deadline: {
+        start: null,
+        end: null
+      }
+    }
+  })
+
+  // Get specific post
+  const getPost = async () => {
+    // Configuration
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    try {
+      const { data } = await api.get(`/class/${classId}/posts/${postId}`, config)
+      // console.log(data)
+      setPost(data.data.post)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // Initial get post
+  useEffect(() => {
+    getPost()
+  }, [])
   return (
     <Layout>
       <Breadcrumb paths={paths} navigate={navigate} />
-
-      <p>Edit class post</p>
+      <div className="flex w-full items-center justify-center">
+        {post.title === null ? <Spin /> : <EditTaskInfo post={post} />}
+      </div>
     </Layout>
   )
 }
