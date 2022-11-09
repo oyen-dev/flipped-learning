@@ -99,6 +99,7 @@ export default function AppRoutes () {
 
         {/* Handle page not found */}
         <Route path="*" element={<NotFound />} />
+        <Route path="404" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

@@ -5,10 +5,10 @@ import api from '../../api'
 
 import Cookies from 'js-cookie'
 import { Link, useLocation } from 'react-router-dom'
-import { BsCameraVideo, BsFileImage, BsFilePdf, BsFileWord, BsFilePpt, BsFileEarmark, BsPencilSquare, BsTrash } from 'react-icons/bs'
+import { BsCameraVideo, BsFileImage, BsFilePdf, BsFileWord, BsFilePpt, BsFileEarmark, BsPencilSquare, BsTrash, BsFileText } from 'react-icons/bs'
 
 const Post = (props) => {
-  const { description, attachments, postId, setFetchPosts } = props
+  const { description, isTask, attachments, _id: postId, setFetchPosts } = props
 
   // Global Functions
   const { globalFunctions } = useGlobal()
@@ -92,7 +92,7 @@ const Post = (props) => {
 
       {user.role === 'TEACHER' && (
         <div className="flex flex-row space-x-4 w-full items-center justify-end">
-          <Link to={`posts/${postId}/edit`} className='flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:bg-blue-800 rounded-lg duration-300 ease-in-out'>
+          <Link to={`posts/${postId}/edit`} className='flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out'>
             <BsPencilSquare className="w-5 h-5 fill-white" />
             <span>Edit Postingan</span>
           </Link>
@@ -105,6 +105,17 @@ const Post = (props) => {
           </button>
         </div>
       )}
+
+      {user.role === 'STUDENT' && isTask
+        ? (
+        <div className="flex flex-row space-x-4 w-full items-center justify-end">
+          <Link to={`tasks/${postId}/submissions`} className='flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out'>
+            <BsFileText className="w-5 h-5 fill-white" />
+            <span>Kumpulkan Tugas</span>
+          </Link>
+        </div>
+          )
+        : null}
     </div>
   )
 }

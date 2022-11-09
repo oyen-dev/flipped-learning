@@ -92,8 +92,7 @@ const EditTaskInfo = (props) => {
 
     // Update post
     try {
-      const res = await api.put(`/class/${endpoint}`, payload, config)
-      console.log(res)
+      await api.put(`/class/${endpoint}`, payload, config)
 
       mySwal.fire({
         icon: 'success',

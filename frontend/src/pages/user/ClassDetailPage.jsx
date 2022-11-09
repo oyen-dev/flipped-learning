@@ -153,6 +153,9 @@ const ClassDetailPage = () => {
         setClassData(data.data)
       } catch (error) {
         console.log(error)
+        if (error.response.status === 404) {
+          navigate('/404')
+        }
       } finally {
         mySwal.close()
       }

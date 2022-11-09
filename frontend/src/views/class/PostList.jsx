@@ -29,24 +29,14 @@ const PostList = (props) => {
             // expandIcon={({ isActive }) => <RightOutlined className='text-white fill-white' rotate={isActive ? 90 : 0} />}
             style={{ backgroundColor: 'transparent', border: 'none' }}
           >
-            {posts.map((post, index) => {
-              const headerProps = {
-                picture: post.teacherId.picture,
-                title: post.title,
-                createdAt: post.createdAt,
-                isUpdated: post.createdAt !== post.updatedAt,
-                updatedAt: post.updatedAt
-              }
-
+            {posts.map((post) => {
               const postProps = {
-                description: post.description,
-                attachments: post.attachments,
-                postId: post._id,
+                ...post,
                 setFetchPosts
               }
               return (
                 <Panel
-                  header={<PostHeader {...headerProps} />}
+                  header={<PostHeader {...post} />}
                   key={post._id}
                   className="flex flex-col w-full text-black dark:text-white bg-[#e9ecef] dark:bg-gray-700 transition-all ease-in-out duration-300"
                 >
