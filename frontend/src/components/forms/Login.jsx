@@ -3,7 +3,7 @@ import { useGlobal } from '../../contexts/Global'
 
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Form, Input, Button, Checkbox, message } from 'antd'
+import { Form, Input, Button, Checkbox } from 'antd'
 import api from '../../api'
 import Cookies from 'js-cookie'
 
@@ -20,8 +20,8 @@ const Login = () => {
   // Navigator
   const navigate = useNavigate()
 
+  // onFinish
   const onFinish = async (values) => {
-    // console.log(values)
     // Show loadng
     mySwal.fire({
       title: 'Logging you in...',
@@ -31,29 +31,18 @@ const Login = () => {
       }
     })
 
-    await logIn(values)
-  }
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-
-    message.error('Login failed')
-  }
-
-  const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`)
-  }
-
-  const logIn = async (values) => {
+    // Payload
     const payload = {
       email: values.email,
       password: values.password,
       remember: values.remember
     }
+
     try {
       const { data } = await api.post('/auth/login', payload)
       // console.log(data)
 
+      // Set cookie
       const token = data.data.accessToken
       Cookies.set('jwtToken', token, {
         expires: values.remember ? 7 : 1
@@ -66,11 +55,14 @@ const Login = () => {
       // Fetch user data
       await fetchUser()
 
-      // Show success message using mySwal
+      // Show success
       mySwal.fire({
         icon: 'success',
         title: 'Login Success',
         text: 'You will be redirected to the dashboard',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false
@@ -83,11 +75,25 @@ const Login = () => {
         icon: 'error',
         title: 'Login Failed',
         text: error.response.data.message,
-        timer: 2000,
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 3000,
+        timerProgressBar: true,
         showConfirmButton: false
       })
     }
   }
+
+  // onFinishFailed
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo)
+  }
+
+  const onChange = (e) => {
+    console.log(`checked = ${e.target.checked}`)
+  }
+
   return (
     <Form
       name="loginForm"
