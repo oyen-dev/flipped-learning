@@ -68,7 +68,7 @@ const AttachmentDetail = () => {
 
     try {
       const { data } = await api.get(`/attachment/${attachmentId}`, config)
-      console.log(data)
+      // console.log(data)
 
       const { attachment } = data.data
       setAttachmente(attachment)
@@ -93,7 +93,7 @@ const AttachmentDetail = () => {
             <>
               {type <= 2 && 'Image'}
               {type > 2 && type <= 5 && 'Video'}
-              {type > 5 && type <= 6 && <ViewPDF file={attachment.url}/>}
+              {type > 5 && type <= 6 && <ViewPDF {...attachment}/>}
               {type > 6 && type <= 8 && 'Word'}
               {type > 8 && type <= 10 && 'PPT'}
               {type > 10 && 'Other'}
