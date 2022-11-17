@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import api from '../../api'
 import Layout from '../../components/layouts'
 import { Breadcrumb } from '../../components/breadcrumb'
-import { ViewPDF, ViewImage, ViewVideo, ViewDocument } from '../../components/viewer'
+import { ViewPDF, ViewImage, ViewVideo, ViewDocument, ViewOther } from '../../components/viewer'
 
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { Spin } from 'antd'
@@ -96,7 +96,7 @@ const AttachmentDetail = () => {
               {type > 5 && type <= 6 && <ViewPDF {...attachment}/>}
               {type > 6 && type <= 8 && <ViewDocument {...attachment} />}
               {type > 8 && type <= 10 && <ViewDocument {...attachment} />}
-              {type > 10 && 'Other'}
+              {type > 10 && <ViewOther {...attachment} />}
             </>
             )
           : <Spin size="small" className="mx-auto" />
