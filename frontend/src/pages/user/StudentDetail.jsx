@@ -11,19 +11,19 @@ import Cookies from 'js-cookie'
 
 import FallBack from '../../assets/images/profile.png'
 
-const TeacherList = () => {
+const StudentDetail = () => {
   // Use params
-  const { id } = useParams()
+  const { studentId } = useParams()
 
   // Navigator
   const navigate = useNavigate()
 
   // Location
   const { pathname } = useLocation()
-  const classLocation = pathname.split('/teachers')[0]
+  const classLocation = pathname.split('/students')[0]
 
   // Local States
-  const [teacher, setTeacher] = useState(null)
+  const [student, setStudent] = useState(null)
 
   // Breadcrumb Items
   const paths = [
@@ -40,13 +40,13 @@ const TeacherList = () => {
       destination: `${classLocation}`
     },
     {
-      name: 'Detail Guru',
+      name: 'Detail Siswa',
       destination: `${pathname}`
     }
   ]
 
-  // Fetching teacher data
-  const getTeacherDetails = async () => {
+  // Fetching student data
+  const getStudentDetails = async () => {
     // Configuration
     const config = {
       headers: {
@@ -54,13 +54,18 @@ const TeacherList = () => {
       }
     }
 
-    const res = await api.get(`users/teachers/${id}`, config)
-    setTeacher(res.data.data)
+    try {
+      const res = await api.get(`users/students/${studentId}`, config)
+      // console.log(res)
+      setStudent(res.data.data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   // Initail fetch data
   useEffect(() => {
-    getTeacherDetails()
+    getStudentDetails()
   }, [])
 
   return (
@@ -69,16 +74,16 @@ const TeacherList = () => {
       <div className="flex flex-col w-full rounded-lg py-2 px-2 bg-[#accbe1] dark:bg-gray-900 text-black dark:text-white transition-all ease-in-out duration-300">
         <div className="flex w-full justify-center items-center h-10 sticky top-0 left-0 z-40">
           <h5 className="font-semibold text-lg text-center mb-0 text-black dark:text-white transition-all ease-in-out duration-300">
-            Data Profil Guru
+            Data Profil Siswa
           </h5>
         </div>
         <div className="flex flex-col w-full h-[90%]">
           <div className="flex flex-col lg:flex-row w-full items-start justify-start py-5 space-y-4 lg:space-y-0 overflow-auto text-black dark:text-white transition-all ease-in-out duration-300">
             <div className="flex w-full lg:w-1/3 items-center justify-center">
-              {teacher
+              {student
                 ? (
                 <Image
-                  src={teacher.picture}
+                  src={student.picture}
                   className="h-[80%] w-[60%]"
                   fallback={FallBack}
                 />
@@ -88,21 +93,21 @@ const TeacherList = () => {
                   )}
             </div>
             <div className="flex flex-col items-start justify-start w-full lg:w-2/3 h-full p-2 space-y-4">
-              {teacher
+              {student
                 ? (
                 <>
-                  <Field label="Nama" value={teacher.fullName} />
-                  <Field label="Email" value={teacher.email} />
+                  <Field label="Nama" value={student.fullName} />
+                  <Field label="Email" value={student.email} />
                   <Field
                     label="Tanggal Lahir"
-                    value={moment(teacher.dateOfBirth).format('LL')}
+                    value={moment(student.dateOfBirth).format('LL')}
                   />
                   <Field
                     label="Jenis Kelamin"
-                    value={teacher.gender ? 'Lak-laki' : 'Perempuan'}
+                    value={student.gender ? 'Lak-laki' : 'Perempuan'}
                   />
-                  <Field label="No Telp" value={teacher.phone} />
-                  <Field label="Alamat" value={teacher.address} />
+                  <Field label="No Telp" value={student.phone} />
+                  <Field label="Alamat" value={student.address} />
                   <Enrolled
                     label="Kelas Diampu"
                     value={[
@@ -163,4 +168,4 @@ const Enrolled = ({ label, value }) => {
   )
 }
 
-export default TeacherList
+export default StudentDetail
