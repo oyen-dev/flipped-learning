@@ -3,7 +3,6 @@ import { BsCameraVideo, BsFileImage, BsFilePdf, BsFileWord, BsFilePpt, BsFileEar
 
 const Attachment = (props) => {
   const { _id, type, name } = props
-  console.log(props)
 
   const listOfAcceptFiles = [
     'image/jpeg',
@@ -28,7 +27,7 @@ const Attachment = (props) => {
       {indexofType > 6 && indexofType <= 8 && <BsFileWord className="w-5 h-5 fill-black" />}
       {indexofType > 8 && indexofType <= 10 && <BsFilePpt className="w-5 h-5 fill-black" />}
       {indexofType > 10 && <BsFileEarmark className="w-5 h-5 fill-black" />}
-      <Link to={`attachment/${_id}`} className="mb-0 text-black">{name}</Link>
+      <Link to={`attachments/${_id}`} className="mb-0 text-black">{name}</Link>
     </div>
   )
 }

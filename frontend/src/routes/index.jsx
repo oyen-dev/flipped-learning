@@ -20,7 +20,7 @@ import {
   EditProfilePage
 } from '../pages/admin'
 
-import { Classes, ClassDetailPage, EditClassPost, TeacherList, StudentDetail } from '../pages/user'
+import { Classes, ClassDetailPage, EditClassPost, TeacherList, StudentDetail, AttachmentDetail } from '../pages/user'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
@@ -92,6 +92,7 @@ export default function AppRoutes () {
           <Route path=':id'>
             <Route path='teachers/:id' element={isAuthenticated ? (<ManagementContext> <TeacherList /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route path='students/:studentId' element={isAuthenticated ? (<ManagementContext> <StudentDetail /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            <Route path='attachments/:attachmentId' element={isAuthenticated ? (<ManagementContext> <AttachmentDetail /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route path='posts/:postId/edit' element={isAuthenticated ? (<ManagementContext> <EditClassPost /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route index element={isAuthenticated ? <ClassDetailPage /> : <Navigate to="/auth" />}/>
           </Route>
