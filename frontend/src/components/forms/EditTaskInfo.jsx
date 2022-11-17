@@ -23,7 +23,7 @@ const { Panel } = Collapse
 const EditTaskInfo = (props) => {
   // Destrcuture props
   const { post } = props
-  console.log(post)
+  // console.log(post)
 
   // Global Functions
   const { globalFunctions } = useGlobal()
@@ -77,7 +77,7 @@ const EditTaskInfo = (props) => {
 
     // Show loading
     mySwal.fire({
-      title: 'Creating post...',
+      title: 'Updating post...',
       didOpen: () => {
         mySwal.showLoading()
       }
