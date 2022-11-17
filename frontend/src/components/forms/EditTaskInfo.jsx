@@ -198,7 +198,7 @@ const EditTaskInfo = (props) => {
 
       const limitFileSize = file.size / 1024 / 1024 < 25
       if (!limitFileSize) {
-        message.error('Image must smaller than 25MB!')
+        message.error('File must smaller than 25MB!')
       }
       return acceptFiles && limitFileSize
     },
@@ -260,11 +260,12 @@ const EditTaskInfo = (props) => {
                   <InboxOutlined />
                 </p>
                 <p className="ant-upload-text">
-                  Click or drag file to this area to upload
+                  Klik atau tarik file untuk mengunggah
                 </p>
                 <p className="ant-upload-hint">
-                  Support for a single or bulk upload. Strictly prohibit from
-                  uploading company data or other band files
+                  Jenis file yang diperbolehkan berupa gambar, video, pdf, ms word, dan ppt
+                  <br />
+                  Ukuran file maksimal 25MB
                 </p>
               </Dragger>
             </Form.Item>
