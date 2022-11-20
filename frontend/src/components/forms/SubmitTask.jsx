@@ -8,14 +8,23 @@ import {
   Form,
   Input,
   Upload,
-  message
+  message,
+  Collapse
 } from 'antd'
 import { InboxOutlined } from '@ant-design/icons'
+import { useParams, useNavigate } from 'react-router-dom'
 
 const { Dragger } = Upload
 const { TextArea } = Input
+const { Panel } = Collapse
 
 const SubmitTask = (props) => {
+  // useParams
+  const { id: classId, postId } = useParams()
+
+  // Navigator
+  const navigate = useNavigate()
+
   // Global Functions
   const { globalFunctions } = useGlobal()
   const { mySwal } = globalFunctions
@@ -33,10 +42,56 @@ const SubmitTask = (props) => {
   const onFinish = async (values) => {
     const payload = {
       answers: values.answers === '' ? null : values.answers,
-      attachments: attachments.length === 0 ? null : attachments
+      attachments: attachments.length === 0 ? [] : attachments.map(attachment => attachment.id)
     }
 
-    console.log(payload)
+    // Show loading
+    mySwal.fire({
+      title: 'Submitting...',
+      allowEscapeKey: true,
+      allowOutsideClick: true,
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Config
+    const config = {
+      headers: {
+        authorization: Cookies.get('jwtToken')
+      }
+    }
+
+    try {
+      await api.post(`/class/${classId}/posts/${postId}/submissions`, payload, config)
+
+      // Show success
+      mySwal.fire({
+        icon: 'success',
+        title: 'Submitted!',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      }).then(() => {
+        navigate(`/classes/${classId}`)
+      })
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response.data.message,
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      })
+    }
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -156,22 +211,25 @@ const SubmitTask = (props) => {
           />
         </Form.Item>
 
-        <Form.Item name="lampiran">
-          <Dragger {...uploadAttachmentProps}>
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">
-              Klik atau tarik file untuk mengunggah
-            </p>
-            <p className="ant-upload-hint">
-              Jenis file yang diperbolehkan berupa gambar, video, pdf, ms word,
-              dan ppt
-              <br />
-              Ukuran file maksimal 25MB
-            </p>
-          </Dragger>
-        </Form.Item>
+        <Collapse>
+          <Panel header="Lampiran" key="1">
+            <Form.Item name="lampiran">
+              <Dragger {...uploadAttachmentProps}>
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">
+                  Klik atau tarik file untuk mengunggah
+                </p>
+                <p className="ant-upload-hint">
+                  Jenis file yang diperbolehkan berupa gambar, video, pdf, ms word, dan ppt
+                  <br />
+                  Ukuran file maksimal 25MB
+                </p>
+              </Dragger>
+            </Form.Item>
+          </Panel>
+        </Collapse>
 
         <div className="w-full flex flex-row justify-between">
           <Form.Item className="w-full flex justify-end">
