@@ -1,5 +1,7 @@
+import { useAuth } from '../../contexts/Auth'
+
 import { Empty } from '../../pages/error'
-import { Post, PostHeader } from '../../components/card'
+import { Post, PostHeader, Submission } from '../../components/card'
 import { StudentTasks } from '../../components/tables'
 
 import { Collapse } from 'antd'
@@ -10,6 +12,10 @@ const { Panel } = Collapse
 const PostList = (props) => {
   // Destructure props
   const { posts, setFetchPosts, isTask } = props
+
+  // Auth States
+  const { authState } = useAuth()
+  const { user } = authState
 
   return (
     <div className="flex w-full">
@@ -42,7 +48,9 @@ const PostList = (props) => {
                   className="flex flex-col w-full text-black dark:text-white bg-[#e9ecef] dark:bg-gray-700 transition-all ease-in-out duration-300"
                 >
                   {isTask
-                    ? <StudentTasks {...postProps} />
+                    ? user.role === 'STUDENT'
+                      ? <Submission {...postProps} />
+                      : <StudentTasks {...postProps} />
                     : <Post {...postProps} />
                   }
                 </Panel>
