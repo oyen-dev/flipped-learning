@@ -8,3 +8,4 @@ export { default as StudentDetail } from './StudentDetail'
 export { default as AttachmentDetail } from './AttachmentDetail'
 
 export { default as SubmitTaskPage } from './SubmitTask'
+export { default as EditSubmittedTaskPage } from './EditSubmittedTask'

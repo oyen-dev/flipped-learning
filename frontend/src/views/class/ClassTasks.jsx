@@ -29,7 +29,6 @@ const ClassTasks = () => {
       // console.log(data)
 
       const { posts } = data.data
-      console.log(posts)
       setTasks(posts)
     } catch (error) {
       console.log(error)

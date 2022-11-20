@@ -142,7 +142,7 @@ const Post = (props) => {
       {/* Button for Student */}
       {user.role === 'STUDENT' && isTask && (
         <div className="flex flex-row space-x-4 w-full items-center justify-end">
-          {isSubmitted
+          {isSubmitted !== null
             ? isSubmitted
               ? <button
                   onClick={() => setTabKey('3')}

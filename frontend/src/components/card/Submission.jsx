@@ -31,7 +31,7 @@ const Submission = (props) => {
 
     try {
       const { data } = await api.get(`/class/${classId}/posts/${postId}/submission`, config)
-      console.log(data)
+      // console.log(data)
 
       if (data.data) {
         setIsSubmitted(true)
@@ -59,7 +59,7 @@ const Submission = (props) => {
               </div>
 
               <div className="flex justify-end items-end">
-                <Link to={`tasks/${postId}/submissions`} className='flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out'>
+                <Link to={`tasks/${postId}/submissions/edit`} className='flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out'>
                   <BsPencilSquare className="w-5 h-5 fill-white" />
                   <span>Edit pengumpulan tugas</span>
                 </Link>
