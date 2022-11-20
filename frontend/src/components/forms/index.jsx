@@ -16,3 +16,5 @@ export { default as JoinClass } from './JoinClass'
 
 export { default as PostTaskInfo } from './PostTaskInfo'
 export { default as EditTaskInfo } from './EditTaskInfo'
+
+export { default as SubmitTask } from './SubmitTask'

@@ -6,3 +6,5 @@ export { default as TeacherList } from './TeacherList'
 export { default as StudentDetail } from './StudentDetail'
 
 export { default as AttachmentDetail } from './AttachmentDetail'
+
+export { default as SubmitTaskPage } from './SubmitTask'
