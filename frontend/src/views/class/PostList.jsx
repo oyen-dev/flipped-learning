@@ -1,5 +1,6 @@
 import { Empty } from '../../pages/error'
 import { Post, PostHeader } from '../../components/card'
+import { StudentTasks } from '../../components/tables'
 
 import { Collapse } from 'antd'
 import { BsChevronRight, BsChevronDown } from 'react-icons/bs'
@@ -8,7 +9,7 @@ const { Panel } = Collapse
 
 const PostList = (props) => {
   // Destructure props
-  const { posts, setFetchPosts } = props
+  const { posts, setFetchPosts, isTask } = props
 
   return (
     <div className="flex w-full">
@@ -40,7 +41,10 @@ const PostList = (props) => {
                   key={post._id}
                   className="flex flex-col w-full text-black dark:text-white bg-[#e9ecef] dark:bg-gray-700 transition-all ease-in-out duration-300"
                 >
-                  <Post {...postProps} />
+                  {isTask
+                    ? <StudentTasks {...postProps} />
+                    : <Post {...postProps} />
+                  }
                 </Panel>
               )
             })}
