@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useGlobal } from '../../contexts/Global'
 import { useAuth } from '../../contexts/Auth'
 
@@ -5,23 +6,27 @@ import api from '../../api'
 import { Attachment } from '../../components/others'
 
 import Cookies from 'js-cookie'
-import { Link, useLocation } from 'react-router-dom'
+import { Spin } from 'antd'
+import { Link, useParams } from 'react-router-dom'
 import { BsPencilSquare, BsTrash, BsFileText } from 'react-icons/bs'
 
 const Post = (props) => {
   const { description, isTask, attachments, _id: postId, setFetchPosts } = props
 
+  // useParams
+  const { id: classId } = useParams()
+
   // Global Functions
-  const { globalFunctions } = useGlobal()
+  const { globalFunctions, globalState } = useGlobal()
   const { mySwal } = globalFunctions
+  const { setTabKey } = globalState
 
   // Auth States
   const { authState } = useAuth()
   const { user } = authState
 
-  // use Location
-  const { pathname } = useLocation()
-  const classId = `cls-${pathname.split('/cls-')[1]}`
+  // Local States
+  const [isSubmitted, setIsSubmitted] = useState(null)
 
   // Delete Post
   const deletePost = async () => {
@@ -83,6 +88,32 @@ const Post = (props) => {
     })
   }
 
+  // Check submitted
+  const checkIsSubmitted = async () => {
+    // Config
+    const config = {
+      headers: {
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    try {
+      const { data } = await api.get(`/class/${classId}/posts/${postId}/status`, config)
+      // console.log(data)
+
+      const { isSubmitted } = data.data
+      setIsSubmitted(isSubmitted)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (user.role === 'STUDENT') {
+      checkIsSubmitted()
+    }
+  }, [])
+
   return (
     <div className="flex flex-col space-y-5 w-full bg-transparent">
       <p className="mb-0">{description}</p>
@@ -111,10 +142,20 @@ const Post = (props) => {
       {/* Button for Student */}
       {user.role === 'STUDENT' && isTask && (
         <div className="flex flex-row space-x-4 w-full items-center justify-end">
-          <Link to={`tasks/${postId}/submissions`} className='flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out'>
-            <BsFileText className="w-5 h-5 fill-white" />
-            <span>Kumpulkan Tugas</span>
-          </Link>
+          {isSubmitted
+            ? isSubmitted
+              ? <button
+                  onClick={() => setTabKey('3')}
+                  className='flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-green-600 hover:text-white hover:bg-green-800 rounded-lg duration-300 ease-in-out'>
+                  <BsFileText className="w-5 h-5 fill-white" />
+                  <span>Cek Status Pengerjaan</span>
+                </button>
+              : <Link to={`tasks/${postId}/submissions`} className='flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out'>
+                  <BsFileText className="w-5 h-5 fill-white" />
+                  <span>Kumpulkan Tugas</span>
+                </Link>
+            : <Spin size="small" />
+          }
         </div>
       )}
     </div>

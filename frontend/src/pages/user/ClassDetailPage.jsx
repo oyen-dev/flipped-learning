@@ -17,8 +17,9 @@ const ClassDetailPage = () => {
   const { id } = useParams()
 
   // Global States
-  const { globalFunctions } = useGlobal()
+  const { globalFunctions, globalState } = useGlobal()
   const { mySwal } = globalFunctions
+  const { tabKey, setTabKey } = globalState
 
   // Auth States
   const { authState } = useAuth()
@@ -31,7 +32,6 @@ const ClassDetailPage = () => {
   const navigate = useNavigate()
 
   // Local States
-  const [tabKey, setTabKey] = useState('1')
   const [tabs] = useState([
     {
       name: 'Pusat Informasi',

@@ -8,6 +8,7 @@ const GlobalContext = createContext()
 export const GlobalProvider = ({ children }) => {
   // Global States
   const [theme, setTheme] = useState(true)
+  const [tabKey, setTabKey] = useState('1')
 
   // Global Functions
   const mySwal = withReactContent(Swal)
@@ -15,7 +16,9 @@ export const GlobalProvider = ({ children }) => {
   // Export global state here
   const globalState = {
     theme,
-    setTheme
+    setTheme,
+    tabKey,
+    setTabKey
   }
 
   // Export global functions here
