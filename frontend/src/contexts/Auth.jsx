@@ -21,9 +21,9 @@ export const AuthProvider = ({ children }) => {
 
   // Connect to socket
   useEffect(() => {
-    const staging = 'https://api.flipped.binaceria.dev'
-    // const development = 'http://localhost:5000'
-    const socket = io(staging)
+    // const staging = 'https://api.flipped.binaceria.dev'
+    const development = 'http://localhost:5000'
+    const socket = io(development)
     setSocket(socket)
   }, [])
 

@@ -2,7 +2,7 @@ import momentId from '../../constants/momentId'
 
 import { Spin } from 'antd'
 import moment from 'moment/moment'
-moment.defineLocale('id', momentId)
+moment.updateLocale('id', momentId)
 
 const RecentAccess = (props) => {
   const { logs } = props

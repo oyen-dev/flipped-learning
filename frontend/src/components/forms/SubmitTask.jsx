@@ -289,7 +289,7 @@ const SubmitTask = (props) => {
         </Collapse>
 
         <div className={`flex flex-col space-y-2 items-center bg-white w-full ${isSelectted ? 'h-32' : 'h-24'} rounded-sm duration-300 ease-in-out`}>
-          <p className='mb-0 py-2 text-center font-medium tracking-wide'>Reaksi kamu:</p>
+          <p className='mb-0 py-2 text-center font-medium tracking-wide'>Reaksi kamu setelah menyelesaikan tugas:</p>
           <div className="flex flex-row space-x-2">
             {/* Emoji 1 */}
             <div>
@@ -398,7 +398,7 @@ const SubmitTask = (props) => {
                   : 'bg-[#fcfff7] dark:bg-[#34A0A4] hover:bg-gray-300 dark:hover:bg-[#3484a4]'
               } rounded-lg duration-300 ease-in-out`}
             >
-              Posting
+              Kumpulkan
             </button>
           </Form.Item>
         </div>
