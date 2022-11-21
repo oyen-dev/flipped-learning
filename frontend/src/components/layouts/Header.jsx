@@ -80,9 +80,9 @@ const Header = ({ children }) => {
                   )}
             </button>
 
-            <button className="flex flex-row items-center space-x-2 group" onClick={handleLogout}>
-              <BsBoxArrowInRight className="w-6 h-6 fill-gray-900 dark:fill-white group-hover:fill-blue-500 duration-300 ease-in-out"/>
-              <span className="mb-0 text-gray-900 dark:text-white hover:fill-blue-500 duration-300 ease-in-out">
+            <button className="flex flex-row group items-center space-x-2" onClick={handleLogout}>
+              <BsBoxArrowInRight className="w-6 h-6 fill-gray-900 group-hover:fill-blue-500 dark:fill-white duration-300 ease-in-out"/>
+              <span className="mb-0 text-gray-900 dark:text-white group-hover:text-blue-500 duration-300 ease-in-out">
                 Log Out
               </span>
             </button>

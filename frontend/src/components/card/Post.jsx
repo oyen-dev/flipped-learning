@@ -109,7 +109,7 @@ const Post = (props) => {
   }
 
   useEffect(() => {
-    if (user.role === 'STUDENT') {
+    if (user.role === 'STUDENT' && isTask) {
       checkIsSubmitted()
     }
   }, [])
