@@ -131,36 +131,28 @@ const ClassDetailPage = () => {
     })
   }
 
-  // Initial fetch data
-  useEffect(() => {
-    const getClassDetail = async () => {
-      // Show Loading
-      mySwal.fire({
-        html: 'Wait a moment...',
-        didOpen: () => {
-          mySwal.showLoading()
-        }
-      })
-
-      const config = {
-        headers: {
-          authorization: `Bearer ${Cookies.get('jwtToken')}`
-        }
-      }
-      try {
-        const { data } = await api.get(`/class/${id}`, config)
-        // console.log(data)
-        setClassData(data.data)
-      } catch (error) {
-        console.log(error)
-        if (error.response.status === 404) {
-          navigate('/404')
-        }
-      } finally {
-        mySwal.close()
+  // Get class detail
+  const getClassDetail = async () => {
+    // Config
+    const config = {
+      headers: {
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
       }
     }
+    try {
+      const { data } = await api.get(`/class/${id}`, config)
+      // console.log(data)
+      setClassData(data.data)
+    } catch (error) {
+      console.log(error)
+      if (error.response.status === 404) {
+        navigate('/404')
+      }
+    }
+  }
 
+  // Initial fetch data
+  useEffect(() => {
     getClassDetail()
   }, [])
 

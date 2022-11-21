@@ -26,14 +26,7 @@ const InformationCenter = (props) => {
   const [fetchPosts, setFetchPosts] = useState(true)
 
   const getClassPosts = async () => {
-    // Show Loading
-    mySwal.fire({
-      html: 'Wait a moment...',
-      didOpen: () => {
-        mySwal.showLoading()
-      }
-    })
-
+    // Config
     const config = {
       headers: {
         authorization: `Bearer ${Cookies.get('jwtToken')}`

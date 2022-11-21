@@ -78,66 +78,64 @@ const SubmitTask = (props) => {
       reaction
     }
 
-    console.log(payload)
-
     // Check if reaction is selected
     if (payload.answers === undefined || payload.answers === null) {
       if (payload.attachments.length === 0) message.error('Isi jawaban atau lampirkan file terlebih dahulu')
+      else await uploadSubmission(payload)
     } else if (reaction === null) message.error('Pilih reaksi terlebih dahulu')
-    else {
-      // Show loading
-      mySwal.fire({
-        title: 'Submitting...',
-        allowEscapeKey: true,
-        allowOutsideClick: true,
-        didOpen: () => {
-          mySwal.showLoading()
-        }
-      })
+    else await uploadSubmission(payload)
+  }
 
-      // Config
-      const config = {
-        headers: {
-          authorization: Cookies.get('jwtToken')
-        }
+  // Upload Submission
+  const uploadSubmission = async (payload) => {
+    // Show loading
+    mySwal.fire({
+      title: 'Submitting...',
+      allowEscapeKey: true,
+      allowOutsideClick: true,
+      didOpen: () => {
+        mySwal.showLoading()
       }
+    })
 
-      try {
-        await api.post(
-          `/class/${classId}/posts/${postId}/submissions`,
-          payload,
-          config
-        )
+    // Config
+    const config = {
+      headers: {
+        authorization: Cookies.get('jwtToken')
+      }
+    }
 
-        // Show success
-        mySwal
-          .fire({
-            icon: 'success',
-            title: 'Submitted!',
-            allowOutsideClick: true,
-            backdrop: true,
-            allowEscapeKey: true,
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false
-          })
-          .then(() => {
-            navigate(`/classes/${classId}`)
-          })
-      } catch (error) {
-        console.log(error)
-        mySwal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: error.response.data.message,
+    try {
+      await api.post(`/class/${classId}/posts/${postId}/submissions`, payload, config)
+
+      // Show success
+      mySwal
+        .fire({
+          icon: 'success',
+          title: 'Submitted!',
           allowOutsideClick: true,
           backdrop: true,
           allowEscapeKey: true,
-          timer: 3000,
+          timer: 2000,
           timerProgressBar: true,
           showConfirmButton: false
         })
-      }
+        .then(() => {
+          navigate(`/classes/${classId}`)
+        })
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response.data.message,
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      })
     }
   }
 

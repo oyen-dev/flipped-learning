@@ -282,8 +282,8 @@ const Class = (props) => {
       </div>
 
       <div className="flex flex-col w-full items-center justify-center space-y-1 pt-2">
-        <Link to={admin ? `/management/classes/${path}` : `/classes/${path}`}>
-          <p className="mb-0 text-gray-900 dark:text-white dark:hover:text-blue-500 text-center font-bold text-base duration-150 ease-in">
+        <Link to={admin ? '' : `/classes/${path}`}>
+          <p className={`mb-0 text-gray-900 dark:text-white ${admin ? 'dark:hover:text-white hover:text-gray-900 cursor-default' : 'hover:text-blue-500 dark:hover:text-blue-500'} text-center font-bold text-base duration-150 ease-in`} >
             {title}
           </p>
         </Link>

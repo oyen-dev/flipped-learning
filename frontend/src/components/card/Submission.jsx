@@ -37,7 +37,7 @@ const Submission = (props) => {
 
     try {
       const { data } = await api.get(`/class/${classId}/posts/${postId}/submission`, config)
-      console.log(data.data)
+      // console.log(data.data)
 
       if (data.data) {
         setIsSubmitted(true)

@@ -135,14 +135,14 @@ const StudentTasks = (props) => {
                   {/* Tanggal */}
                   <td className="py-3  text-left">
                     <div className="flex items-center justify-start">
-                      <span className="font-medium">{submission === null ? 'Belum Mengumpulkan' : moment(submission.createdAt).format('LLLL')}</span>
+                      <span className="font-medium">{submission === null ? 'Belum Mengumpulkan' : moment(submission.updatedAt).format('LLLL')}</span>
                     </div>
                   </td>
 
                   {/* Status */}
                   <td className="py-3  text-left">
                     <div className="flex items-center justify-center">
-                      <span className="font-medium">{submission === null ? 'Belum Mengumpulkan' : moment() > moment(submission.createdAt) ? 'Tepat Waktu' : 'Telat'}</span>
+                      <span className="font-medium">{submission === null ? 'Belum Mengumpulkan' : moment() > moment(submission.updatedAt) ? 'Tepat Waktu' : 'Telat'}</span>
                     </div>
                   </td>
 
