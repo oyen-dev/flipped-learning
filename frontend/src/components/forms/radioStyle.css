@@ -1,0 +1,9 @@
+.input-hidden {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Stuff after this is only to make things more pretty */
+input[type=radio] + label>img {
+  transition: 500ms all;
+}

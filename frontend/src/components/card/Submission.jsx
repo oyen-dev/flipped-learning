@@ -87,7 +87,12 @@ const Submission = (props) => {
               <div className="flex flex-col space-y-2">
                 <div className="flex flex-row space-x-2 items-center">
                   <p className='mb-0 font-bold'>Nilai:</p>
-                  <p className='mb-0 text-lg'>{submission.points}</p>
+                  <div className='mb-0'>
+                    {submission.points === null
+                      ? <span className='text-gray-300'>Belum dinilai</span>
+                      : <span>{submission.points}</span>
+                    }
+                  </div>
                 </div>
 
                 <div className="flex flex-row space-x-2 items-center">

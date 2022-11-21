@@ -1,18 +1,21 @@
 import { useState } from 'react'
 import { useGlobal } from '../../contexts/Global'
 
+import Emoji1 from '../../assets/gif/1.gif'
+import Emoji2 from '../../assets/gif/2.gif'
+import Emoji3 from '../../assets/gif/3.gif'
+import Emoji4 from '../../assets/gif/4.gif'
+import Emoji5 from '../../assets/gif/5.gif'
+
 import api from '../../api'
 
 import Cookies from 'js-cookie'
-import {
-  Form,
-  Input,
-  Upload,
-  message,
-  Collapse
-} from 'antd'
+import { Form, Input, Upload, message, Collapse } from 'antd'
 import { InboxOutlined } from '@ant-design/icons'
 import { useParams, useNavigate } from 'react-router-dom'
+
+// Style
+import './radioStyle.css'
 
 const { Dragger } = Upload
 const { TextArea } = Input
@@ -30,7 +33,32 @@ const SubmitTask = (props) => {
   const { mySwal } = globalFunctions
 
   // Local States
+  const [reaction, setReaction] = useState(null)
   const [waitUpload, setWaitUpload] = useState(false)
+  const [reactions] = useState([
+    {
+      value: 1,
+      image: Emoji1
+    },
+    {
+      value: 2,
+      image: Emoji2
+    },
+    {
+      value: 3,
+      image: Emoji3
+    },
+    {
+      value: 4,
+      image: Emoji4
+    },
+    {
+      value: 5,
+      image: Emoji5
+    }
+  ])
+  const [isSelectted, setIsSelected] = useState(false)
+
   // eslint-disable-next-line no-unused-vars
   const [fileList, setFileList] = useState([])
   const [attachments, setAttachments] = useState([])
@@ -39,63 +67,90 @@ const SubmitTask = (props) => {
   // UseForm
   const [form] = Form.useForm()
 
+  // Submit Form
   const onFinish = async (values) => {
     const payload = {
       answers: values.answers === '' ? null : values.answers,
-      attachments: attachments.length === 0 ? [] : attachments.map(attachment => attachment.id)
+      attachments:
+        attachments.length === 0
+          ? []
+          : attachments.map((attachment) => attachment.id),
+      reaction
     }
 
-    // Show loading
-    mySwal.fire({
-      title: 'Submitting...',
-      allowEscapeKey: true,
-      allowOutsideClick: true,
-      didOpen: () => {
-        mySwal.showLoading()
-      }
-    })
+    console.log(payload)
 
-    // Config
-    const config = {
-      headers: {
-        authorization: Cookies.get('jwtToken')
-      }
-    }
-
-    try {
-      await api.post(`/class/${classId}/posts/${postId}/submissions`, payload, config)
-
-      // Show success
+    // Check if reaction is selected
+    if (payload.answers === undefined || payload.answers === null) {
+      if (payload.attachments.length === 0) message.error('Isi jawaban atau lampirkan file terlebih dahulu')
+    } else if (reaction === null) message.error('Pilih reaksi terlebih dahulu')
+    else {
+      // Show loading
       mySwal.fire({
-        icon: 'success',
-        title: 'Submitted!',
-        allowOutsideClick: true,
-        backdrop: true,
+        title: 'Submitting...',
         allowEscapeKey: true,
-        timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false
-      }).then(() => {
-        navigate(`/classes/${classId}`)
-      })
-    } catch (error) {
-      console.log(error)
-      mySwal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: error.response.data.message,
         allowOutsideClick: true,
-        backdrop: true,
-        allowEscapeKey: true,
-        timer: 3000,
-        timerProgressBar: true,
-        showConfirmButton: false
+        didOpen: () => {
+          mySwal.showLoading()
+        }
       })
+
+      // Config
+      const config = {
+        headers: {
+          authorization: Cookies.get('jwtToken')
+        }
+      }
+
+      try {
+        await api.post(
+          `/class/${classId}/posts/${postId}/submissions`,
+          payload,
+          config
+        )
+
+        // Show success
+        mySwal
+          .fire({
+            icon: 'success',
+            title: 'Submitted!',
+            allowOutsideClick: true,
+            backdrop: true,
+            allowEscapeKey: true,
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+          })
+          .then(() => {
+            navigate(`/classes/${classId}`)
+          })
+      } catch (error) {
+        console.log(error)
+        mySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message,
+          allowOutsideClick: true,
+          backdrop: true,
+          allowEscapeKey: true,
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        })
+      }
     }
   }
 
+  // Error Submit Form
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
+  }
+
+  // Handler reaction
+  const handleReaction = (e) => {
+    setReaction(e)
+
+    if (!isSelectted) setIsSelected(true)
   }
 
   // Custom upload image request
@@ -133,6 +188,7 @@ const SubmitTask = (props) => {
     }
   }
 
+  // Upload attachment
   const uploadAttachmentProps = {
     name: 'attachmentForm',
     multiple: true,
@@ -194,7 +250,7 @@ const SubmitTask = (props) => {
         form={form}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        className="space-y-4"
+        className="space-y-4 w-full"
       >
         <Form.Item
           name="answers"
@@ -222,7 +278,8 @@ const SubmitTask = (props) => {
                   Klik atau tarik file untuk mengunggah
                 </p>
                 <p className="ant-upload-hint">
-                  Jenis file yang diperbolehkan berupa gambar, video, pdf, ms word, dan ppt
+                  Jenis file yang diperbolehkan berupa gambar, video, pdf, ms
+                  word, dan ppt
                   <br />
                   Ukuran file maksimal 25MB
                 </p>
@@ -230,6 +287,106 @@ const SubmitTask = (props) => {
             </Form.Item>
           </Panel>
         </Collapse>
+
+        <div className={`flex flex-col space-y-2 items-center bg-white w-full ${isSelectted ? 'h-32' : 'h-24'} rounded-sm duration-300 ease-in-out`}>
+          <p className='mb-0 py-2 text-center font-medium tracking-wide'>Reaksi kamu:</p>
+          <div className="flex flex-row space-x-2">
+            {/* Emoji 1 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[0].image}
+                  onClick={() => handleReaction(1)}
+                  className={`cursor-pointer ${
+                    reaction === 1 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+
+            {/* Emoji 2 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[1].image}
+                  onClick={() => handleReaction(2)}
+                  className={`cursor-pointer ${
+                    reaction === 2 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+
+            {/* Emoji 3 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[2].image}
+                  onClick={() => handleReaction(3)}
+                  className={`cursor-pointer ${
+                    reaction === 3 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+
+            {/* Emoji 4 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[3].image}
+                  onClick={() => handleReaction(4)}
+                  className={`cursor-pointer ${
+                    reaction === 4 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+
+            {/* Emoji 5 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[4].image}
+                  onClick={() => handleReaction(5)}
+                  className={`cursor-pointer ${
+                    reaction === 5 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+          </div>
+        </div>
 
         <div className="w-full flex flex-row justify-between">
           <Form.Item className="w-full flex justify-end">
