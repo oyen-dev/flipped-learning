@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { useGlobal } from '../../contexts/Global'
 
+import Emoji1 from '../../assets/gif/1.gif'
+import Emoji2 from '../../assets/gif/2.gif'
+import Emoji3 from '../../assets/gif/3.gif'
+import Emoji4 from '../../assets/gif/4.gif'
+import Emoji5 from '../../assets/gif/5.gif'
+
 import api from '../../api'
 
 import Cookies from 'js-cookie'
@@ -34,6 +40,31 @@ const EditSubmitTask = (props) => {
 
   // Local States
   const [waitUpload, setWaitUpload] = useState(false)
+  const [reaction, setReaction] = useState(submittedTask.reaction)
+  const [reactions] = useState([
+    {
+      value: 1,
+      image: Emoji1
+    },
+    {
+      value: 2,
+      image: Emoji2
+    },
+    {
+      value: 3,
+      image: Emoji3
+    },
+    {
+      value: 4,
+      image: Emoji4
+    },
+    {
+      value: 5,
+      image: Emoji5
+    }
+  ])
+  const [isSelectted, setIsSelected] = useState(true)
+
   const [uploadedAttachments, setUploadedAttachments] = useState(
     submittedTask.attachments.map((attachment, index) => {
       return {
@@ -61,7 +92,8 @@ const EditSubmitTask = (props) => {
   const onFinish = async (values) => {
     const payload = {
       answers: values.answers === '' ? null : values.answers,
-      attachments: attachments.length === 0 ? [] : attachments.map(attachment => attachment.id)
+      attachments: attachments.length === 0 ? [] : attachments.map(attachment => attachment.id),
+      reaction
     }
 
     // Show loading
@@ -115,6 +147,13 @@ const EditSubmitTask = (props) => {
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
+  }
+
+  // Handler reaction
+  const handleReaction = (e) => {
+    setReaction(e)
+
+    if (!isSelectted) setIsSelected(true)
   }
 
   // Custom upload image request
@@ -261,6 +300,107 @@ const EditSubmitTask = (props) => {
             </Form.Item>
           </Panel>
         </Collapse>
+
+        {/* Reaction */}
+        <div className={`flex flex-col space-y-2 items-center bg-white w-full ${isSelectted ? 'h-32' : 'h-24'} rounded-sm duration-300 ease-in-out`}>
+          <p className='mb-0 py-2 text-center font-medium tracking-wide'>Reaksi kamu:</p>
+          <div className="flex flex-row space-x-2">
+            {/* Emoji 1 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[0].image}
+                  onClick={() => handleReaction(1)}
+                  className={`cursor-pointer ${
+                    reaction === 1 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+
+            {/* Emoji 2 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[1].image}
+                  onClick={() => handleReaction(2)}
+                  className={`cursor-pointer ${
+                    reaction === 2 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+
+            {/* Emoji 3 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[2].image}
+                  onClick={() => handleReaction(3)}
+                  className={`cursor-pointer ${
+                    reaction === 3 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+
+            {/* Emoji 4 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[3].image}
+                  onClick={() => handleReaction(4)}
+                  className={`cursor-pointer ${
+                    reaction === 4 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+
+            {/* Emoji 5 */}
+            <div>
+              <input
+                type="radio"
+                name="emotion"
+                id="sad"
+                className="input-hidden"
+              />
+              <label htmlFor="sad">
+                <img
+                  src={reactions[4].image}
+                  onClick={() => handleReaction(5)}
+                  className={`cursor-pointer ${
+                    reaction === 5 ? 'w-20 h-20 ' : 'w-10 h-10'
+                  }`}
+                />
+              </label>
+            </div>
+          </div>
+        </div>
 
         {/* Submit button */}
         <div className="w-full flex flex-row justify-between">

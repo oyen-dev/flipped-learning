@@ -33,8 +33,8 @@ const SubmitTask = (props) => {
   const { mySwal } = globalFunctions
 
   // Local States
-  const [reaction, setReaction] = useState(null)
   const [waitUpload, setWaitUpload] = useState(false)
+  const [reaction, setReaction] = useState(null)
   const [reactions] = useState([
     {
       value: 1,

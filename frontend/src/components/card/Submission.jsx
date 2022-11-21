@@ -69,13 +69,13 @@ const Submission = (props) => {
 
               <div className="flex flex-row space-x-2 pt-2 items-center">
                 <p className='mb-0 font-bold'>Reaksimu: </p>
-                {submission.reaction === 0
+                {submission.reaction === 1
                   ? <img src={Smile1} alt="emoji" className="w-8 h-8" />
-                  : submission.reaction === 1
+                  : submission.reaction === 2
                     ? <img src={Smile2} alt="emoji" className="w-8 h-8" />
-                    : submission.reaction === 2
+                    : submission.reaction === 3
                       ? <img src={Smile3} alt="emoji" className="w-8 h-8" />
-                      : submission.reaction === 3
+                      : submission.reaction === 4
                         ? <img src={Smile4} alt="emoji" className="w-8 h-8" />
                         : <img src={Smile5} alt="emoji" className="w-8 h-8" />
                 }
