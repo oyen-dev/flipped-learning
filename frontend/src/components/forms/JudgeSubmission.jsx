@@ -160,7 +160,7 @@ const JudgeSubmission = (props) => {
             <button
               className={'py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-black dark:text-white bg-[#fcfff7] dark:bg-[#34A0A4] hover:bg-gray-300 dark:hover:bg-[#3484a4] rounded-lg duration-300 ease-in-out'}
             >
-              Beri Nilai
+              {points === null ? 'Beri Nilai' : 'Perbarui Nilai'}
             </button>
           </Form.Item>
         </div>
