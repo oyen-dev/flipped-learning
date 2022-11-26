@@ -1,4 +1,9 @@
 import { useState, useEffect } from 'react'
+import Smile1 from '../../assets/images/1.png'
+import Smile2 from '../../assets/images/2.png'
+import Smile3 from '../../assets/images/3.png'
+import Smile4 from '../../assets/images/4.png'
+import Smile5 from '../../assets/images/5.png'
 
 import api from '../../api'
 
@@ -6,7 +11,7 @@ import momentId from '../../constants/momentId'
 
 import Cookies from 'js-cookie'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Spin } from 'antd'
+import { Spin, Tag } from 'antd'
 import { BsPencilSquare } from 'react-icons/bs'
 import moment from 'moment/moment'
 
@@ -14,7 +19,8 @@ moment.updateLocale('id', momentId)
 
 const StudentTasks = (props) => {
   // Props destructure
-  const { _id: postId } = props
+  const { _id: postId, taskId } = props
+  const { end } = taskId.deadline
 
   // useParams
   const { id: classId } = useParams()
@@ -64,6 +70,51 @@ const StudentTasks = (props) => {
       align: 'text-center'
     }
   ])
+
+  // Define point color
+  const pointColor = (point) => {
+    let color = '#f50'
+
+    if (point >= 85) color = '#87d068'
+    else if (point >= 75 && point < 85) color = '#108ee9'
+    else if (point >= 65 && point < 75) color = '#faad14'
+    else if (point >= 55 && point < 65) color = '#fa541c'
+
+    return (
+      <Tag color={color} className="text-white">
+        {point}
+      </Tag>
+    )
+  }
+
+  // Define reaction
+  const reaction = (reaction) => {
+    let emoji = null
+
+    if (reaction === 1) emoji = <img src={Smile1} alt="emoji" className="w-8 h-8" />
+    else if (reaction === 2) emoji = <img src={Smile2} alt="emoji" className="w-8 h-8" />
+    else if (reaction === 3) emoji = <img src={Smile3} alt="emoji" className="w-8 h-8" />
+    else if (reaction === 4) emoji = <img src={Smile4} alt="emoji" className="w-8 h-8" />
+    else emoji = <img src={Smile5} alt="emoji" className="w-8 h-8" />
+
+    return emoji
+  }
+
+  // Define submission status
+  const submissionStatus = (updatedAt) => {
+    let color = '#faad14'
+    let status = 'Telat Mengumpulkan'
+
+    if (moment(end) > moment(updatedAt)) {
+      color = '#87d068'
+      status = 'Tepat Waktu'
+    }
+    return (
+      <Tag color={color} className="text-white">
+        {status}
+      </Tag>
+    )
+  }
 
   // Handle judging
   const handleJudging = (path) => {
@@ -145,8 +196,11 @@ const StudentTasks = (props) => {
                       <div className="flex items-center justify-start">
                         <span className="font-medium whitespace-nowrap px-2">
                           {submission === null
-                            ? 'Belum Mengumpulkan'
-                            : moment(submission.updatedAt).format('LLLL')}
+                            ? <Tag color="#f50" className="text-white">Belum Mengumpulkan</Tag>
+                            : <Tag color="#87d068" className="text-white">
+                              {moment(submission.updatedAt).format('LLLL')}
+                            </Tag>
+                          }
                         </span>
                       </div>
                     </td>
@@ -156,10 +210,9 @@ const StudentTasks = (props) => {
                       <div className="flex items-center justify-center">
                         <span className="font-medium whitespace-nowrap px-2">
                           {submission === null
-                            ? 'Belum Mengumpulkan'
-                            : moment() > moment(submission.updatedAt)
-                              ? 'Tepat Waktu'
-                              : 'Telat'}
+                            ? <Tag color="#f50">Belum Mengumpulkan</Tag>
+                            : submissionStatus(submission.updatedAt)
+                          }
                         </span>
                       </div>
                     </td>
@@ -169,8 +222,9 @@ const StudentTasks = (props) => {
                       <div className="flex items-center justify-center">
                         <span className="font-medium whitespace-nowrap px-2">
                           {submission === null
-                            ? 'Belum Mengumpulkan'
-                            : submission.reaction}
+                            ? <Tag color="#f50">Belum Mengumpulkan</Tag>
+                            : reaction(submission.reaction)
+                          }
                         </span>
                       </div>
                     </td>
@@ -180,10 +234,11 @@ const StudentTasks = (props) => {
                       <div className="flex items-center justify-center">
                         <span className="font-medium whitespace-nowrap px-2">
                           {submission === null
-                            ? 'Belum Mengumpulkan'
+                            ? <Tag color="#f50">Belum Mengumpulkan</Tag>
                             : submission.points === null
-                              ? 'Belum dinilai'
-                              : submission.points}
+                              ? <Tag color="#faad14">Belum Dinilai</Tag>
+                              : pointColor(submission.points)
+                          }
                         </span>
                       </div>
                     </td>
