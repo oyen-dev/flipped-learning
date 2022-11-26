@@ -19,3 +19,5 @@ export { default as EditTaskInfo } from './EditTaskInfo'
 
 export { default as SubmitTask } from './SubmitTask'
 export { default as EditSubmitTask } from './EditSubmitTask'
+
+export { default as JudgeSubmission } from './JudgeSubmission'

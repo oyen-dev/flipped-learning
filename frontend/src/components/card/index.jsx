@@ -8,4 +8,5 @@ export { default as StudentList } from './StudentList'
 
 export { default as TaskHeader } from './TaskHeader'
 
+export { default as StudentName } from './StudentName'
 export { default as GradeSubmission } from './GradeSubmission'

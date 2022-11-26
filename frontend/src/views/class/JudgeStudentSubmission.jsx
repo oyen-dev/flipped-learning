@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 
 import api from '../../api'
-import { GradeSubmission, TaskHeader } from '../../components/card'
+import { GradeSubmission, StudentName, TaskHeader } from '../../components/card'
+import { Empty } from '../../pages/error'
 
 import Cookies from 'js-cookie'
 import { Divider, Spin } from 'antd'
@@ -11,7 +12,6 @@ import { BsCaretRight, BsCaretLeft } from 'react-icons/bs'
 const JudgeStudentSubmission = (props) => {
   // Props destructuring
   const { post, submissions } = props
-  console.log(submissions)
 
   // useParams
   const { id: classId, postId } = useParams()
@@ -21,8 +21,13 @@ const JudgeStudentSubmission = (props) => {
   const submissionId = searchParams.get('submissionId')
 
   // Local states
-  const [submissionList] = useState(submissions.map((obj) => obj.submission ? obj.submission._id : null))
-  const [currentSubmission, setCurrentSubmission] = useState(submissionList.findIndex((id) => id === submissionId))
+  const [submissionList] = useState(submissions.map((obj) => {
+    return {
+      student: obj.student,
+      submission: obj.submission ? obj.submission._id : null
+    }
+  }))
+  const [currentSubmission, setCurrentSubmission] = useState(submissionList.findIndex((obj) => obj.submission === submissionId))
   const [currentSubmissionData, setCurrentSubmissionData] = useState(null)
 
   // Handle next submission
@@ -52,7 +57,7 @@ const JudgeStudentSubmission = (props) => {
     }
 
     try {
-      const { data } = await api.get(`/class/${classId}/posts/${postId}/submissions/${submissionList[currentSubmission]}`, config)
+      const { data } = await api.get(`/class/${classId}/posts/${postId}/submissions/${submissionList[currentSubmission].submission}`, config)
       //   console.log(data)
 
       const { submission } = data.data
@@ -65,7 +70,11 @@ const JudgeStudentSubmission = (props) => {
 
   // Monitor when currentSubmission changes
   useEffect(() => {
-    getCurrentSubmission()
+    if (submissionList[currentSubmission].submission) {
+      getCurrentSubmission()
+    } else {
+      setCurrentSubmissionData(undefined)
+    }
   }, [currentSubmission])
 
   return (
@@ -95,13 +104,20 @@ const JudgeStudentSubmission = (props) => {
       <Divider className='bg-black dark:bg-white duration-300 ease-in-out'/>
 
       {/* Submission */}
-      <div className="flex w-full items-center justify-center">
-        {currentSubmissionData === null
-          ? <Spin size='small' />
-          : currentSubmissionData === undefined
-            ? <span className='text-sm lg:text-base font-semibold text-black dark:text-white'>Belum mengumpulkan</span>
-            : <GradeSubmission currentSubmissionData={currentSubmissionData} />
-        }
+      <div className="flex flex-col space-y-4 w-full items-start justify-center">
+
+        {/* Student Details */}
+        <StudentName student={submissionList[currentSubmission].student} />
+
+        {/* Student Submission */}
+        <div className="flex w-full items-center justify-center">
+            {currentSubmissionData === null
+              ? <Spin size='default' />
+              : currentSubmissionData === undefined
+                ? <Empty message='Belum mengumpulkan penugasan' />
+                : <GradeSubmission currentSubmissionData={currentSubmissionData} />
+            }
+        </div>
 
       </div>
     </div>
