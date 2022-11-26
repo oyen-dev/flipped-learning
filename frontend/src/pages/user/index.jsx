@@ -9,3 +9,4 @@ export { default as AttachmentDetail } from './AttachmentDetail'
 
 export { default as SubmitTaskPage } from './SubmitTask'
 export { default as EditSubmittedTaskPage } from './EditSubmittedTask'
+export { default as JudgeSubmissionPage } from './JudgeSubmission'

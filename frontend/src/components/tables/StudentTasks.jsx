@@ -80,8 +80,10 @@ const StudentTasks = (props) => {
     }
 
     try {
-      const { data } = await api.get(`/class/${classId}/posts/${postId}/submissions`, config)
-      console.log(data)
+      const { data } = await api.get(
+        `/class/${classId}/posts/${postId}/submissions`,
+        config
+      )
 
       setSubmissions(data.data)
     } catch (error) {
@@ -101,84 +103,118 @@ const StudentTasks = (props) => {
     <>
       {submissions !== null
         ? (
-        <table className="w-full table-auto">
-          <thead>
-            <tr className="bg-gray-600 text-white uppercase text-sm leading-normal">
-              {columns.map((column, index) => (
-                <th key={index} className={`py-3 w-[${column.width}%] ${column.align} whitespace-nowrap`}>
-                  {column.title}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="text-black text-xs font-light">
-            {submissions.map((subs, index) => {
-              const { student, submission } = subs
-              const { fullName } = student
-              return (
-                <tr key={index} className="border-b border-gray-200 bg-gray-50 hover:bg-gray-100">
+        <div className="flex flex-col w-full space-y-4 overflow-x-auto">
+          <table className="w-full table-auto">
+            <thead>
+              <tr className="bg-gray-600 text-white uppercase text-sm leading-normal">
+                {columns.map((column, index) => (
+                  <th
+                    key={index}
+                    className={`py-3 w-[${column.width}%] ${column.align} whitespace-nowrap`}
+                  >
+                    {column.title}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="text-black text-xs font-light">
+              {submissions.map((subs, index) => {
+                const { student, submission } = subs
+                const { fullName } = student
+                return (
+                  <tr
+                    key={index}
+                    className="border-b border-gray-200 bg-gray-50 hover:bg-gray-100"
+                  >
+                    {/* Nomor */}
+                    <td className="py-3 text-left">
+                      <div className="flex items-center pl-3 justify-start">
+                        <span className="font-medium whitespace-nowrap px-2">{index + 1}</span>
+                      </div>
+                    </td>
 
-                  {/* Nomor */}
-                  <td className="py-3 text-left whitespace-nowrap">
-                    <div className="flex items-center pl-3 justify-start">
-                      <span className="font-medium">{index + 1}</span>
-                    </div>
-                  </td>
+                    {/* Nama */}
+                    <td className="py-3  text-left">
+                      <div className="flex items-center justify-start">
+                        <span className="font-medium whitespace-nowrap px-2">{fullName}</span>
+                      </div>
+                    </td>
 
-                  {/* Nama */}
-                  <td className="py-3  text-left">
-                    <div className="flex items-center justify-start">
-                      <span className="font-medium">{fullName}</span>
-                    </div>
-                  </td>
+                    {/* Tanggal */}
+                    <td className="py-3  text-left">
+                      <div className="flex items-center justify-start">
+                        <span className="font-medium whitespace-nowrap px-2">
+                          {submission === null
+                            ? 'Belum Mengumpulkan'
+                            : moment(submission.updatedAt).format('LLLL')}
+                        </span>
+                      </div>
+                    </td>
 
-                  {/* Tanggal */}
-                  <td className="py-3  text-left">
-                    <div className="flex items-center justify-start">
-                      <span className="font-medium">{submission === null ? 'Belum Mengumpulkan' : moment(submission.updatedAt).format('LLLL')}</span>
-                    </div>
-                  </td>
+                    {/* Status */}
+                    <td className="py-3  text-left">
+                      <div className="flex items-center justify-center">
+                        <span className="font-medium whitespace-nowrap px-2">
+                          {submission === null
+                            ? 'Belum Mengumpulkan'
+                            : moment() > moment(submission.updatedAt)
+                              ? 'Tepat Waktu'
+                              : 'Telat'}
+                        </span>
+                      </div>
+                    </td>
 
-                  {/* Status */}
-                  <td className="py-3  text-left">
-                    <div className="flex items-center justify-center">
-                      <span className="font-medium">{submission === null ? 'Belum Mengumpulkan' : moment() > moment(submission.updatedAt) ? 'Tepat Waktu' : 'Telat'}</span>
-                    </div>
-                  </td>
+                    {/* Reaksi */}
+                    <td className="py-3  text-left">
+                      <div className="flex items-center justify-center">
+                        <span className="font-medium whitespace-nowrap px-2">
+                          {submission === null
+                            ? 'Belum Mengumpulkan'
+                            : submission.reaction}
+                        </span>
+                      </div>
+                    </td>
 
-                  {/* Reaksi */}
-                  <td className="py-3  text-left">
-                    <div className="flex items-center justify-center">
-                      <span className="font-medium">{submission === null ? 'Belum Mengumpulkan' : submission.reaction}</span>
-                    </div>
-                  </td>
+                    {/* Nilai */}
+                    <td className="py-3  text-left">
+                      <div className="flex items-center justify-center">
+                        <span className="font-medium whitespace-nowrap px-2">
+                          {submission === null
+                            ? 'Belum Mengumpulkan'
+                            : submission.points === null
+                              ? 'Belum dinilai'
+                              : submission.points}
+                        </span>
+                      </div>
+                    </td>
 
-                  {/* Nilai */}
-                  <td className="py-3  text-left">
-                    <div className="flex items-center justify-center">
-                      <span className="font-medium">{submission === null ? 'Belum Mengumpulkan' : submission.points === null ? 'Belum dinilai' : submission.points}</span>
-                    </div>
-                  </td>
-
-                  {/* AKSI */}
-                  <td className="py-3  text-left">
-                    <div className="flex items-center justify-center">
-                      <button
-                        disabled={submission === null}
-                        onClick={() => handleJudging(`posts/${postId}/submissions/${submission._id}`)}
-                        className={`flex flex-row items-center justify-center space-x-2 ${submission === null ? 'bg-gray-500' : 'bg-blue-500 hover:bg-blue-800'} py-2 px-4 rounded-md duration-300 ease-in-out`}
-                      >
-                        <BsPencilSquare className='w-5 h-5 fill-white' />
-                        <span className='font-medium text-white'>Nilai</span>
-                      </button>
-                    </div>
-                  </td>
-
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+                    {/* AKSI */}
+                    <td className="py-3  text-left">
+                      <div className="flex items-center justify-center">
+                        <button
+                          disabled={submission === null}
+                          onClick={() =>
+                            handleJudging(
+                              `posts/${postId}/grading?submissionId=${submission._id}`
+                            )
+                          }
+                          className={`flex flex-row items-center justify-center space-x-2 ${
+                            submission === null
+                              ? 'bg-gray-500'
+                              : 'bg-blue-500 hover:bg-blue-800'
+                          } py-2 px-4 rounded-md duration-300 ease-in-out`}
+                        >
+                          <BsPencilSquare className="w-5 h-5 fill-white" />
+                          <span className="font-medium text-white">Nilai</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
           )
         : (
         <div className="flex w-full items-center justify-center">

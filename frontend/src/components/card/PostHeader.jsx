@@ -2,7 +2,7 @@ import momentId from '../../constants/momentId'
 
 import { BsBook, BsClipboardCheck } from 'react-icons/bs'
 import moment from 'moment'
-moment.defineLocale('id', momentId)
+moment.updateLocale('id', momentId)
 
 const PostHeader = (props) => {
   const { teacherId, title, isTask, taskId, createdAt, updatedAt } = props

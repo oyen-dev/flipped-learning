@@ -28,7 +28,8 @@ import {
   StudentDetail,
   AttachmentDetail,
   SubmitTaskPage,
-  EditSubmittedTaskPage
+  EditSubmittedTaskPage,
+  JudgeSubmissionPage
 } from '../pages/user'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
@@ -103,6 +104,7 @@ export default function AppRoutes () {
             <Route path='students/:studentId' element={isAuthenticated ? (<ManagementContext> <StudentDetail /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route path='attachments/:attachmentId' element={isAuthenticated ? (<ManagementContext> <AttachmentDetail /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route path='posts/:postId/edit' element={isAuthenticated ? (<ManagementContext> <EditClassPost /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            <Route path='posts/:postId/grading' element={isAuthenticated ? (<ManagementContext> <JudgeSubmissionPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route path='tasks/:postId/submissions' element={isAuthenticated ? (<ManagementContext> <SubmitTaskPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route path='tasks/:postId/submissions/edit' element={isAuthenticated ? (<ManagementContext> <EditSubmittedTaskPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route index element={isAuthenticated ? <ClassDetailPage /> : <Navigate to="/auth" />}/>

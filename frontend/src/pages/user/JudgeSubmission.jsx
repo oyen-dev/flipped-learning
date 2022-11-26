@@ -3,24 +3,25 @@ import { useState, useEffect } from 'react'
 import api from '../../api'
 import Layout from '../../components/layouts'
 import { Breadcrumb } from '../../components/breadcrumb'
-import { TaskHeader } from '../../components/card'
-import { EditSubmitTask } from '../../components/forms'
+import { JudgeStudentSubmission } from '../../views/class'
 
 import Cookies from 'js-cookie'
 import { Spin } from 'antd'
-import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
 
-const EditSubmittedTaskPage = () => {
-  // Navigator
-  const navigate = useNavigate()
-
+const JudgeSubmissionPage = () => {
   // useParams
   const { id: classId, postId } = useParams()
 
   // useLocation
   const { pathname } = useLocation()
 
+  // Navigator
+  const navigate = useNavigate()
+
   // Local States
+  const [post, setPost] = useState(null)
+  const [submissions, setSubmissions] = useState(null)
   const [paths] = useState([
     {
       name: 'Dashboard',
@@ -35,12 +36,10 @@ const EditSubmittedTaskPage = () => {
       destination: `/classes/${classId}`
     },
     {
-      name: 'Pengumpulan Tugas',
+      name: 'Penilaian Tugas',
       destination: `${pathname}`
     }
   ])
-  const [post, setPost] = useState(null)
-  const [submittedTask, setSubmittedTask] = useState(null)
 
   // Get task detail
   const getTaskDetail = async () => {
@@ -53,7 +52,7 @@ const EditSubmittedTaskPage = () => {
 
     try {
       const { data } = await api.get(`/class/${classId}/posts/${postId}`, config)
-      // console.log(data)
+      //   console.log(data)
 
       const { post } = data.data
       setPost(post)
@@ -62,8 +61,8 @@ const EditSubmittedTaskPage = () => {
     }
   }
 
-  // Get submitted task
-  const getSubmitted = async () => {
+  // Get student task submissions
+  const getStudentTaskSubmissions = async () => {
     // Config
     const config = {
       headers: {
@@ -72,41 +71,36 @@ const EditSubmittedTaskPage = () => {
     }
 
     try {
-      const { data } = await api.get(`/class/${classId}/posts/${postId}/submission`, config)
-      // console.log(data)
+      const { data } = await api.get(
+        `/class/${classId}/posts/${postId}/submissions`,
+        config
+      )
 
-      setSubmittedTask(data.data)
+      setSubmissions(data.data)
     } catch (error) {
       console.log(error)
     }
   }
 
-  // Initially get task detail and submitted task
+  // Initally get task detail
   useEffect(() => {
     getTaskDetail()
-    getSubmitted()
+    getStudentTaskSubmissions()
   }, [])
+
   return (
     <Layout>
       <Breadcrumb paths={paths} navigate={navigate} />
-      <div className="flex flex-col w-full rounded-lg bg-[#accbe1] dark:bg-gray-900 text-black dark:text-white transition-all ease-in-out duration-300">
-        {post
-          ? (
+        <div className="flex flex-col w-full rounded-lg bg-[#accbe1] dark:bg-gray-900 text-black dark:text-white transition-all ease-in-out duration-300">
           <div className="flex flex-col space-y-6 px-4 py-4">
-            <TaskHeader post={post} />
-
-            {submittedTask !== null
-              ? <EditSubmitTask submittedTask={submittedTask} />
-              : <Spin />
+            {post && submissions
+              ? <JudgeStudentSubmission post={post} submissions={submissions} />
+              : <Spin size="small" />
             }
           </div>
-            )
-          : (
-          <Spin size="small" />
-            )}
-      </div>
+        </div>
     </Layout>
   )
 }
 
-export default EditSubmittedTaskPage
+export default JudgeSubmissionPage

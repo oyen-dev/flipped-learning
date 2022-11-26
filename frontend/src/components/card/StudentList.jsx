@@ -3,7 +3,7 @@ import momentId from '../../constants/momentId'
 import moment from 'moment/moment'
 import { Link } from 'react-router-dom'
 
-moment.defineLocale('id', momentId)
+moment.updateLocale('id', momentId)
 const StudentList = (props) => {
   // Destructure props
   const { student } = props

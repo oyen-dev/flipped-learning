@@ -100,7 +100,7 @@ const StudentDetail = () => {
                   <Field label="Email" value={student.email} />
                   <Field
                     label="Tanggal Lahir"
-                    value={moment(student.dateOfBirth).format('LL')}
+                    value={moment(new Date(student.dateOfBirth)).format('LL')}
                   />
                   <Field
                     label="Jenis Kelamin"

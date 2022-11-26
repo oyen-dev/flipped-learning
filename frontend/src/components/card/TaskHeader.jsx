@@ -16,7 +16,7 @@ const TaskHeader = (props) => {
       </div>
 
       <div className="flex">
-        <p className="mb-0 text-sm text-yellow-400">
+        <p className="mb-0 text-sm text-yellow-700 dark:text-yellow-400 duration-300 ease-in-out">
           Deadline: {moment(post.taskId.deadline.end).format('LLLL')}
         </p>
       </div>

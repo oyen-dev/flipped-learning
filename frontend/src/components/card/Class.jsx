@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { BsGear } from 'react-icons/bs'
 import moment from 'moment'
-moment.defineLocale('id', momentId)
+moment.updateLocale('id', momentId)
 
 const Class = (props) => {
   // Props destructure
