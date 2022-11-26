@@ -303,7 +303,7 @@ const EditSubmitTask = (props) => {
 
         {/* Reaction */}
         <div className={`flex flex-col space-y-2 items-center bg-white w-full ${isSelectted ? 'h-32' : 'h-24'} rounded-sm duration-300 ease-in-out`}>
-          <p className='mb-0 py-2 text-center font-medium tracking-wide'>Reaksi kamu:</p>
+          <p className='mb-0 py-2 text-center font-medium tracking-wide'>Reaksi kamu setelah menyelesaikan tugas:</p>
           <div className="flex flex-row space-x-2">
             {/* Emoji 1 */}
             <div>
@@ -317,9 +317,7 @@ const EditSubmitTask = (props) => {
                 <img
                   src={reactions[0].image}
                   onClick={() => handleReaction(1)}
-                  className={`cursor-pointer ${
-                    reaction === 1 ? 'w-20 h-20 ' : 'w-10 h-10'
-                  }`}
+                  className={`cursor-pointer duration-150 ease-in-out ${reaction === 1 ? 'w-20 h-20 ' : 'w-10 h-10 hover:w-12 hover:h-12'}`}
                 />
               </label>
             </div>
@@ -337,7 +335,7 @@ const EditSubmitTask = (props) => {
                   src={reactions[1].image}
                   onClick={() => handleReaction(2)}
                   className={`cursor-pointer ${
-                    reaction === 2 ? 'w-20 h-20 ' : 'w-10 h-10'
+                    reaction === 2 ? 'w-20 h-20 ' : 'w-10 h-10 hover:w-12 hover:h-12'
                   }`}
                 />
               </label>
@@ -356,7 +354,7 @@ const EditSubmitTask = (props) => {
                   src={reactions[2].image}
                   onClick={() => handleReaction(3)}
                   className={`cursor-pointer ${
-                    reaction === 3 ? 'w-20 h-20 ' : 'w-10 h-10'
+                    reaction === 3 ? 'w-20 h-20 ' : 'w-10 h-10 hover:w-12 hover:h-12'
                   }`}
                 />
               </label>
@@ -375,7 +373,7 @@ const EditSubmitTask = (props) => {
                   src={reactions[3].image}
                   onClick={() => handleReaction(4)}
                   className={`cursor-pointer ${
-                    reaction === 4 ? 'w-20 h-20 ' : 'w-10 h-10'
+                    reaction === 4 ? 'w-20 h-20 ' : 'w-10 h-10 hover:w-12 hover:h-12'
                   }`}
                 />
               </label>
