@@ -1,0 +1,5 @@
+export { default as PrivacyPolicy } from './PrivacyPolicy'
+export { default as CreateUser } from './CreateUser'
+export { default as StudentProfile } from './StudentProfile'
+export { default as UpdateUser } from './UpdateUser'
+export { default as CreateClass } from './CreateClass'
