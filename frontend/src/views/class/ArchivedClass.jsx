@@ -83,12 +83,18 @@ const ArchivedClass = () => {
 
   // Initial fetch data
   useEffect(() => {
+    // Reset classList
+    setClassList(null)
+
     fetchClass(1, 10)
     // console.log('init')
   }, [])
 
   // Fetch data when page change or limit change
   useEffect(() => {
+    // Reset classList
+    setClassList(null)
+
     if (isFetchClass) {
       fetchClass(currentPage, limitClass)
       setIsFetchClass(false)
@@ -97,12 +103,16 @@ const ArchivedClass = () => {
 
   // Search classes
   const searchClass = async () => {
+    // Reset classList
+    setClassList(null)
+
     fetchClass(currentPage, limitClass)
   }
 
   // Fetch class when search input is empty
   useEffect(() => {
     if (search === '') {
+      setClassList(null)
       fetchClass(1, 10)
       setCurrentSearchPage(1)
     }

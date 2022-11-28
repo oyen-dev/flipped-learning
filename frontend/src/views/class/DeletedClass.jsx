@@ -107,10 +107,8 @@ const DeletedClass = () => {
 
   // Fetch class when search input is empty
   useEffect(() => {
-    // Reset classList
-    setClassList(null)
-
     if (search === '') {
+      setClassList(null)
       fetchClass(1, 10)
       setCurrentSearchPage(1)
     }
