@@ -7,6 +7,8 @@ export const ManagementProvider = ({ children }) => {
   const [studentList, setStudentList] = useState([])
   const [teacherList, setTeacherList] = useState([])
   const [classList, setClassList] = useState([])
+  const [willUpdateClassId, setWillUpdateClassId] = useState(null)
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   // Fetcher
   const [isFetchStudent, setIsFetchStudent] = useState(false)
@@ -26,7 +28,11 @@ export const ManagementProvider = ({ children }) => {
     isFetchTeacher,
     setIsFetchTeacher,
     isFetchClass,
-    setIsFetchClass
+    setIsFetchClass,
+    willUpdateClassId,
+    setWillUpdateClassId,
+    isModalVisible,
+    setIsModalVisible
   }
 
   return (

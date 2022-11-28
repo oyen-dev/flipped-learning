@@ -84,8 +84,6 @@ const AddClass = () => {
         : mapSchedule(values.schedule)
     }
 
-    console.log(payload)
-
     // Show loading
     mySwal.fire({
       title: 'Creating class...',
