@@ -4,7 +4,7 @@ const CreateUser = (props) => {
   const { mode } = props
   return (
     <div className="modal" style={{ margin: 0 }}>
-      <div className="modal-box flex flex-col relative bg-gray-800">
+      <div className="modal-box flex flex-col relative bg-[#e9ecef] dark:bg-gray-900 transition-all ease-in-out duration-300">
         <div className="flex flex-col w-full h-full">
           <label
             htmlFor="my-modal-create"
@@ -21,7 +21,7 @@ const CreateUser = (props) => {
               <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
             </svg>
           </label>
-          <h4 className="font-semibold text-lg text-center text-white">
+          <h4 className="font-semibold text-lg text-center text-black dark:text-white">
             {mode === 'teacher' ? 'Tambah Data Guru' : 'Tambah Data Siswa'}
           </h4>
         </div>

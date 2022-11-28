@@ -5,7 +5,7 @@ import { BsXLg } from 'react-icons/bs'
 const EditClass = () => {
   return (
     <div className="modal w-full h-screen" style={{ margin: 0 }}>
-      <div className="modal-box max-h-[70%] w-11/12 max-w-5xl bg-gray-900">
+      <div className="modal-box max-h-[70%] w-11/12 max-w-5xl bg-[#e9ecef] dark:bg-gray-900 transition-all ease-in-out duration-300">
         <div className="flex w-full justify-center items-center h-10 sticky top-0 left-0 z-40">
           <label
             htmlFor="modal-update-class"
@@ -13,7 +13,7 @@ const EditClass = () => {
           >
             <BsXLg />
           </label>
-          <h5 className="font-semibold text-lg text-center mb-0 text-white">
+          <h5 className="font-semibold text-lg text-center mb-0 text-black dark:text-white duration-300 ease-in-out">
             Edit Kelas
           </h5>
         </div>

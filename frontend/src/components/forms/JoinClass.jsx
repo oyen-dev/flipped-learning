@@ -71,7 +71,7 @@ const JoinClass = () => {
       autoComplete="off"
       className="w-full"
     >
-      <p className="text-white text-base font-normal mb-0">
+      <p className="text-black dark:text-white text-base font-normal mb-0">
         Kode Undangan Kelas
       </p>
       <Form.Item

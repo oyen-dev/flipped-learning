@@ -88,14 +88,6 @@ const AddTeacher = () => {
     setIsFetchTeacher(true)
   }
 
-  // const changeAssign = (e) => {
-  //   setAssignClass(e.target.checked)
-  // }
-
-  // const assignClasses = (value) => {
-  //   console.log(`selected ${value}`)
-  // }
-
   return (
     <Form
       form={form}
@@ -104,7 +96,7 @@ const AddTeacher = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <p className="text-white text-base font-normal mb-0">Nama Lengkap</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Nama Lengkap</p>
       <Form.Item
         name="fullName"
         rules={[
@@ -117,7 +109,7 @@ const AddTeacher = () => {
         <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Email</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Email</p>
       <Form.Item
         name="email"
         rules={[
@@ -134,7 +126,7 @@ const AddTeacher = () => {
         <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Jenis Kelamin</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Jenis Kelamin</p>
       <Form.Item
         name="gender"
         rules={[
@@ -150,7 +142,7 @@ const AddTeacher = () => {
         </Select>
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Tanggal Lahir</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Tanggal Lahir</p>
       <Form.Item
         name="dateOfBirth"
         rules={[
@@ -163,7 +155,7 @@ const AddTeacher = () => {
         <DatePicker onChange={changeDate} className="w-full" />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Tempat Lahir</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Tempat Lahir</p>
       <Form.Item
         name="placeOfBirth"
         rules={[
@@ -176,7 +168,7 @@ const AddTeacher = () => {
         <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Alamat</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Alamat</p>
       <Form.Item
         name="address"
         rules={[
@@ -188,43 +180,6 @@ const AddTeacher = () => {
       >
         <Input />
       </Form.Item>
-
-      {/* {assignClass && (
-        <>
-          <p className="text-white text-base font-normal mb-0">Kelas Diampu</p>
-          <Form.Item
-            name="classes"
-            rules={[
-              {
-                required: true,
-                message: 'Mohon pilih kelas yang akan diampu!'
-              }
-            ]}
-          >
-            <Select
-              mode="multiple"
-              allowClear
-              placeholder="Pilih kelas yang akan diampu"
-              onChange={assignClasses}
-            >
-              <Option title="Pemrograman Dasar" value="Pemdas" />
-              <Option title="Pemrograman Berorientasi Objek" value="PBO" />
-              <Option title="Algoritma dan Strukur Data" value="ASD" />
-            </Select>
-          </Form.Item>
-        </>
-      )} */}
-
-      {/* <div className="flex flex-row items-start justify-start space-x-4 text-white">
-        <Form.Item name="agree" valuePropName="checked">
-          <div className="flex flex-row space-x-4">
-            <Checkbox onChange={changeAssign} />
-            <p className="text-sm justify-center items-center mb-0 text-justify text-white">
-              Tugaskan guru ini untuk mengajar kelas?
-            </p>
-          </div>
-        </Form.Item>
-      </div> */}
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">

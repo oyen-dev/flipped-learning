@@ -165,7 +165,7 @@ const AddClass = () => {
       autoComplete="off"
       className="w-full"
     >
-      <p className="text-white text-base font-normal mb-0">
+      <p className="text-black dark:text-white text-base font-normal mb-0">
         Nama Kelas/Mata Pelajaran
       </p>
       <Item
@@ -180,7 +180,7 @@ const AddClass = () => {
         <Input />
       </Item>
 
-      <p className="text-white text-base font-normal mb-0">Kelas/Jenjang</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Kelas/Jenjang</p>
       <Item
         name="grade"
         rules={[
@@ -218,7 +218,7 @@ const AddClass = () => {
         </>
       )}
 
-      <p className="text-white text-base font-normal mb-0">Jadwal Kelas</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Jadwal Kelas</p>
       <List name="schedule">
         {(fields, { add, remove }) => (
           <>

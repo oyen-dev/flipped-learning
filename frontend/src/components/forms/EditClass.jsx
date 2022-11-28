@@ -217,7 +217,7 @@ const EditClass = () => {
             }))
           }}
         >
-          <p className="text-white text-base font-normal mb-0">
+          <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">
             Nama Kelas/Mata Pelajaran
           </p>
           <Item
@@ -232,7 +232,7 @@ const EditClass = () => {
             <Input />
           </Item>
 
-          <p className="text-white text-base font-normal mb-0">Kelas/Jenjang</p>
+          <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">Kelas/Jenjang</p>
           <Item
             name="grade"
             rules={[
@@ -245,7 +245,7 @@ const EditClass = () => {
             <Input />
           </Item>
 
-          <p className="text-white text-base font-normal mb-0">Guru/Pengajar</p>
+          <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">Guru/Pengajar</p>
           <Item
             name="teachers"
             rules={[
@@ -266,7 +266,7 @@ const EditClass = () => {
             />
           </Item>
 
-          <p className="text-white text-base font-normal mb-0">Jadwal Kelas</p>
+          <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">Jadwal Kelas</p>
           <List
             name="schedule"
             initialValue={scheduleList}
