@@ -220,12 +220,14 @@ const Class = (props) => {
                   <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700">
                     <span>Edit Kelas</span>
                   </li>
-                  <li
-                    className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"
-                    onClick={() => archiveClassDialog()}
-                  >
-                    <span>Arsipkan Kelas</span>
-                  </li>
+                  {user.role === 'ADMIN' && (
+                    <li
+                      className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"
+                      onClick={() => archiveClassDialog()}
+                    >
+                      <span>Arsipkan Kelas</span>
+                    </li>
+                  )}
                 </>
               )}
 
@@ -248,14 +250,14 @@ const Class = (props) => {
               }
 
               {mode === 'active' || mode === 'archived'
-                ? (
-                <li
+                ? user.role === 'ADMIN'
+                  ? <li
                   className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700 text-red-500"
                   onClick={() => deleteClassDialog()}
                   >
                   <span>Hapus Kelas</span>
                 </li>
-                  )
+                  : null
                 : null}
             </ul>
           </div>
