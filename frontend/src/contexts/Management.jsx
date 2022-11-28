@@ -6,7 +6,7 @@ export const ManagementProvider = ({ children }) => {
   // Management States
   const [studentList, setStudentList] = useState([])
   const [teacherList, setTeacherList] = useState([])
-  const [classList, setClassList] = useState([])
+  const [classList, setClassList] = useState(null)
   const [willUpdateClassId, setWillUpdateClassId] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
 
