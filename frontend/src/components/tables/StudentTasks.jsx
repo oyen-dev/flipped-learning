@@ -75,10 +75,9 @@ const StudentTasks = (props) => {
   const pointColor = (point) => {
     let color = '#f50'
 
-    if (point >= 85) color = '#87d068'
-    else if (point >= 75 && point < 85) color = '#108ee9'
-    else if (point >= 65 && point < 75) color = '#faad14'
-    else if (point >= 55 && point < 65) color = '#fa541c'
+    if (point >= 81) color = '#108ee9'
+    else if (point >= 71 && point < 80) color = '#87d068'
+    else if (point >= 60 && point <= 70) color = '#faad14'
 
     return (
       <Tag color={color} className="text-white">
@@ -106,7 +105,7 @@ const StudentTasks = (props) => {
     let status = 'Telat Mengumpulkan'
 
     if (moment(end) > moment(updatedAt)) {
-      color = '#87d068'
+      color = '#108ee9'
       status = 'Tepat Waktu'
     }
     return (
@@ -196,10 +195,8 @@ const StudentTasks = (props) => {
                       <div className="flex items-center justify-start">
                         <span className="font-medium whitespace-nowrap px-2">
                           {submission === null
-                            ? <Tag color="#f50" className="text-white">Belum Mengumpulkan</Tag>
-                            : <Tag color="#87d068" className="text-white">
-                              {moment(submission.updatedAt).format('LLLL')}
-                            </Tag>
+                            ? <span className='text-red-500'>Belum Mengumpulkan</span>
+                            : <span>{moment(submission.updatedAt).format('LLLL')}</span>
                           }
                         </span>
                       </div>

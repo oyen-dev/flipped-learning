@@ -9,3 +9,4 @@ export { default as ClassTasks } from './ClassTasks'
 
 export { default as PostList } from './PostList'
 export { default as JudgeStudentSubmission } from './JudgeStudentSubmission'
+export { default as AttachmentDetail } from './AttachmentDetail'
