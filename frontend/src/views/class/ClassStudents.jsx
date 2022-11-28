@@ -47,7 +47,7 @@ const ClassStudents = () => {
           ? students.map((student, index) => (
               <StudentList key={index} student={student} />
           ))
-          : <Empty message='Belum ada siswa di kelas ini' />
+          : <Empty message='Belum ada siswa di kelas.' />
         : <Spin />
       }
     </div>
