@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useManagement } from '../../contexts/Management'
 
 import { useGlobal } from '../../contexts/Global'
 import { useAuth } from '../../contexts/Auth'
@@ -30,6 +31,10 @@ const ClassHeader = (props) => {
   const { authState } = useAuth()
   const { user } = authState
 
+  // Management States
+  const { managementStates } = useManagement()
+  const { setPresenceClassId, setPresenceMode } = managementStates
+
   // Local States
   const [isPresenceOpen, setIsPresenceOpen] = useState(null)
 
@@ -56,19 +61,37 @@ const ClassHeader = (props) => {
     }
   }
 
+  // Open modal
+  const openModal = () => {
+    // Set presence class id
+    setPresenceClassId(classId)
+
+    // Modal is from daisyUI, open it using dom manipulation
+    document.getElementById('modal-presence').checked = true
+  }
+
   // Open presence for teacher
   const openPresence = async () => {
     console.log('open presence')
+    setPresenceMode('open')
+
+    openModal()
   }
 
   // Edit presence for teacher
   const editPresence = async () => {
     console.log('edit presence')
+    setPresenceMode('edit')
+
+    openModal()
   }
 
   // Presence for student
   const presenceNow = async () => {
     console.log('presence now')
+    setPresenceMode('presence')
+
+    openModal()
   }
 
   // Leave class

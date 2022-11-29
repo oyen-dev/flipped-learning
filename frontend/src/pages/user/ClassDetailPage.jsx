@@ -6,6 +6,7 @@ import Layout from '../../components/layouts'
 import { Breadcrumb } from '../../components/breadcrumb'
 import { BorderBottom } from '../../components/buttons'
 import { ClassHeader } from '../../components/card'
+import { Presence } from '../../components/modals'
 import { InformationCenter, ClassStudents, ClassTasks, ClassEvaluations } from '../../views/class'
 
 import Cookies from 'js-cookie'
@@ -115,6 +116,14 @@ const ClassDetailPage = () => {
       {tabKey === '2' && <ClassStudents />}
       {tabKey === '3' && <ClassTasks />}
       {tabKey === '4' && <ClassEvaluations />}
+
+      {/* Modal container */}
+      <input
+          type="checkbox"
+          id="modal-presence"
+          className="modal-toggle"
+        />
+        <Presence />
     </Layout>
   )
 }

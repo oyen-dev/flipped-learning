@@ -6,22 +6,25 @@ const EditClass = () => {
   return (
     <div className="modal w-full h-screen" style={{ margin: 0 }}>
       <div className="modal-box max-h-[70%] w-11/12 max-w-5xl bg-[#e9ecef] dark:bg-gray-900 transition-all ease-in-out duration-300">
-        <div className="flex w-full justify-center items-center h-10 sticky top-0 left-0 z-40">
+
+        {/* Title */}
+        <div className="flex flex-col w-full h-full">
           <label
             htmlFor="modal-update-class"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             <BsXLg />
           </label>
-          <h5 className="font-semibold text-lg text-center mb-0 text-black dark:text-white duration-300 ease-in-out">
+          <h4 className="font-semibold text-lg text-center text-black dark:text-white">
             Edit Kelas
-          </h5>
+          </h4>
         </div>
-        <div className="flex flex-col w-full h-[90%]">
-          <div className="flex flex-col lg:flex-row w-full text-white items-start justify-start py-5 space-y-4 lg:space-y-0 overflow-auto">
-            <EditClassForm />
-          </div>
+
+        {/* Form */}
+        <div className="flex flex-col w-full overflow-y-auto pr-5">
+          <EditClassForm />
         </div>
+
       </div>
     </div>
   )

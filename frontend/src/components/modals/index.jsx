@@ -7,3 +7,5 @@ export { default as UpdateUser } from './UpdateUser'
 
 export { default as CreateClass } from './CreateClass'
 export { default as EditClass } from './EditClass'
+
+export { default as Presence } from './Presence'
