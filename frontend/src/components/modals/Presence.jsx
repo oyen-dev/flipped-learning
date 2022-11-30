@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useManagement } from '../../contexts/Management'
 
+import { OpenPresence, EditPresence, RecordPresence } from '../forms'
+
 import { BsXLg } from 'react-icons/bs'
 import { Spin } from 'antd'
 
@@ -38,7 +40,12 @@ const Presence = () => {
             <BsXLg />
           </label>
           <h4 className="font-semibold text-lg text-center text-black dark:text-white">
-            Buka Presensi
+            {presenceMode === 'open'
+              ? 'Buka Presensi'
+              : presenceMode === 'edit'
+                ? 'Edit Presensi'
+                : 'Presensi Sekarang'
+            }
           </h4>
         </div>
 
@@ -47,11 +54,11 @@ const Presence = () => {
           {mode === null
             ? <Spin size='default'/>
             : mode === 1
-              ? 'Open'
+              ? <OpenPresence />
               : mode === 2
-                ? 'Edit'
+                ? <EditPresence />
                 : mode === 3
-                  ? 'Presence'
+                  ? <RecordPresence />
                   : 'Error'
           }
         </div>

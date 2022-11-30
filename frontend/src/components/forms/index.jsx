@@ -22,3 +22,7 @@ export { default as SubmitTask } from './SubmitTask'
 export { default as EditSubmitTask } from './EditSubmitTask'
 
 export { default as JudgeSubmission } from './JudgeSubmission'
+
+export { default as OpenPresence } from './OpenPresence'
+export { default as EditPresence } from './EditPresence'
+export { default as RecordPresence } from './RecordPresence'
