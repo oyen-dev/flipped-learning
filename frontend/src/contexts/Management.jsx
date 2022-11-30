@@ -13,6 +13,7 @@ export const ManagementProvider = ({ children }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [presenceClassId, setPresenceClassId] = useState(null)
   const [presenceMode, setPresenceMode] = useState(null)
+  const [fetchPresence, setFetchPresence] = useState(false)
 
   // Fetcher
   const [isFetchStudent, setIsFetchStudent] = useState(false)
@@ -40,7 +41,9 @@ export const ManagementProvider = ({ children }) => {
     presenceClassId,
     setPresenceClassId,
     presenceMode,
-    setPresenceMode
+    setPresenceMode,
+    fetchPresence,
+    setFetchPresence
   }
 
   return (

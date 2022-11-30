@@ -33,7 +33,7 @@ const ClassHeader = (props) => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { setPresenceClassId, setPresenceMode } = managementStates
+  const { setPresenceClassId, setPresenceMode, fetchPresence, setFetchPresence } = managementStates
 
   // Local States
   const [isPresenceOpen, setIsPresenceOpen] = useState(null)
@@ -72,7 +72,6 @@ const ClassHeader = (props) => {
 
   // Open presence for teacher
   const openPresence = async () => {
-    console.log('open presence')
     setPresenceMode('open')
 
     openModal()
@@ -80,7 +79,6 @@ const ClassHeader = (props) => {
 
   // Edit presence for teacher
   const editPresence = async () => {
-    console.log('edit presence')
     setPresenceMode('edit')
 
     openModal()
@@ -88,7 +86,6 @@ const ClassHeader = (props) => {
 
   // Presence for student
   const presenceNow = async () => {
-    console.log('presence now')
     setPresenceMode('presence')
 
     openModal()
@@ -161,6 +158,14 @@ const ClassHeader = (props) => {
   useEffect(() => {
     checkPresence()
   }, [])
+
+  // Monitor fetchPresence
+  useEffect(() => {
+    if (fetchPresence) {
+      checkPresence()
+      setFetchPresence(false)
+    }
+  }, [fetchPresence])
   return (
     <div className="w-full flex flex-col space-y-4">
 
