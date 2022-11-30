@@ -12,3 +12,4 @@ export { default as StudentName } from './StudentName'
 export { default as GradeSubmission } from './GradeSubmission'
 
 export { default as ClassHeader } from './ClassHeader'
+export { default as PresenceHeader } from './PresenceHeader'

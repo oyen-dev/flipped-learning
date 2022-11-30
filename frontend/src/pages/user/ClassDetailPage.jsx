@@ -7,7 +7,7 @@ import { Breadcrumb } from '../../components/breadcrumb'
 import { BorderBottom } from '../../components/buttons'
 import { ClassHeader } from '../../components/card'
 import { Presence } from '../../components/modals'
-import { InformationCenter, ClassStudents, ClassTasks, ClassEvaluations } from '../../views/class'
+import { InformationCenter, ClassStudents, ClassTasks, ClassEvaluations, ClassPresences } from '../../views/class'
 
 import Cookies from 'js-cookie'
 import { Spin } from 'antd'
@@ -17,14 +17,15 @@ const ClassDetailPage = () => {
   // Use params
   const { id } = useParams()
 
+  // Navigator
+  const navigate = useNavigate()
+
   // Global States
   const { globalState } = useGlobal()
   const { tabKey, setTabKey } = globalState
 
-  // Navigator
-  const navigate = useNavigate()
-
   // Local States
+  const [classData, setClassData] = useState(null)
   const [tabs] = useState([
     {
       name: 'Pusat Informasi',
@@ -41,9 +42,12 @@ const ClassDetailPage = () => {
     {
       name: 'Evaluasi',
       tabId: '4'
+    },
+    {
+      name: 'Presensi',
+      tabId: '5'
     }
   ])
-  const [classData, setClassData] = useState(null)
 
   // Breadcrumb Items
   const paths = [
@@ -116,6 +120,7 @@ const ClassDetailPage = () => {
       {tabKey === '2' && <ClassStudents />}
       {tabKey === '3' && <ClassTasks />}
       {tabKey === '4' && <ClassEvaluations />}
+      {tabKey === '5' && <ClassPresences />}
 
       {/* Modal container */}
       <input

@@ -6,6 +6,7 @@ export { default as InformationCenter } from './InformationCenter'
 export { default as ClassEvaluations } from './ClassEvaluations'
 export { default as ClassStudents } from './ClassStudents'
 export { default as ClassTasks } from './ClassTasks'
+export { default as ClassPresences } from './ClassPresences'
 
 export { default as PostList } from './PostList'
 export { default as JudgeStudentSubmission } from './JudgeStudentSubmission'
