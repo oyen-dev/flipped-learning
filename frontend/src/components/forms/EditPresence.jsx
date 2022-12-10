@@ -33,7 +33,7 @@ const EditPresence = () => {
 
     try {
       const { data } = await api.get(`/class/${classId}/presences/current`, config)
-      //   console.log(data)
+      console.log(data)
 
       const { presence } = data.data
       console.log(presence)
@@ -95,7 +95,7 @@ const EditPresence = () => {
       {/* Button */}
       <Item>
         <Button type="primary" htmlType="submit" className="w-full">
-          <p className="font-medium">Buka Presensi</p>
+          <p className="font-medium">Perbarui Presensi</p>
         </Button>
       </Item>
     </Form>

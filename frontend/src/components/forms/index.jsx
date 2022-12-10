@@ -26,3 +26,5 @@ export { default as JudgeSubmission } from './JudgeSubmission'
 export { default as OpenPresence } from './OpenPresence'
 export { default as EditPresence } from './EditPresence'
 export { default as RecordPresence } from './RecordPresence'
+
+export { default as AddEvaluation } from './AddEvaluation'

@@ -9,3 +9,5 @@ export { default as CreateClass } from './CreateClass'
 export { default as EditClass } from './EditClass'
 
 export { default as Presence } from './Presence'
+
+export { default as CreateEvaluation } from './CreateEvaluation'
