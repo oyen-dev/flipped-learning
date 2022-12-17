@@ -52,10 +52,19 @@ const ClassHeader = (props) => {
 
     try {
       const { data } = await api.get(`/class/${classId}/presences/current`, config)
-      //   console.log(data)
+      console.log(data)
 
-      const { isOpen } = data.data
-      setIsPresenceOpen(isOpen)
+      const userRole = user && user.role
+      console.log(userRole)
+
+      const { isOpen, isStudentPresent } = data.data
+      setIsPresenceOpen(
+        userRole === 'TEACHER'
+          ? isOpen
+          : userRole === 'STUDENT'
+            ? isOpen && !isStudentPresent
+            : isOpen
+      )
     } catch (error) {
       console.log(error)
     }

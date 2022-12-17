@@ -1,6 +1,3 @@
-import { Form, Button, message } from 'antd'
-import { useState } from 'react'
-
 import Emoji1 from '../../assets/gif/1.gif'
 import Emoji2 from '../../assets/gif/2.gif'
 import Emoji3 from '../../assets/gif/3.gif'
@@ -10,9 +7,30 @@ import Emoji6 from '../../assets/gif/6.gif'
 import Emoji7 from '../../assets/gif/7.gif'
 import Emoji8 from '../../assets/gif/8.gif'
 
+import { useState } from 'react'
+import { useGlobal } from '../../contexts/Global'
+import { useManagement } from '../../contexts/Management'
+
+import api from '../../api'
+
+import { Form, Button, message } from 'antd'
+import { useParams } from 'react-router-dom'
+import Cookies from 'js-cookie'
+
 const { Item } = Form
 
 const RecordPresence = () => {
+  // useParams
+  const { id: classId } = useParams()
+
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
+  // Managemnet States
+  const { managementStates } = useManagement()
+  const { setFetchPresence } = managementStates
+
   // Local States
   const [isSelectted, setIsSelected] = useState(false)
   const [isAttended, setIsAttended] = useState(true)
@@ -71,20 +89,77 @@ const RecordPresence = () => {
     if (!isAttended) setIsAttended(true)
   }
 
+  // Close modal
+  const closeModal = () => {
+    // Resset form
+    setReaction(null)
+    setAttendance(1)
+
+    // Modal is from daisyUI, close it
+    document.getElementById('modal-presence').checked = false
+  }
+
   // onFinish
-  const onFinish = () => {
+  const onFinish = async () => {
     if (!isSelectted) {
       message.error('Silahkan pilih reaksi terlebih dahulu')
       return
     }
 
+    // Payload
     const payload = {
       attendance,
-      reaction,
-      at: new Date()
+      reaction
+      // at: new Date()
     }
 
-    console.log(payload)
+    // Show loading
+    mySwal.fire({
+      title: 'Recording Presence...',
+      showConfirmButton: false,
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Config
+    const config = {
+      headers: {
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    try {
+      const res = await api.post(`/class/${classId}/presences/current`, payload, config)
+      console.log(res)
+
+      mySwal.fire({
+        icon: 'success',
+        title: 'Presence recorded!',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      }).then(() => {
+        setFetchPresence(true)
+        closeModal()
+      })
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Failed to record presence!',
+        text: error.response.data.message,
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      })
+    }
   }
 
   // onFinishFailed
