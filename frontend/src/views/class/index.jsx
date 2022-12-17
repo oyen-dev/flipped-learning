@@ -11,3 +11,6 @@ export { default as ClassPresences } from './ClassPresences'
 export { default as PostList } from './PostList'
 export { default as JudgeStudentSubmission } from './JudgeStudentSubmission'
 export { default as AttachmentDetail } from './AttachmentDetail'
+
+export { default as EditEvaluation } from './EditEvaluation'
+export { default as ClassSummary } from './ClassSummary'

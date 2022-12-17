@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useGlobal } from '../../contexts/Global'
+import { useAuth } from '../../contexts/Auth'
 
 import api from '../../api'
 import Layout from '../../components/layouts'
@@ -7,7 +8,7 @@ import { Breadcrumb } from '../../components/breadcrumb'
 import { BorderBottom } from '../../components/buttons'
 import { ClassHeader } from '../../components/card'
 import { Presence } from '../../components/modals'
-import { InformationCenter, ClassStudents, ClassTasks, ClassEvaluations, ClassPresences } from '../../views/class'
+import { InformationCenter, ClassStudents, ClassTasks, ClassEvaluations, ClassPresences, ClassSummary } from '../../views/class'
 
 import Cookies from 'js-cookie'
 import { Spin } from 'antd'
@@ -24,30 +25,59 @@ const ClassDetailPage = () => {
   const { globalState } = useGlobal()
   const { tabKey, setTabKey } = globalState
 
+  // Auth States
+  const { authState } = useAuth()
+  const { user } = authState
+
   // Local States
   const [classData, setClassData] = useState(null)
-  const [tabs] = useState([
-    {
-      name: 'Pusat Informasi',
-      tabId: '1'
-    },
-    {
-      name: 'Siswa',
-      tabId: '2'
-    },
-    {
-      name: 'Penugasan',
-      tabId: '3'
-    },
-    {
-      name: 'Evaluasi',
-      tabId: '4'
-    },
-    {
-      name: 'Presensi',
-      tabId: '5'
-    }
-  ])
+  const [tabs] = useState(
+    user && user.role === 'TEACHER'
+      ? [
+          {
+            name: 'Pusat Informasi',
+            tabId: '1'
+          },
+          {
+            name: 'Siswa',
+            tabId: '2'
+          },
+          {
+            name: 'Penugasan',
+            tabId: '3'
+          },
+          {
+            name: 'Evaluasi',
+            tabId: '4'
+          },
+          {
+            name: 'Presensi',
+            tabId: '5'
+          }
+        ]
+      : [
+          {
+            name: 'Pusat Informasi',
+            tabId: '1'
+          },
+          {
+            name: 'Siswa',
+            tabId: '2'
+          },
+          {
+            name: 'Penugasan',
+            tabId: '3'
+          },
+          {
+            name: 'Evaluasi',
+            tabId: '4'
+          },
+          {
+            name: 'Rekap Studi',
+            tabId: '5'
+          }
+        ]
+  )
 
   // Breadcrumb Items
   const paths = [
@@ -120,7 +150,8 @@ const ClassDetailPage = () => {
       {tabKey === '2' && <ClassStudents />}
       {tabKey === '3' && <ClassTasks />}
       {tabKey === '4' && <ClassEvaluations />}
-      {tabKey === '5' && <ClassPresences />}
+      {user && user.role === 'TEACHER' && tabKey === '5' && <ClassPresences />}
+      {user && user.role === 'STUDENT' && tabKey === '5' && <ClassSummary />}
 
       {/* Modal container */}
       <input

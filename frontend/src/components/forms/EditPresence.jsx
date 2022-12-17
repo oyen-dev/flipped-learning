@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useGlobal } from '../../contexts/Global'
+import { useManagement } from '../../contexts/Management'
 
 import api from '../../api'
 
@@ -17,8 +19,45 @@ const EditPresence = () => {
   // useParams
   const { id: classId } = useParams()
 
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
+  // Managemnet States
+  const { managementStates } = useManagement()
+  const { setFetchPresence } = managementStates
+
   // Local states
   const [presenceData, setPresenceData] = useState(null)
+
+  // Close modal
+  const closeModal = () => {
+    // Reset form
+    form.resetFields()
+
+    // Modal is from daisyUI, close it
+    document.getElementById('modal-presence').checked = false
+  }
+
+  // Function disabledHours
+  const disabledHours = () => {
+    const hours = []
+    for (let i = 0; i < moment().hour(); i++) {
+      hours.push(i)
+    }
+    return hours
+  }
+
+  // Function disabledMinutes
+  const disabledMinutes = (selectedHour) => {
+    const minutes = []
+    if (selectedHour === moment().hour()) {
+      for (let i = 0; i < moment().minute(); i++) {
+        minutes.push(i)
+      }
+    }
+    return minutes
+  }
 
   const checkPresence = async () => {
     // Reset isPresenceOpen
@@ -33,10 +72,10 @@ const EditPresence = () => {
 
     try {
       const { data } = await api.get(`/class/${classId}/presences/current`, config)
-      console.log(data)
+      // console.log(data)
 
       const { presence } = data.data
-      console.log(presence)
+      // console.log(presence)
       setPresenceData(presence)
     } catch (error) {
       console.log(error)
@@ -44,8 +83,60 @@ const EditPresence = () => {
   }
 
   // onFinish
-  const onFinish = (values) => {
-    console.log(values)
+  const onFinish = async (values) => {
+    // Show loading
+    mySwal.fire({
+      title: 'Editing Presence...',
+      showConfirmButton: false,
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Config
+    const config = {
+      headers: {
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    // Payload data
+    const payload = {
+      start: moment(values.time[0]).toDate(),
+      end: moment(values.time[1]).toDate()
+    }
+
+    try {
+      const { data } = await api.put(`/class/${classId}/presences`, payload, config)
+      console.log(data)
+
+      mySwal.fire({
+        icon: 'success',
+        title: 'Presence edited!',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      }).then(() => {
+        setFetchPresence(true)
+        closeModal()
+      })
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: 'Failed to edit presence!',
+        text: error.response.data.message,
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      })
+    }
   }
 
   // onFinishFailed
@@ -88,6 +179,10 @@ const EditPresence = () => {
           placeholder={['Waktu Mulai', 'Waktu Selesai']}
           format="HH:mm"
           className="w-full"
+          disabledTime={() => ({
+            disabledHours,
+            disabledMinutes
+          })}
         />
       </Item>
 
