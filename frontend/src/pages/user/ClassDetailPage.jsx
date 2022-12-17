@@ -31,7 +31,7 @@ const ClassDetailPage = () => {
 
   // Local States
   const [classData, setClassData] = useState(null)
-  const [tabs] = useState(
+  const [tabs, setTabs] = useState(
     user && user.role === 'TEACHER'
       ? [
           {
@@ -119,6 +119,57 @@ const ClassDetailPage = () => {
   useEffect(() => {
     getClassDetail()
   }, [])
+
+  // Monitor user
+  useEffect(() => {
+    setTabs(
+      user && user.role === 'TEACHER'
+        ? [
+            {
+              name: 'Pusat Informasi',
+              tabId: '1'
+            },
+            {
+              name: 'Siswa',
+              tabId: '2'
+            },
+            {
+              name: 'Penugasan',
+              tabId: '3'
+            },
+            {
+              name: 'Evaluasi',
+              tabId: '4'
+            },
+            {
+              name: 'Presensi',
+              tabId: '5'
+            }
+          ]
+        : [
+            {
+              name: 'Pusat Informasi',
+              tabId: '1'
+            },
+            {
+              name: 'Siswa',
+              tabId: '2'
+            },
+            {
+              name: 'Penugasan',
+              tabId: '3'
+            },
+            {
+              name: 'Evaluasi',
+              tabId: '4'
+            },
+            {
+              name: 'Rekap Studi',
+              tabId: '5'
+            }
+          ]
+    )
+  }, [user])
 
   return (
     <Layout>

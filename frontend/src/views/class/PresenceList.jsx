@@ -2,6 +2,7 @@ import { PresenceHeader } from '../../components/card'
 
 import { Collapse } from 'antd'
 import { BsChevronDown, BsChevronRight } from 'react-icons/bs'
+import { StudentPresences } from '../../components/tables'
 
 const { Panel } = Collapse
 
@@ -27,7 +28,7 @@ const PresenceList = (props) => {
             header={<PresenceHeader time={presence.start} />}
             className="flex flex-col w-full text-black dark:text-white bg-[#e9ecef] dark:bg-gray-700 transition-all ease-in-out duration-300"
           >
-            <p>{presence._id}</p>
+            <StudentPresences presenceId={presence._id} />
           </Panel>
         ))}
       </Collapse>
