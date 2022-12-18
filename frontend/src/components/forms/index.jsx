@@ -28,3 +28,4 @@ export { default as EditPresence } from './EditPresence'
 export { default as RecordPresence } from './RecordPresence'
 
 export { default as AddEvaluation } from './AddEvaluation'
+export { default as EditEvaluation } from './EditEvaluation'

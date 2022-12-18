@@ -66,7 +66,7 @@ const StudentPresences = (props) => {
         `/class/${classId}/presences/detail/${presenceId}`,
         config
       )
-      console.log(data)
+      // console.log(data)
 
       setPresenceDetail(data.data)
     } catch (error) {
@@ -131,6 +131,7 @@ const StudentPresences = (props) => {
             <tbody className="text-black text-xs font-light">
               {presenceDetail.studentPresences.map((presence, index) => (
                 <tr key={index} className="border-b border-gray-200 bg-gray-50 hover:bg-gray-100">
+
                 {/* Nomor */}
                 <td className="py-3 text-left">
                   <div className="flex items-center pl-3 justify-start">

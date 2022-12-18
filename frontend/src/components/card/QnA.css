@@ -1,0 +1,8 @@
+form input[type="radio"]:checked + label {
+  font-weight: 700;
+  color: teal-600;
+}
+
+form input[type="radio"]:focus + label {
+  outline: 3px solid teal-600;
+}

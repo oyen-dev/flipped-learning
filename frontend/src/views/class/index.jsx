@@ -14,3 +14,5 @@ export { default as AttachmentDetail } from './AttachmentDetail'
 
 export { default as EditEvaluation } from './EditEvaluation'
 export { default as ClassSummary } from './ClassSummary'
+
+export { default as EvaluationList } from './EvaluationList'
