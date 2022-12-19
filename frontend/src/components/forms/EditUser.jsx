@@ -38,7 +38,7 @@ const EditUser = () => {
   const onFinish = async (values) => {
     // Show loading
     mySwal.fire({
-      title: 'Updating profile data...',
+      title: 'Memperbarui data profil...',
       allowOutsideClick: true,
       backdrop: true,
       allowEscapeKey: true,
@@ -63,7 +63,7 @@ const EditUser = () => {
     mySwal.fire({
       icon: 'success',
       title: 'Success',
-      text: 'Profile has been updated',
+      text: 'Profil berhasil diperbarui!',
       timer: 3000,
       showConfirmButton: false
     })

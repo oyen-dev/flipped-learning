@@ -5,7 +5,7 @@ import Layout from '../../components/layouts'
 import { Breadcrumb } from '../../components/breadcrumb'
 import { EditEvaluation as EditEvaluationForm } from '../../components/forms'
 import { QuestionList } from '../../components/tables'
-import { AddQuestion } from '../../components/modals'
+import { AddQuestion, EditQuestion } from '../../components/modals'
 
 import Cookies from 'js-cookie'
 import { BsPlus } from 'react-icons/bs'
@@ -108,6 +108,13 @@ const EditEvaluationPage = () => {
           className="modal-toggle"
         />
         <AddQuestion setFetchEvaluation={setFetchEvaluation} />
+
+        <input
+          type="checkbox"
+          id="modal-edit-question"
+          className="modal-toggle"
+        />
+        <EditQuestion setFetchEvaluation={setFetchEvaluation} />
       </div>
     </Layout>
   )

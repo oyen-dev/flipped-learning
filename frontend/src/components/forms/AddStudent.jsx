@@ -20,7 +20,7 @@ const AddStudent = () => {
   const onFinish = async (values) => {
     // console.log('Success:', values)
     mySwal.fire({
-      html: 'Wait a moment...',
+      html: 'Mohon tunggu...',
       didOpen: () => {
         mySwal.showLoading()
       }

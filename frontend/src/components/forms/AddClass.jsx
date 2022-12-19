@@ -13,6 +13,7 @@ import moment from 'moment'
 
 const { RangePicker } = TimePicker
 const { Item, List } = Form
+
 const AddClass = () => {
   // Global Functions
   const { globalFunctions } = useGlobal()
@@ -86,7 +87,7 @@ const AddClass = () => {
 
     // Show loading
     mySwal.fire({
-      title: 'Creating class...',
+      title: 'Membuat kelas...',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -108,8 +109,8 @@ const AddClass = () => {
         mySwal
           .fire({
             icon: 'success',
-            title: 'Class successfully created',
-            text: "You'll be redirected to the class page",
+            title: 'Kelas berhasil dibuat!',
+            text: 'Anda akan dialihkan ke halaman kelas',
             timer: 2000,
             showConfirmButton: false
           })

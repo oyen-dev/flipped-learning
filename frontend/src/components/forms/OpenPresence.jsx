@@ -59,7 +59,7 @@ const OpenPresence = () => {
   const onFinish = async (values) => {
     // Show loading
     mySwal.fire({
-      title: 'Opening Presence...',
+      title: 'Membuka presensi...',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -85,7 +85,7 @@ const OpenPresence = () => {
 
       mySwal.fire({
         icon: 'success',
-        title: 'Presence opened!',
+        title: 'Presensi berhasil dibuka!',
         allowOutsideClick: true,
         backdrop: true,
         allowEscapeKey: true,
@@ -100,7 +100,7 @@ const OpenPresence = () => {
       console.log(error)
       mySwal.fire({
         icon: 'error',
-        title: 'Failed to open presence!',
+        title: 'Presensi gagal dibuka!',
         text: error.response.data.message,
         allowOutsideClick: true,
         backdrop: true,

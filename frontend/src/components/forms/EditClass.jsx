@@ -89,7 +89,7 @@ const EditClass = () => {
 
     // Show loading
     mySwal.fire({
-      title: 'Updating Class...',
+      title: 'Memperbarui Kelas...',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -109,7 +109,7 @@ const EditClass = () => {
       // Show success message
       mySwal.fire({
         icon: 'success',
-        title: 'Class successfully updated',
+        title: 'Kelas berhasil diperbarui!',
         showConfirmButton: false,
         backdrop: true,
         allowOutsideClick: true,

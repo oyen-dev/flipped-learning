@@ -36,7 +36,7 @@ const AddTeacher = () => {
 
     // Show loading modal
     mySwal.fire({
-      html: 'Wait a moment...',
+      html: 'Mohon tunggu...',
       didOpen: () => {
         mySwal.showLoading()
       }

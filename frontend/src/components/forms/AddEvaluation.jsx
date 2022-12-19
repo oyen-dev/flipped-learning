@@ -34,7 +34,7 @@ const AddEvaluation = () => {
   const onFinish = async (values) => {
     // Show loading
     mySwal.fire({
-      title: 'Creating Evaluation...',
+      title: 'Membuat evaluasi...',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -66,7 +66,7 @@ const AddEvaluation = () => {
       // Show success message
       mySwal.fire({
         icon: 'success',
-        title: 'Evaluation created successfully!',
+        title: 'Evaluasi berhasil dibuat!',
         showConfirmButton: false,
         backdrop: true,
         allowOutsideClick: true,

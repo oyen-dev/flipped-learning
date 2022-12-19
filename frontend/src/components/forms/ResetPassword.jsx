@@ -80,7 +80,7 @@ const ResetPassword = (props) => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
 
-    message.error('Please fill in all the fields.')
+    message.error('Mohon mengisi form dengan benar!')
   }
 
   return (

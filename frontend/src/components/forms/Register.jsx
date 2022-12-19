@@ -26,7 +26,7 @@ const Register = () => {
   const register = async (values) => {
     // Show loadng
     mySwal.fire({
-      title: 'Registering you in...',
+      title: 'Registering...',
       allowOutsideClick: true,
       backdrop: true,
       allowEscapeKey: true,
@@ -43,7 +43,7 @@ const Register = () => {
         mySwal.fire({
           icon: 'success',
           title: 'Register Success',
-          text: 'Please check your email to verify your account',
+          text: 'Mohon cek email Anda untuk verifikasi akun Anda!',
           timer: 5000,
           showConfirmButton: false
         }).then(() => {

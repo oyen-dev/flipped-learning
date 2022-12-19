@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useGlobal } from '../../contexts/Global'
 import { useAuth } from '../../contexts/Auth'
+import { useManagement } from '../../contexts/Management'
 
 import api from '../../api'
 
 import Cookies from 'js-cookie'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { BsPencilSquare, BsTrash } from 'react-icons/bs'
 
 const QuestionDetail = (props) => {
@@ -16,13 +17,17 @@ const QuestionDetail = (props) => {
   // useParams
   const { id: classId, evaluationId } = useParams()
 
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
+
   // Auth States
   const { authState } = useAuth()
   const { user } = authState
 
-  // Global Functions
-  const { globalFunctions } = useGlobal()
-  const { mySwal } = globalFunctions
+  // useManagement
+  const { managementStates } = useManagement()
+  const { setWilUpdateQuestionId } = managementStates
 
   // Local States
   const [selectedAnswer] = useState(key)
@@ -130,13 +135,14 @@ const QuestionDetail = (props) => {
 
         {user && user.role === 'TEACHER' && (
           <div className="flex flex-row space-x-4 w-full items-center justify-end">
-            <Link
-              to={0}
-              className="flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out"
+            <label
+              onClick={() => setWilUpdateQuestionId(_id)}
+              htmlFor="modal-edit-question"
+              className="modal-button flex flex-row space-x-2 cursor-pointer items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out"
             >
               <BsPencilSquare className="w-5 h-5 fill-white" />
               <span>Edit Pertanyaan</span>
-            </Link>
+            </label>
 
             <button onClick={dialogDeleteQuestion} className="flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-red-600 hover:bg-red-800 rounded-lg duration-300 ease-in-out">
               <BsTrash className="w-5 h-5 fill-white" />

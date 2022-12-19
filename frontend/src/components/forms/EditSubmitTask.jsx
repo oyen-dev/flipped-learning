@@ -98,7 +98,7 @@ const EditSubmitTask = (props) => {
 
     // Show loading
     mySwal.fire({
-      title: 'Updating...',
+      title: 'Memperbarui pengumpulan tugas...',
       allowEscapeKey: true,
       allowOutsideClick: true,
       didOpen: () => {
@@ -119,7 +119,7 @@ const EditSubmitTask = (props) => {
       // Show success
       mySwal.fire({
         icon: 'success',
-        title: 'Updated!',
+        title: 'Tugas berhasil diperbarui!',
         allowOutsideClick: true,
         backdrop: true,
         allowEscapeKey: true,
@@ -224,12 +224,12 @@ const EditSubmitTask = (props) => {
       const acceptFiles = listOfAcceptFiles.includes(file.type)
 
       if (!acceptFiles) {
-        message.error('You can only upload image, video, pdf, ms word, and ppt file!')
+        message.error('Anda hanya dapat mengupload gambar, video, pdf, ms word, and ppt file!')
       }
 
       const limitFileSize = file.size / 1024 / 1024 < 25
       if (!limitFileSize) {
-        message.error('File must smaller than 25MB!')
+        message.error('Ukuran file tidak boleh lebih dari 25 MB!')
       }
       return acceptFiles && limitFileSize
     },

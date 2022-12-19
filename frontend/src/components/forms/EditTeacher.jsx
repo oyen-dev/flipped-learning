@@ -37,7 +37,7 @@ const EditTeacher = () => {
   const onFinish = async (values) => {
     // Show loading
     mySwal.fire({
-      title: 'Updating teacher data...',
+      title: 'Memperbarui data guru...',
       allowOutsideClick: true,
       backdrop: true,
       allowEscapeKey: true,
@@ -61,7 +61,7 @@ const EditTeacher = () => {
     mySwal.fire({
       icon: 'success',
       title: 'Success',
-      text: 'Teacher data has been updated',
+      text: 'Data guru berhasil diperbarui!',
       timer: 3000,
       showConfirmButton: false
     })

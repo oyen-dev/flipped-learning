@@ -57,7 +57,7 @@ const PostTaskInfo = (props) => {
 
     // Show loading
     mySwal.fire({
-      title: 'Creating post...',
+      title: 'Membuat postingan...',
       didOpen: () => {
         mySwal.showLoading()
       }
@@ -89,7 +89,7 @@ const PostTaskInfo = (props) => {
       console.log(error)
       mySwal.fire({
         icon: 'error',
-        title: 'Oops something went wrong',
+        title: 'Oops...',
         text: error.response.data.message,
         timer: 2000,
         showConfirmButton: false

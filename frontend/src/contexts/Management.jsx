@@ -10,6 +10,7 @@ export const ManagementProvider = ({ children }) => {
 
   // Management Functional States
   const [willUpdateClassId, setWillUpdateClassId] = useState(null)
+  const [wilUpdateQuestionId, setWilUpdateQuestionId] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [presenceClassId, setPresenceClassId] = useState(null)
   const [presenceMode, setPresenceMode] = useState(null)
@@ -36,6 +37,8 @@ export const ManagementProvider = ({ children }) => {
     setIsFetchClass,
     willUpdateClassId,
     setWillUpdateClassId,
+    wilUpdateQuestionId,
+    setWilUpdateQuestionId,
     isModalVisible,
     setIsModalVisible,
     presenceClassId,

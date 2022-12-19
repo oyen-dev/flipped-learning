@@ -24,7 +24,7 @@ const JudgeSubmission = (props) => {
   const onFinish = async (values) => {
     // Show loading
     mySwal.fire({
-      title: 'Submitting your feedback...',
+      title: 'Menilai tugas...',
       allowOutsideClick: true,
       backdrop: true,
       allowEscapeKey: true,

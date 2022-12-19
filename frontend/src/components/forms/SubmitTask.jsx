@@ -90,7 +90,7 @@ const SubmitTask = (props) => {
   const uploadSubmission = async (payload) => {
     // Show loading
     mySwal.fire({
-      title: 'Submitting...',
+      title: 'Mengumpulkan tugas...',
       allowEscapeKey: true,
       allowOutsideClick: true,
       didOpen: () => {
@@ -112,7 +112,7 @@ const SubmitTask = (props) => {
       mySwal
         .fire({
           icon: 'success',
-          title: 'Submitted!',
+          title: 'Tugas berhasil dikumpulkan!',
           allowOutsideClick: true,
           backdrop: true,
           allowEscapeKey: true,

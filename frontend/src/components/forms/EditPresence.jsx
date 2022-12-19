@@ -86,7 +86,7 @@ const EditPresence = () => {
   const onFinish = async (values) => {
     // Show loading
     mySwal.fire({
-      title: 'Editing Presence...',
+      title: 'Memperbarui presensi...',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -112,7 +112,7 @@ const EditPresence = () => {
 
       mySwal.fire({
         icon: 'success',
-        title: 'Presence edited!',
+        title: 'Presensi berhasil diperbarui!',
         allowOutsideClick: true,
         backdrop: true,
         allowEscapeKey: true,
@@ -127,7 +127,7 @@ const EditPresence = () => {
       console.log(error)
       mySwal.fire({
         icon: 'error',
-        title: 'Failed to edit presence!',
+        title: 'Presensi gagal diperbarui!',
         text: error.response.data.message,
         allowOutsideClick: true,
         backdrop: true,

@@ -115,7 +115,7 @@ const RecordPresence = () => {
 
     // Show loading
     mySwal.fire({
-      title: 'Recording Presence...',
+      title: 'Merekam kehadiran...',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -135,7 +135,7 @@ const RecordPresence = () => {
 
       mySwal.fire({
         icon: 'success',
-        title: 'Presence recorded!',
+        title: 'Kehadiran berhasil direkam!',
         allowOutsideClick: true,
         backdrop: true,
         allowEscapeKey: true,
@@ -150,7 +150,7 @@ const RecordPresence = () => {
       console.log(error)
       mySwal.fire({
         icon: 'error',
-        title: 'Failed to record presence!',
+        title: 'Gagal merekam kehadiran!',
         text: error.response.data.message,
         allowOutsideClick: true,
         backdrop: true,

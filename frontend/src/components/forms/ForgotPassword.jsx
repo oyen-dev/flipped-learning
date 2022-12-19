@@ -15,7 +15,7 @@ const ForgotPassword = () => {
   const onFinish = async (values) => {
     // Show loadng
     mySwal.fire({
-      title: 'Checking your email...',
+      title: 'Mengecek email...',
       allowOutsideClick: true,
       backdrop: true,
       allowEscapeKey: true,
@@ -32,7 +32,7 @@ const ForgotPassword = () => {
         mySwal.fire({
           icon: 'success',
           title: 'Done',
-          text: 'Please check your email to reset your password',
+          text: 'Mohon cek email Anda untuk mereset password Anda!',
           timer: 5000,
           showConfirmButton: false
         }).then(() => {
@@ -42,7 +42,7 @@ const ForgotPassword = () => {
         // Show error message using mySwal
         mySwal.fire({
           icon: 'error',
-          title: 'Failed',
+          title: 'Oops...',
           text: res.data.message,
           timer: 5000,
           showConfirmButton: false
@@ -52,7 +52,7 @@ const ForgotPassword = () => {
       console.log(error)
       mySwal.fire({
         icon: 'error',
-        title: 'Failed',
+        title: 'Oops...',
         text: error.response.data.message,
         timer: 5000,
         showConfirmButton: false
