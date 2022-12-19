@@ -11,3 +11,4 @@ export { default as EditClass } from './EditClass'
 export { default as Presence } from './Presence'
 
 export { default as CreateEvaluation } from './CreateEvaluation'
+export { default as AddQuestion } from './AddQuestion'

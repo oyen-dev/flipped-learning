@@ -130,6 +130,7 @@ const AddEvaluation = () => {
         <DatePicker
           placeholder="Tengat evaluasi"
           disabledDate={disabledDate}
+          format={'DD MMMM YYYY: HH:mm'}
           showTime
           className="w-full"
         />

@@ -1,14 +1,29 @@
+import { useGlobal } from '../../contexts/Global'
 import momentId from '../../constants/momentId'
 
+import api from '../../api'
+
+import Cookies from 'js-cookie'
 import { Form, Input, DatePicker } from 'antd'
 import moment from 'moment/moment'
+import { useParams } from 'react-router-dom'
 
 moment.updateLocale('id', momentId)
 const { Item } = Form
 
 const EditEvaluation = (props) => {
   // Props Destructuring
-  const { evaluation } = props
+  const { evaluation, setFetchEvaluation } = props
+
+  // useForm
+  const [form] = Form.useForm()
+
+  // useParams
+  const { id: classId, evaluationId } = useParams()
+
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
 
   // Disabled Date
   const disabledDate = (current) => {
@@ -17,8 +32,63 @@ const EditEvaluation = (props) => {
   }
 
   // onFinish
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  const onFinish = async (values) => {
+    // Show loading
+    mySwal.fire({
+      title: 'Updating Evaluation...',
+      showConfirmButton: false,
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Payload
+    const payload = {
+      title: values.title,
+      deadline: {
+        start: moment(),
+        end: moment(values.deadline)
+      }
+    }
+
+    // Config
+    const config = {
+      headers: {
+        authorization: Cookies.get('jwtToken')
+      }
+    }
+
+    try {
+      await api.put(`/class/${classId}/evaluations/${evaluationId}`, payload, config)
+      // console.log(data)
+
+      // Show success message
+      mySwal.fire({
+        icon: 'success',
+        title: 'Evaluation updated successfully!',
+        showConfirmButton: false,
+        backdrop: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        timer: 2000,
+        timerProgressBar: true
+      }).then(() => setFetchEvaluation(true))
+
+      // Reset form
+      form.resetFields()
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: error.response.data.message,
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      })
+    }
   }
 
   // onFinishFailed
@@ -32,6 +102,7 @@ const EditEvaluation = (props) => {
       className="w-full"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
+      form={form}
       initialValues={{
         title: evaluation.title,
         deadline: moment(evaluation.deadline.end)
@@ -62,6 +133,7 @@ const EditEvaluation = (props) => {
         <DatePicker
           placeholder="Tengat evaluasi"
           disabledDate={disabledDate}
+          format={'DD MMMM YYYY: HH:mm'}
           showTime
           className="w-full"
         />

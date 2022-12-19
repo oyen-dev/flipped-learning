@@ -28,7 +28,7 @@ const ClassEvaluations = () => {
 
     try {
       const { data } = await api.get(`/class/${classId}/evaluations`, config)
-      console.log(data)
+      // console.log(data)
       setEvaluations(data.data)
     } catch (error) {
       console.log(error)
