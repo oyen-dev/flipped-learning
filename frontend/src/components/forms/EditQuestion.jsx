@@ -12,7 +12,7 @@ const { TextArea } = Input
 
 const EditQuestion = (props) => {
   // Props Destructuring
-  const { question: questionDetail, closeModal, setFetchEvaluation } = props
+  const { question: questionDetail, setFetchEvaluation } = props
   const { question, key, options, _id: questionId } = questionDetail
 
   // useForm
@@ -31,6 +31,12 @@ const EditQuestion = (props) => {
 
   const handleAnswerChange = (index) => {
     setSelectedAnswer(index)
+  }
+
+  // Close daisy ui modal
+  const closeModal = () => {
+    const modal = document.getElementById('modal-edit-question')
+    modal.checked = false
   }
 
   // onFinish
@@ -88,8 +94,8 @@ const EditQuestion = (props) => {
         timer: 2000,
         timerProgressBar: true
       }).then(() => {
-        setFetchEvaluation(true)
         closeModal()
+        setFetchEvaluation(true)
       })
     } catch (error) {
       console.log(error)

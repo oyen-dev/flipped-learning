@@ -16,6 +16,7 @@ const ClassEvaluations = () => {
 
   // Local States
   const [evaluations, setEvaluations] = useState(null)
+  const [fetchEvaluations, setFetchEvaluations] = useState(true)
 
   // Get class evaluations
   const getClassEvaluations = async () => {
@@ -37,8 +38,11 @@ const ClassEvaluations = () => {
 
   // Initially get class evaluations
   useEffect(() => {
-    getClassEvaluations()
-  }, [])
+    if (fetchEvaluations) {
+      getClassEvaluations()
+      setFetchEvaluations(false)
+    }
+  }, [fetchEvaluations])
   return (
     <div className="w-full h-full flex flex-col items-center justify-between py-4 px-4 space-y-4 rounded-lg text-black dark:text-white z-10 bg-[#accbe1] dark:bg-gray-900 transition-all ease-in-out duration-300">
 
@@ -46,7 +50,7 @@ const ClassEvaluations = () => {
         ? <Spin size='default' />
         : evaluations.length === 0
           ? <Empty message='Belum ada evaluasi di kelas.' />
-          : <EvaluationList evaluations={evaluations} />
+          : <EvaluationList evaluations={evaluations} setFetchEvaluations={setFetchEvaluations} />
       }
 
       {/* Create Evaluation Button */}

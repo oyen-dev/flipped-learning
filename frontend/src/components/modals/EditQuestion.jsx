@@ -30,7 +30,7 @@ const EditQuestion = (props) => {
     setWilUpdateQuestionId(null)
 
     const modal = document.getElementById('modal-edit-question')
-    modal.checked = false
+    modal.checked = true
   }
 
   // Get question detail
@@ -65,7 +65,7 @@ const EditQuestion = (props) => {
         <div className="flex flex-col w-full h-full">
           <label
             htmlFor="modal-edit-question"
-            onClick={closeModal}
+            onClick={() => closeModal()}
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             <BsXLg />

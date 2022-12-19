@@ -16,3 +16,4 @@ export { default as EditEvaluation } from './EditEvaluation'
 export { default as ClassSummary } from './ClassSummary'
 
 export { default as EvaluationList } from './EvaluationList'
+export { default as ClassEvaluationResult } from './ClassEvaluationResult'
