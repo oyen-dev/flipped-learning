@@ -5,7 +5,6 @@ import Layout from '../../components/layouts'
 import { Breadcrumb } from '../../components/breadcrumb'
 import { EditEvaluation as EditEvaluationForm } from '../../components/forms'
 import { QuestionList } from '../../components/tables'
-import { QuestionDetail } from '../../components/card'
 import { AddQuestion } from '../../components/modals'
 
 import Cookies from 'js-cookie'
@@ -88,9 +87,8 @@ const EditEvaluationPage = () => {
               )
             : (
             <>
-              <EditEvaluationForm evaluation={evaluation} setFetchEvaluation={setFetchEvaluation}/>
-              <QuestionList evaluation={evaluation} />
-              <QuestionDetail evaluation={evaluation} />
+              <EditEvaluationForm evaluation={evaluation} setFetchEvaluation={setFetchEvaluation} />
+              <QuestionList evaluation={evaluation} setFetchEvaluation={setFetchEvaluation} />
             </>
               )}
         </div>
@@ -109,7 +107,7 @@ const EditEvaluationPage = () => {
           id="modal-add-question"
           className="modal-toggle"
         />
-        <AddQuestion />
+        <AddQuestion setFetchEvaluation={setFetchEvaluation} />
       </div>
     </Layout>
   )

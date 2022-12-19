@@ -1,42 +1,20 @@
 import { useState } from 'react'
 import { useAuth } from '../../contexts/Auth'
 
-import { Empty } from '../../pages/error'
-
 import { Link } from 'react-router-dom'
 import { BsPencilSquare, BsTrash } from 'react-icons/bs'
 
 const QuestionDetail = (props) => {
   // Props Destructure
-  const { evaluation } = props
-  const { questions } = evaluation
+  const { questionDetail, setFetchEvaluation } = props
+  const { question, options, key, _id } = questionDetail
 
   // Auth States
   const { authState } = useAuth()
   const { user } = authState
 
-  const question = 'What is Tailwind CSS?'
-  const options = [
-    {
-      id: 'option1',
-      text: 'Option 1: '
-    },
-    {
-      id: 'option2',
-      text: 'Option 2: ing custom user interfaces.'
-    },
-    {
-      id: 'option3',
-      text: 'Option 3: Tail CSS framework for rapidly building custom user interfaces.'
-    },
-    {
-      id: 'option4',
-      text: 'Option 4: Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces.'
-    }
-  ]
-
   // Local States
-  const [selectedAnswer, setSelectedAnswer] = useState(options[2].text)
+  const [selectedAnswer, setSelectedAnswer] = useState(key)
 
   const handleAnswerChange = (event) => {
     setSelectedAnswer(event.target.value)
@@ -44,10 +22,9 @@ const QuestionDetail = (props) => {
 
   return (
     <div className="flex flex-col w-full px-3 space-y-4 text-black dark:text-white rounded-md duration-300 ease-in-out">
-    <Empty message='Belum ada pertanyaan pada evaluasi ini.' />
 
       {/* Make a list of a answer using radio */}
-      {/* <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="mb-4 text-2xl font-bold text-gray-800">{question}</div>
         <div className="flex flex-col space-y-2 mb-4 text-gray-700">
           {options.map((option, index) => (
@@ -58,8 +35,8 @@ const QuestionDetail = (props) => {
               <input
                 type="radio"
                 name="answer"
-                value={option.text}
-                checked={selectedAnswer === option.text}
+                value={option}
+                checked={selectedAnswer === index}
                 hidden
                 disabled
                 onChange={handleAnswerChange}
@@ -67,12 +44,12 @@ const QuestionDetail = (props) => {
               />
               <span
                 className={`duration-75 ease-in-out ${
-                  selectedAnswer === option.text
+                  selectedAnswer === index
                     ? 'font-bold bg-green-400 py-1 px-2 rounded-lg'
                     : 'group-hover:font-semibold'
                 }`}
               >
-                {String.fromCharCode(97 + index).toUpperCase()}. {option.text}
+                {String.fromCharCode(97 + index).toUpperCase()}. {option}
               </span>
               <br />
             </label>
@@ -95,7 +72,7 @@ const QuestionDetail = (props) => {
             </button>
           </div>
         )}
-      </div> */}
+      </div>
     </div>
   )
 }

@@ -1,13 +1,28 @@
 import { useState } from 'react'
+import { useGlobal } from '../../contexts/Global'
 
+import api from '../../api'
+
+import Cookies from 'js-cookie'
 import { Form, Input, message } from 'antd'
+import { useParams } from 'react-router-dom'
 
 const { Item } = Form
 const { TextArea } = Input
 
-const AddQuestion = () => {
+const AddQuestion = (props) => {
+  // Props Destructuring
+  const { setFetchEvaluation } = props
+
   // useForm
   const [form] = Form.useForm()
+
+  // useParams
+  const { id: classId, evaluationId } = useParams()
+
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
 
   // Local States
   const [selectedAnswer, setSelectedAnswer] = useState(null)
@@ -22,8 +37,14 @@ const AddQuestion = () => {
     setSelectedAnswer(event.target.value)
   }
 
+  // Close daisy ui modal
+  const closeModal = () => {
+    const modal = document.getElementById('modal-add-question')
+    modal.checked = false
+  }
+
   // onFinish
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     // Iterate through answers, if answer is empty show error using message
     let isAnswerEmpty = false
     for (let i = 0; i < answers.length; i++) {
@@ -41,13 +62,67 @@ const AddQuestion = () => {
       return
     }
 
+    // Show loading
+    mySwal.fire({
+      title: 'Menambahkan pertanyaan...',
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Payload
     const payload = {
       question: values.question,
       options: answers.map((answer) => answer.text),
-      key: selectedAnswer
+      key: parseInt(selectedAnswer)
     }
 
-    console.log(payload)
+    // Config
+    const config = {
+      headers: {
+        authorization: Cookies.get('jwtToken')
+      }
+    }
+
+    try {
+      const { data } = await api.post(`/class/${classId}/evaluations/${evaluationId}/questions`, payload, config)
+      console.log(data)
+
+      // Show success message
+      mySwal.fire({
+        icon: 'success',
+        title: 'Pertanyaan berhasil ditambahkan!',
+        showConfirmButton: false,
+        backdrop: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        timer: 2000,
+        timerProgressBar: true
+      }).then(() => setFetchEvaluation(true))
+
+      // Reset form
+      form.resetFields()
+      setSelectedAnswer(null)
+      setAnswers([
+        { text: '' },
+        { text: '' },
+        { text: '' },
+        { text: '' }
+      ])
+      closeModal()
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: error.response.data.message,
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      })
+    }
   }
 
   // onFinishFailed
