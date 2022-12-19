@@ -1,7 +1,11 @@
 import { useState } from 'react'
+import { useGlobal } from '../../contexts/Global'
 import { useAuth } from '../../contexts/Auth'
 
-import { Link } from 'react-router-dom'
+import api from '../../api'
+
+import Cookies from 'js-cookie'
+import { Link, useParams } from 'react-router-dom'
 import { BsPencilSquare, BsTrash } from 'react-icons/bs'
 
 const QuestionDetail = (props) => {
@@ -9,15 +13,84 @@ const QuestionDetail = (props) => {
   const { questionDetail, setFetchEvaluation } = props
   const { question, options, key, _id } = questionDetail
 
+  // useParams
+  const { id: classId, evaluationId } = useParams()
+
   // Auth States
   const { authState } = useAuth()
   const { user } = authState
 
-  // Local States
-  const [selectedAnswer, setSelectedAnswer] = useState(key)
+  // Global Functions
+  const { globalFunctions } = useGlobal()
+  const { mySwal } = globalFunctions
 
-  const handleAnswerChange = (event) => {
-    setSelectedAnswer(event.target.value)
+  // Local States
+  const [selectedAnswer] = useState(key)
+
+  // Delete question
+  const deleteQuestion = async () => {
+    // Show loading
+    mySwal.fire({
+      title: 'Menghapus pertanyaan.',
+      showConfirmButton: false,
+      didOpen: () => {
+        mySwal.showLoading()
+      }
+    })
+
+    // Config
+    const config = {
+      headers: {
+        authorization: Cookies.get('jwtToken')
+      }
+    }
+
+    try {
+      await api.delete(`/class/${classId}/evaluations/${evaluationId}/questions/${_id}`, config)
+
+      // Show success message
+      mySwal.fire({
+        icon: 'success',
+        title: 'Pertanyaan berhasil dihapus!',
+        showConfirmButton: false,
+        backdrop: true,
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+        timer: 2000,
+        timerProgressBar: true
+      }).then(() => setFetchEvaluation(true))
+    } catch (error) {
+      console.log(error)
+      mySwal.fire({
+        icon: 'error',
+        title: error.response.data.message,
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      })
+    }
+  }
+
+  // Delete dialog
+  const dialogDeleteQuestion = () => {
+    mySwal.fire({
+      icon: 'warning',
+      title: 'Apakah Anda yakin?',
+      text: 'Pertanyaan yang dihapus tidak dapat dikembalikan.',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, hapus!',
+      confirmButtonColor: '#d33',
+      cancelButtonText: 'Batal',
+      cancelButtonColor: '#3085d6',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteQuestion()
+      }
+    })
   }
 
   return (
@@ -30,7 +103,7 @@ const QuestionDetail = (props) => {
           {options.map((option, index) => (
             <label
               key={index}
-              className="cursor-pointer hover:text-semibold group"
+              className="hover:text-semibold group"
             >
               <input
                 type="radio"
@@ -39,17 +112,16 @@ const QuestionDetail = (props) => {
                 checked={selectedAnswer === index}
                 hidden
                 disabled
-                onChange={handleAnswerChange}
-                className="mr-2 cursor-pointer"
+                className="mr-2"
               />
               <span
                 className={`duration-75 ease-in-out ${
                   selectedAnswer === index
                     ? 'font-bold bg-green-400 py-1 px-2 rounded-lg'
-                    : 'group-hover:font-semibold'
+                    : ''
                 }`}
               >
-                {String.fromCharCode(97 + index).toUpperCase()}. {option}
+                <span className='font-bold'>{String.fromCharCode(97 + index).toUpperCase()}.</span> {option}
               </span>
               <br />
             </label>
@@ -66,7 +138,7 @@ const QuestionDetail = (props) => {
               <span>Edit Pertanyaan</span>
             </Link>
 
-            <button className="flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-red-600 hover:bg-red-800 rounded-lg duration-300 ease-in-out">
+            <button onClick={dialogDeleteQuestion} className="flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-red-600 hover:bg-red-800 rounded-lg duration-300 ease-in-out">
               <BsTrash className="w-5 h-5 fill-white" />
               <span>Hapus Pertanyaan</span>
             </button>

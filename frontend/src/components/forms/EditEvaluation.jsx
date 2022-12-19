@@ -35,7 +35,7 @@ const EditEvaluation = (props) => {
   const onFinish = async (values) => {
     // Show loading
     mySwal.fire({
-      title: 'Updating Evaluation...',
+      title: 'Memperbarui evaluasi.',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -65,7 +65,7 @@ const EditEvaluation = (props) => {
       // Show success message
       mySwal.fire({
         icon: 'success',
-        title: 'Evaluation updated successfully!',
+        title: 'Evaluasi berhasil diperbarui!',
         showConfirmButton: false,
         backdrop: true,
         allowOutsideClick: true,

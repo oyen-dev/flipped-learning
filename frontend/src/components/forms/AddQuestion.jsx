@@ -41,6 +41,16 @@ const AddQuestion = (props) => {
   const closeModal = () => {
     const modal = document.getElementById('modal-add-question')
     modal.checked = false
+
+    // Reset form
+    form.resetFields()
+    setSelectedAnswer(null)
+    setAnswers([
+      { text: '' },
+      { text: '' },
+      { text: '' },
+      { text: '' }
+    ])
   }
 
   // onFinish
@@ -85,8 +95,7 @@ const AddQuestion = (props) => {
     }
 
     try {
-      const { data } = await api.post(`/class/${classId}/evaluations/${evaluationId}/questions`, payload, config)
-      console.log(data)
+      await api.post(`/class/${classId}/evaluations/${evaluationId}/questions`, payload, config)
 
       // Show success message
       mySwal.fire({
@@ -100,15 +109,6 @@ const AddQuestion = (props) => {
         timerProgressBar: true
       }).then(() => setFetchEvaluation(true))
 
-      // Reset form
-      form.resetFields()
-      setSelectedAnswer(null)
-      setAnswers([
-        { text: '' },
-        { text: '' },
-        { text: '' },
-        { text: '' }
-      ])
       closeModal()
     } catch (error) {
       console.log(error)
@@ -178,6 +178,7 @@ const AddQuestion = (props) => {
             placeholder={`Jawaban ${String.fromCharCode(97 + index).toUpperCase()}`}
             autoSize={{ minRows: 1, maxRows: 3 }}
             onChange={(e) => updateAnswer(index, e)}
+            value={answers[index].text}
           />
         </label>
       ))}
