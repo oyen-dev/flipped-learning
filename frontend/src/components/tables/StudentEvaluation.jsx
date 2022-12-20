@@ -2,8 +2,10 @@ import { useState } from 'react'
 
 import momentId from '../../constants/momentId'
 
+import { BsEye } from 'react-icons/bs'
 import { Tag } from 'antd'
 import moment from 'moment/moment'
+import { useNavigate } from 'react-router-dom'
 
 moment.updateLocale('id', momentId)
 
@@ -11,6 +13,9 @@ const StudentEvaluation = (props) => {
   // Props destructure
   const { students, evaluation } = props
   const { deadline } = evaluation
+
+  // Navigator
+  const navigate = useNavigate()
 
   // Table columns
   const [columns] = useState([
@@ -21,7 +26,7 @@ const StudentEvaluation = (props) => {
     },
     {
       title: 'NAMA',
-      width: 45,
+      width: 35,
       align: 'text-left'
     },
     {
@@ -36,6 +41,11 @@ const StudentEvaluation = (props) => {
     },
     {
       title: 'NILAI',
+      width: 10,
+      align: 'text-center'
+    },
+    {
+      title: 'AKSI',
       width: 10,
       align: 'text-center'
     }
@@ -130,16 +140,36 @@ const StudentEvaluation = (props) => {
 
               {/* Nilai */}
               <td className="py-3  text-left">
-                      <div className="flex items-center justify-center">
-                        <span className="font-medium whitespace-nowrap px-2">
-                          {student.submission === null
-                            ? <Tag color="#f50">Belum Mengumpulkan</Tag>
-                            : <Tag color="#108ee9">{student.submission.points}</Tag>
-                          }
-                        </span>
-                      </div>
-                    </td>
+                <div className="flex items-center justify-center">
+                  <span className="font-medium whitespace-nowrap px-2">
+                    {student.submission === null
+                      ? (
+                      <Tag color="#f50">Belum Mengumpulkan</Tag>
+                        )
+                      : (
+                      <Tag color="#108ee9">{student.submission.points}</Tag>
+                        )}
+                  </span>
+                </div>
+              </td>
 
+              {/* AKSI */}
+              <td className="py-3  text-left">
+                <div className="flex items-center justify-center">
+                  <button
+                    disabled={student.submission === null}
+                    onClick={() => navigate(`result/${student._id}`)}
+                    className={`flex flex-row items-center justify-center space-x-2 ${
+                      student.submission === null
+                        ? 'bg-gray-500'
+                        : 'bg-blue-500 hover:bg-blue-800'
+                    } py-2 px-4 rounded-md duration-300 ease-in-out`}
+                  >
+                    <BsEye className="w-5 h-5 fill-white" />
+                    <span className="font-medium text-white">Lihat Detail</span>
+                  </button>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

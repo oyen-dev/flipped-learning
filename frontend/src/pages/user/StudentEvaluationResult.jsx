@@ -9,9 +9,9 @@ import Cookies from 'js-cookie'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { Spin } from 'antd'
 
-const EvaluationResult = () => {
+const StudentEvaluationResult = () => {
   // useParams
-  const { id: classId, evaluationId } = useParams()
+  const { id: classId, evaluationId, studentId } = useParams()
 
   // useLocation
   const { pathname } = useLocation()
@@ -36,6 +36,10 @@ const EvaluationResult = () => {
     },
     {
       name: 'Hasil Evaluasi',
+      destination: `/classes/${classId}/evaluations/${evaluationId}`
+    },
+    {
+      name: 'Detail Evaluasi Siswa',
       destination: `${pathname}`
     }
   ])
@@ -51,7 +55,7 @@ const EvaluationResult = () => {
 
     try {
       const { data } = await api.get(
-        `/class/${classId}/evaluations/${evaluationId}/result`,
+        `/class/${classId}/evaluations/${evaluationId}/result/${studentId}`,
         config
       )
       // console.log(data)
@@ -80,4 +84,4 @@ const EvaluationResult = () => {
   )
 }
 
-export default EvaluationResult
+export default StudentEvaluationResult
