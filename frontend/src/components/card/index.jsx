@@ -17,3 +17,4 @@ export { default as PresenceHeader } from './PresenceHeader'
 
 export { default as QuestionDetail } from './QuestionDetail'
 export { default as ExamQuestion } from './ExamQuestion'
+export { default as ResultQuestion } from './ResultQuestion'

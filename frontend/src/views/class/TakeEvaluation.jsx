@@ -3,13 +3,16 @@ import { useState, useEffect } from 'react'
 import api from '../../api'
 import QuestionList from './QuestionList'
 
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { Spin } from 'antd'
 
 const TakeEvaluation = () => {
   // useParams
   const { id: classId, evaluationId } = useParams()
+
+  // Navigator
+  const navigate = useNavigate()
 
   // Local States
   const [evaluation, setEvaluation] = useState(null)
@@ -18,6 +21,30 @@ const TakeEvaluation = () => {
     evaluation,
     answers,
     setAnswers
+  }
+
+  // Check if submitted
+  const checkSubmission = async () => {
+    // Config
+    const config = {
+      headers: {
+        authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+
+    try {
+      const { data } = await api.get(
+        `/class/${classId}/evaluations/${evaluationId}/check`,
+        config
+      )
+      //   console.log(data)
+
+      if (data.data.isSubmitted === true) {
+        navigate('result')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   // Get evaluation detail
@@ -52,6 +79,7 @@ const TakeEvaluation = () => {
 
   // Initially get evaluation detail
   useEffect(() => {
+    checkSubmission()
     getEvaluationDetail()
   }, [])
 
