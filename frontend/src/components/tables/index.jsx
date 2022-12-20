@@ -7,3 +7,4 @@ export { default as StudentTasks } from './StudentTasks'
 export { default as StudentPresences } from './StudentPresences'
 
 export { default as QuestionList } from './QuestionList'
+export { default as StudentEvaluation } from './StudentEvaluation'
