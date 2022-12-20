@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 
-import { useGlobal } from '../../contexts/Global'
 import { useManagement } from '../../contexts/Management'
 import api from '../../api'
 
@@ -9,17 +8,14 @@ import { CreateClass } from '../../components/modals'
 import { Empty } from '../../pages/error'
 
 import { BsPlus, BsSearch } from 'react-icons/bs'
-import { Input, Button, Pagination } from 'antd'
+import { Input, Button, Pagination, Spin } from 'antd'
 import Cookies from 'js-cookie'
 
 const ActiveClass = () => {
-  // Global Functions
-  const { globalFunctions } = useGlobal()
-  const { mySwal } = globalFunctions
-
   // Management States
   const { managementStates } = useManagement()
-  const { classList, setClassList, isFetchClass, setIsFetchClass } = managementStates
+  const { classList, setClassList, isFetchClass, setIsFetchClass } =
+    managementStates
 
   // Local States
   const [totalClass, setTotalClass] = useState(0)
@@ -55,13 +51,6 @@ const ActiveClass = () => {
   }
 
   const fetchClass = async (page, limit) => {
-    mySwal.fire({
-      html: 'Wait a moment...',
-      didOpen: () => {
-        mySwal.showLoading()
-      }
-    })
-
     if (page === 0 || limit === 0) {
       page = 1
       limit = 10
@@ -77,46 +66,49 @@ const ActiveClass = () => {
         Authorization: `Bearer ${Cookies.get('jwtToken')}`
       }
     }
-    const res = await api.get(endpoint, config)
-    // console.log(res)
-    // Destructure meta
-    destructureMeta(res.data.meta)
 
-    // Set list of class
-    setClassList(res.data.data)
+    try {
+      const res = await api.get(endpoint, config)
+      // console.log(res)
+      // Destructure meta
+      destructureMeta(res.data.meta)
 
-    mySwal.close()
+      // Set list of class
+      setClassList(res.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // Search classes
+  const searchClass = async () => {
+    setClassList(null)
+    fetchClass(currentPage, limitClass)
   }
 
   // Initial fetch data
   useEffect(() => {
+    // Reset classList
+    setClassList(null)
     fetchClass(1, 10)
     // console.log('init')
   }, [])
 
   // Fetch data when page change or limit change
   useEffect(() => {
+    // Reset classList
+    setClassList(null)
     if (isFetchClass) {
       fetchClass(currentPage, limitClass)
       setIsFetchClass(false)
     }
   }, [isFetchClass])
 
-  // Search classes
-  const searchClass = async () => {
-    mySwal.fire({
-      html: 'Wait a moment...',
-      didOpen: () => {
-        mySwal.showLoading()
-      }
-    })
-    fetchClass(currentPage, limitClass)
-    mySwal.close()
-  }
-
   // Fetch class when search input is empty
   useEffect(() => {
+    // Reset classList
     if (search === '') {
+      setClassList(null)
       fetchClass(1, 10)
       setCurrentSearchPage(1)
     }
@@ -142,7 +134,7 @@ const ActiveClass = () => {
             Cari Kelas
           </Button>
         </div>
-        {classList.length > 0 && (
+        {classList !== null && classList.length > 0 && (
           <Pagination
             showSizeChanger
             onShowSizeChange={onShowSizeChange}
@@ -153,9 +145,17 @@ const ActiveClass = () => {
         )}
       </div>
 
-      {classList.length === 0
-        ? <Empty message="Tidak ada data kelas ditemukan." />
-        : <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
+      <div className="flex flex-col w-full items-center justify-center">
+        {classList === null
+          ? (
+          <Spin size="default" />
+            )
+          : classList.length === 0
+            ? (
+          <Empty message="Tidak ada data kelas ditemukan." />
+              )
+            : (
+          <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
             {classList.map((kelas) => {
               const { gradeId, name, schedule, _id } = kelas
               return (
@@ -171,7 +171,8 @@ const ActiveClass = () => {
               )
             })}
           </div>
-      }
+              )}
+      </div>
 
       <label
         htmlFor="modal-create-class"

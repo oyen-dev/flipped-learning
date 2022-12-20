@@ -23,7 +23,7 @@ const JoinClass = () => {
 
     // Show loading
     mySwal.fire({
-      title: 'Joining class...',
+      title: 'Mengecek kode undangan...',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -43,7 +43,7 @@ const JoinClass = () => {
       mySwal.fire({
         icon: 'success',
         title: data.message,
-        text: "You'll be redirected to the class page",
+        text: 'Kamu akan dialihkan ke halaman kelas',
         timer: 3000,
         showConfirmButton: false
       }).then(() => navigate(data.data._id))
@@ -71,7 +71,7 @@ const JoinClass = () => {
       autoComplete="off"
       className="w-full"
     >
-      <p className="text-white text-base font-normal mb-0">
+      <p className="text-black dark:text-white text-base font-normal mb-0">
         Kode Undangan Kelas
       </p>
       <Form.Item

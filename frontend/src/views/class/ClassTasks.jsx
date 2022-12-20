@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import api from '../../api'
 import { PostList } from './index'
+import { Empty } from '../../pages/error'
 
 import { Spin } from 'antd'
 import Cookies from 'js-cookie'
@@ -47,7 +48,7 @@ const ClassTasks = () => {
       {tasks
         ? tasks.length > 0
           ? <PostList posts={tasks} setFetchPosts={setFetchTasks} isTask={true} />
-          : 'Tidak ada'
+          : <Empty message='Belum ada penugasan di kelas.' />
         : <Spin />
       }
     </div>

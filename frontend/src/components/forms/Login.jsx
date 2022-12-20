@@ -24,7 +24,7 @@ const Login = () => {
   const onFinish = async (values) => {
     // Show loadng
     mySwal.fire({
-      title: 'Logging you in...',
+      title: 'Logging in...',
       showConfirmButton: false,
       didOpen: () => {
         mySwal.showLoading()
@@ -59,7 +59,7 @@ const Login = () => {
       mySwal.fire({
         icon: 'success',
         title: 'Login Success',
-        text: 'You will be redirected to the dashboard',
+        text: 'Anda akan dialihkan ke halaman dashboard...',
         allowOutsideClick: true,
         backdrop: true,
         allowEscapeKey: true,

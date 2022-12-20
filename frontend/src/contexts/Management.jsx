@@ -6,7 +6,15 @@ export const ManagementProvider = ({ children }) => {
   // Management States
   const [studentList, setStudentList] = useState([])
   const [teacherList, setTeacherList] = useState([])
-  const [classList, setClassList] = useState([])
+  const [classList, setClassList] = useState(null)
+
+  // Management Functional States
+  const [willUpdateClassId, setWillUpdateClassId] = useState(null)
+  const [wilUpdateQuestionId, setWilUpdateQuestionId] = useState(null)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [presenceClassId, setPresenceClassId] = useState(null)
+  const [presenceMode, setPresenceMode] = useState(null)
+  const [fetchPresence, setFetchPresence] = useState(false)
 
   // Fetcher
   const [isFetchStudent, setIsFetchStudent] = useState(false)
@@ -26,7 +34,19 @@ export const ManagementProvider = ({ children }) => {
     isFetchTeacher,
     setIsFetchTeacher,
     isFetchClass,
-    setIsFetchClass
+    setIsFetchClass,
+    willUpdateClassId,
+    setWillUpdateClassId,
+    wilUpdateQuestionId,
+    setWilUpdateQuestionId,
+    isModalVisible,
+    setIsModalVisible,
+    presenceClassId,
+    setPresenceClassId,
+    presenceMode,
+    setPresenceMode,
+    fetchPresence,
+    setFetchPresence
   }
 
   return (

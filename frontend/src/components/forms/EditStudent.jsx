@@ -38,7 +38,7 @@ const EditStudent = () => {
   const onFinish = async (values) => {
     // Show loading
     mySwal.fire({
-      title: 'Updating student data...',
+      title: 'Memperbarui data siswa...',
       allowOutsideClick: true,
       backdrop: true,
       allowEscapeKey: true,
@@ -62,7 +62,7 @@ const EditStudent = () => {
     mySwal.fire({
       icon: 'success',
       title: 'Success',
-      text: 'Student data has been updated',
+      text: 'Data siswa berhasil diperbarui',
       timer: 3000,
       showConfirmButton: false
     })

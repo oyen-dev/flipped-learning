@@ -12,6 +12,7 @@ export { default as AddTeacher } from './AddTeacher'
 export { default as EditTeacher } from './EditTeacher'
 
 export { default as AddClass } from './AddClass'
+export { default as EditClass } from './EditClass'
 export { default as JoinClass } from './JoinClass'
 
 export { default as PostTaskInfo } from './PostTaskInfo'
@@ -21,3 +22,12 @@ export { default as SubmitTask } from './SubmitTask'
 export { default as EditSubmitTask } from './EditSubmitTask'
 
 export { default as JudgeSubmission } from './JudgeSubmission'
+
+export { default as OpenPresence } from './OpenPresence'
+export { default as EditPresence } from './EditPresence'
+export { default as RecordPresence } from './RecordPresence'
+
+export { default as AddEvaluation } from './AddEvaluation'
+export { default as EditEvaluation } from './EditEvaluation'
+export { default as AddQuestion } from './AddQuestion'
+export { default as EditQuestion } from './EditQuestion'

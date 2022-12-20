@@ -77,7 +77,7 @@ const EditTaskInfo = (props) => {
 
     // Show loading
     mySwal.fire({
-      title: 'Updating post...',
+      title: 'Memperbarui post...',
       didOpen: () => {
         mySwal.showLoading()
       }
@@ -96,7 +96,7 @@ const EditTaskInfo = (props) => {
 
       mySwal.fire({
         icon: 'success',
-        title: 'Update post success',
+        title: 'Post berhasil diperbarui!',
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false
@@ -108,7 +108,7 @@ const EditTaskInfo = (props) => {
       console.log(error)
       mySwal.fire({
         icon: 'error',
-        title: 'Oops something went wrong',
+        title: 'Oops...',
         text: error.response.data.message,
         timer: 2000,
         showConfirmButton: false

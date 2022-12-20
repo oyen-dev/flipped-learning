@@ -4,6 +4,7 @@ import { useManagement } from '../../contexts/Management'
 import momentId from '../../constants/momentId'
 
 import api from '../../api'
+import { EditClass } from '../modals'
 
 import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
@@ -21,11 +22,17 @@ const Class = (props) => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { setIsFetchClass } = managementStates
+  const { setIsFetchClass, setWillUpdateClassId, setIsModalVisible } = managementStates
 
   // Auth State
   const { authState } = useAuth()
   const { user } = authState
+
+  // Handle update class
+  const handleUpdateClass = (id) => {
+    setWillUpdateClassId(id)
+    setIsModalVisible(true)
+  }
 
   // Archive class
   const archiveClass = async (id, archive) => {
@@ -204,7 +211,7 @@ const Class = (props) => {
       key={path}
       className="flex flex-col w-full items-center justify-center bg-[#e9ecef] text-black dark:bg-gray-700 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300"
     >
-      <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/class.jpg')] bg-center object-contain object-center px-3 py-3 rounded-md">
+      <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/classpic.jpg')] bg-center object-fill object-center px-3 py-3 rounded-md">
         <div className="flex w-full items-center justify-end">
           {user.role !== 'STUDENT' && (
             <div className="dropdown dropdown-end">
@@ -218,14 +225,22 @@ const Class = (props) => {
               {mode === 'active' && (
                 <>
                   <li className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <span>Edit Kelas</span>
+                    <label
+                      htmlFor="modal-update-class"
+                      className='modal-button'
+                      onClick={() => handleUpdateClass(path)}
+                    >
+                      Edit Kelas
+                    </label>
                   </li>
-                  <li
-                    className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"
-                    onClick={() => archiveClassDialog()}
-                  >
-                    <span>Arsipkan Kelas</span>
-                  </li>
+                  {user.role === 'ADMIN' && (
+                    <li
+                      className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700"
+                      onClick={() => archiveClassDialog()}
+                    >
+                      <span>Arsipkan Kelas</span>
+                    </li>
+                  )}
                 </>
               )}
 
@@ -248,14 +263,14 @@ const Class = (props) => {
               }
 
               {mode === 'active' || mode === 'archived'
-                ? (
-                <li
+                ? user.role === 'ADMIN'
+                  ? <li
                   className="whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700 text-red-500"
                   onClick={() => deleteClassDialog()}
                   >
                   <span>Hapus Kelas</span>
                 </li>
-                  )
+                  : null
                 : null}
             </ul>
           </div>
@@ -291,6 +306,14 @@ const Class = (props) => {
           {clases}
         </p>
       </div>
+
+      {/* Modal container */}
+      <input
+          type="checkbox"
+          id="modal-update-class"
+          className="modal-toggle"
+        />
+        <EditClass path={path} />
     </div>
   )
 }

@@ -20,7 +20,7 @@ const AddStudent = () => {
   const onFinish = async (values) => {
     // console.log('Success:', values)
     mySwal.fire({
-      html: 'Wait a moment...',
+      html: 'Mohon tunggu...',
       didOpen: () => {
         mySwal.showLoading()
       }
@@ -89,7 +89,7 @@ const AddStudent = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <p className="text-white text-base font-normal mb-0">Nama Lengkap</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Nama Lengkap</p>
       <Form.Item
         name="fullName"
         rules={[
@@ -102,7 +102,7 @@ const AddStudent = () => {
         <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Email</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Email</p>
       <Form.Item
         name="email"
         rules={[
@@ -119,7 +119,7 @@ const AddStudent = () => {
         <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Jenis Kelamin</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Jenis Kelamin</p>
       <Form.Item
         name="gender"
         rules={[
@@ -135,7 +135,7 @@ const AddStudent = () => {
         </Select>
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Tanggal Lahir</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Tanggal Lahir</p>
       <Form.Item
         name="dateOfBirth"
         rules={[
@@ -148,7 +148,7 @@ const AddStudent = () => {
         <DatePicker onChange={changeDate} className="w-full" />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Tempat Lahir</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Tempat Lahir</p>
       <Form.Item
         name="placeOfBirth"
         rules={[
@@ -161,7 +161,7 @@ const AddStudent = () => {
         <Input />
       </Form.Item>
 
-      <p className="text-white text-base font-normal mb-0">Alamat</p>
+      <p className="text-black dark:text-white text-base font-normal mb-0">Alamat</p>
       <Form.Item
         name="address"
         rules={[

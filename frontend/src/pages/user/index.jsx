@@ -10,3 +10,8 @@ export { default as AttachmentDetail } from './AttachmentDetail'
 export { default as SubmitTaskPage } from './SubmitTask'
 export { default as EditSubmittedTaskPage } from './EditSubmittedTask'
 export { default as JudgeSubmissionPage } from './JudgeSubmission'
+
+export { default as EditEvaluationPage } from './EditEvaluation'
+export { default as EvaluationDetail } from './EvaluationDetail'
+export { default as EvaluationResult } from './EvaluationResult'
+export { default as StudentEvaluationResult } from './StudentEvaluationResult'
