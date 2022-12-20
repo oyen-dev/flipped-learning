@@ -70,8 +70,6 @@ const QuestionList = (props) => {
       reaction: 5
     }
 
-    console.log(payload)
-
     // Config
     const config = {
       headers: {
@@ -80,8 +78,8 @@ const QuestionList = (props) => {
     }
 
     try {
-      const { data } = await api.post(`/class/${classId}/evaluations/${evaluationId}/submit`, payload, config)
-      console.log(data)
+      await api.post(`/class/${classId}/evaluations/${evaluationId}/submit`, payload, config)
+      // console.log(data)
 
       // Show success message
       mySwal.fire({

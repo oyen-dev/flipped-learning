@@ -13,3 +13,4 @@ export { default as JudgeSubmissionPage } from './JudgeSubmission'
 
 export { default as EditEvaluationPage } from './EditEvaluation'
 export { default as EvaluationDetail } from './EvaluationDetail'
+export { default as EvaluationResult } from './EvaluationResult'

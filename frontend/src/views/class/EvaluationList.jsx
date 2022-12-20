@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/Auth'
 
 import api from '../../api'
 import { EvaluationHeader } from '../../components/card'
+import { StudentButtonEvaluation } from '../../components/others'
 
 import { Collapse } from 'antd'
 import {
@@ -10,8 +11,7 @@ import {
   BsChevronDown,
   BsPencilSquare,
   BsTrash,
-  BsEye,
-  BsFileText
+  BsEye
 } from 'react-icons/bs'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
@@ -119,15 +119,7 @@ const EvaluationList = (props) => {
           className="flex flex-col w-full text-black dark:text-white bg-[#e9ecef] dark:bg-gray-700 transition-all ease-in-out duration-300"
         >
           {user && user.role === 'STUDENT' && (
-            <div className="flex flex-row space-x-4 w-full items-center justify-end">
-              <Link
-                to={`${pathname}/evaluations/${evaluation._id}`}
-                className="flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out"
-              >
-                <BsFileText className="w-5 h-5 fill-white" />
-                <span>Kerjakan Evaluasi</span>
-              </Link>
-            </div>
+            <StudentButtonEvaluation evaluationId={evaluation._id} />
           )}
 
           {user && user.role === 'TEACHER' && (
