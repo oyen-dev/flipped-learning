@@ -121,7 +121,7 @@ const EvaluationList = (props) => {
           {user && user.role === 'STUDENT' && (
             <div className="flex flex-row space-x-4 w-full items-center justify-end">
               <Link
-                to={0}
+                to={`${pathname}/evaluations/${evaluation._id}`}
                 className="flex flex-row space-x-2 items-center justify-center py-1 px-4 font-normal md:py-2 md:px-4 md:font-medium text-white bg-blue-600 hover:text-white hover:bg-blue-800 rounded-lg duration-300 ease-in-out"
               >
                 <BsFileText className="w-5 h-5 fill-white" />

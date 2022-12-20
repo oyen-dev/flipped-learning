@@ -17,3 +17,4 @@ export { default as ClassSummary } from './ClassSummary'
 
 export { default as EvaluationList } from './EvaluationList'
 export { default as ClassEvaluationResult } from './ClassEvaluationResult'
+export { default as TakeEvaluation } from './TakeEvaluation'
