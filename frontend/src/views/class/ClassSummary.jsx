@@ -10,7 +10,7 @@ import { Spin } from 'antd'
 
 const ClassSummary = () => {
   // useParams
-  const { id: classId } = useParams()
+  const { id: classId, studentId } = useParams()
 
   // Auth State
   const { authState } = useAuth()
@@ -29,8 +29,11 @@ const ClassSummary = () => {
     }
 
     try {
-      const { data } = await api.get(`/class/${classId}/reports/${user._id}`, config)
-      console.log(data.data)
+      const path = studentId === undefined
+        ? `/class/${classId}/reports/${user._id}`
+        : `/class/${classId}/reports/${studentId}`
+      const { data } = await api.get(path, config)
+      // console.log(data.data)
 
       setSummary(data.data)
     } catch (error) {
