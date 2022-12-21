@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../../contexts/Auth'
 
 import api from '../../api'
-import { ReportPresences, ReportTasks } from '../../components/tables'
+import { ReportPresences, ReportTasks, ReportEvaluations } from '../../components/tables'
 
 import Cookies from 'js-cookie'
 import { useParams } from 'react-router-dom'
@@ -50,6 +50,7 @@ const ClassSummary = () => {
         : <div className='flex flex-col space-y-10 w-full'>
           <ReportPresences presences={summary.presences} />
           <ReportTasks tasks={summary.tasks} />
+          <ReportEvaluations evaluations={summary.evaluations} />
         </div>
       }
     </div>

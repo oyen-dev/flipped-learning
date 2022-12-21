@@ -6,9 +6,9 @@ import { Tag } from 'antd'
 
 moment.updateLocale('id', momentId)
 
-const ReportTasks = (props) => {
+const ReportEvaluations = (props) => {
   // Props destructure
-  const { tasks } = props
+  const { evaluations } = props
 
   // Table columns
   const [columns] = useState([
@@ -18,7 +18,7 @@ const ReportTasks = (props) => {
       align: 'pl-3 text-left'
     },
     {
-      title: 'NAMA TUGAS',
+      title: 'NAMA EVALUASI',
       width: 75,
       align: 'text-left'
     },
@@ -47,7 +47,7 @@ const ReportTasks = (props) => {
   return (
     <div className="flex flex-col w-full space-y-4 overflow-x-auto">
       <h3 className="text-center text-black dark:text-white text-xl font-bold">
-        Rekap Penugasan
+        Rekap Evaluasi
       </h3>
       <table className="w-full table-auto">
         <thead>
@@ -63,7 +63,7 @@ const ReportTasks = (props) => {
           </tr>
         </thead>
         <tbody className="text-black text-xs font-light">
-          {tasks.map((task, index) => (
+          {evaluations.map((task, index) => (
             <tr
               key={index}
               className="border-b border-gray-200 bg-gray-50 hover:bg-gray-100"
@@ -108,4 +108,4 @@ const ReportTasks = (props) => {
   )
 }
 
-export default ReportTasks
+export default ReportEvaluations

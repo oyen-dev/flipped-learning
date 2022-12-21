@@ -11,3 +11,4 @@ export { default as StudentEvaluation } from './StudentEvaluation'
 
 export { default as ReportPresences } from './ReportPresences'
 export { default as ReportTasks } from './ReportTasks'
+export { default as ReportEvaluations } from './ReportEvaluations'
