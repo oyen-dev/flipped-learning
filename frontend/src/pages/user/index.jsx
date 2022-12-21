@@ -15,3 +15,5 @@ export { default as EditEvaluationPage } from './EditEvaluation'
 export { default as EvaluationDetail } from './EvaluationDetail'
 export { default as EvaluationResult } from './EvaluationResult'
 export { default as StudentEvaluationResult } from './StudentEvaluationResult'
+
+export { default as ClassStudentSummary } from './ClassStudentSummary'

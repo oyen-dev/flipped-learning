@@ -33,7 +33,8 @@ import {
   EditEvaluationPage,
   EvaluationDetail,
   EvaluationResult,
-  StudentEvaluationResult
+  StudentEvaluationResult,
+  ClassStudentSummary
 } from '../pages/user'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
@@ -115,6 +116,7 @@ export default function AppRoutes () {
             <Route path='evaluations/:evaluationId/result' element={isAuthenticated ? (<ManagementContext> <EvaluationResult /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route path='evaluations/:evaluationId/result/:studentId' element={isAuthenticated ? (<ManagementContext> <StudentEvaluationResult /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route path='evaluations/:evaluationId/edit' element={isAuthenticated ? (<ManagementContext> <EditEvaluationPage /> </ManagementContext>) : (<Navigate to="/auth" />)} />
+            <Route path='result/:studentId' element={isAuthenticated ? (<ManagementContext> <ClassStudentSummary /> </ManagementContext>) : (<Navigate to="/auth" />)} />
             <Route index element={isAuthenticated ? <ManagementContext> <ClassDetailPage /> </ManagementContext> : <Navigate to="/auth" />}/>
           </Route>
           <Route index element={isAuthenticated ? <ManagementContext> <Classes /> </ManagementContext> : <Navigate to="/auth" />} />
