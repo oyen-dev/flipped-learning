@@ -63,45 +63,60 @@ const ReportTasks = (props) => {
           </tr>
         </thead>
         <tbody className="text-black text-xs font-light">
-          {tasks.map((task, index) => (
-            <tr
-              key={index}
-              className="border-b border-gray-200 bg-gray-50 hover:bg-gray-100"
-            >
-              {/* Nomor */}
-              <td className="py-3 text-left">
-                <div className="flex items-center pl-3 justify-start">
-                  <span className="font-medium whitespace-nowrap px-2">
-                    {index + 1}
-                  </span>
-                </div>
-              </td>
+          {tasks.length !== 0
+            ? (
+                tasks.map((task, index) => (
+              <tr
+                key={index}
+                className="border-b border-gray-200 bg-gray-50 hover:bg-gray-100"
+              >
+                {/* Nomor */}
+                <td className="py-3 text-left">
+                  <div className="flex items-center pl-3 justify-start">
+                    <span className="font-medium whitespace-nowrap px-2">
+                      {index + 1}
+                    </span>
+                  </div>
+                </td>
 
-              {/* Nama Tugas */}
-              <td className="py-3 text-left">
-                <div className="flex items-center justify-start">
-                  <span className="font-medium whitespace-nowrap px-2">
-                    {task.title}
-                  </span>
-                </div>
-              </td>
+                {/* Nama Tugas */}
+                <td className="py-3 text-left">
+                  <div className="flex items-center justify-start">
+                    <span className="font-medium whitespace-nowrap px-2">
+                      {task.title}
+                    </span>
+                  </div>
+                </td>
 
-              {/* Nilai */}
-              <td className="py-3  text-left">
-                <div className="flex items-center justify-end">
-                  <span className="font-medium whitespace-nowrap px-3">
-                    {task.points === null
-                      ? (
-                      <Tag color="#faad14">Belum Dinilai</Tag>
-                        )
-                      : (
-                          pointColor(task.points)
-                        )}
+                {/* Nilai */}
+                <td className="py-3  text-left">
+                  <div className="flex items-center justify-end">
+                    <span className="font-medium whitespace-nowrap px-3">
+                      {task.points === null
+                        ? (
+                        <Tag color="#faad14">Belum Dinilai</Tag>
+                          )
+                        : (
+                            pointColor(task.points)
+                          )}
+                    </span>
+                  </div>
+                </td>
+              </tr>
+                ))
+              )
+            : (
+            <tr className="border-b border-gray-200 bg-gray-50 hover:bg-gray-100">
+              {/* Tidak ada data */}
+              <td colSpan={3} className="py-3 text-center">
+                <div className="flex items-center pl-3 justify-center">
+                  <span className="font-medium whitespace-nowrap px-2">
+                    Belum ada data
                   </span>
                 </div>
               </td>
             </tr>
-          ))}
+              )}
         </tbody>
       </table>
     </div>
