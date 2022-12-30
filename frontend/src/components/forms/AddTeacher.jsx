@@ -25,12 +25,6 @@ const AddTeacher = () => {
   // Form
   const [form] = Form.useForm()
 
-  // Local state
-  // const [assignClass, setAssignClass] = useState(false)
-
-  // Option for select
-  // const { Option } = Select
-
   const onFinish = async (values) => {
     console.log('Success:', values)
 
@@ -152,7 +146,7 @@ const AddTeacher = () => {
           }
         ]}
       >
-        <DatePicker onChange={changeDate} className="w-full" />
+        <DatePicker onChange={changeDate} format={'DD/MM/YYYY'} className="w-full" />
       </Form.Item>
 
       <p className="text-black dark:text-white text-base font-normal mb-0">Tempat Lahir</p>

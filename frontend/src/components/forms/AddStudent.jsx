@@ -145,7 +145,7 @@ const AddStudent = () => {
           }
         ]}
       >
-        <DatePicker onChange={changeDate} className="w-full" />
+        <DatePicker onChange={changeDate} format={'DD/MM/YYYY'} className="w-full" />
       </Form.Item>
 
       <p className="text-black dark:text-white text-base font-normal mb-0">Tempat Lahir</p>

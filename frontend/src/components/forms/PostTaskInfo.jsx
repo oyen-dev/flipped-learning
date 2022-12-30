@@ -251,7 +251,7 @@ const PostTaskInfo = (props) => {
             ]}
             className="w-full"
           >
-            <DatePicker placeholder='Tengat penugasan' disabledDate={disabledDate} showTime className='w-full' />
+            <DatePicker placeholder='Tengat penugasan' format={'DD MMMM YYYY: HH:mm'} disabledDate={disabledDate} showTime className='w-full' />
           </Form.Item>
         )}
 
