@@ -2,16 +2,31 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 import { useGlobal } from '../../contexts/Global'
 import { useManagement } from '../../contexts/Management'
 
+import FallBack from '../../assets/images/profile.png'
+
 import api from '../../api'
 
 import { debounce } from 'lodash'
-import { Form, Input, Button, Select, Spin, TimePicker } from 'antd'
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Spin,
+  TimePicker,
+  Image,
+  message,
+  Upload
+} from 'antd'
+import ImgCrop from 'antd-img-crop'
+import { UploadOutlined } from '@ant-design/icons'
 import { RiIndeterminateCircleLine, RiAddCircleLine } from 'react-icons/ri'
 import Cookies from 'js-cookie'
 import moment from 'moment'
 
 const { RangePicker } = TimePicker
 const { Item, List } = Form
+
 const EditClass = () => {
   // Global Functions
   const { globalFunctions } = useGlobal()
@@ -19,13 +34,19 @@ const EditClass = () => {
 
   // Management States
   const { managementStates } = useManagement()
-  const { willUpdateClassId, isModalVisible, setIsModalVisible, setIsFetchClass } =
-    managementStates
+  const {
+    willUpdateClassId,
+    isModalVisible,
+    setIsModalVisible,
+    setIsFetchClass
+  } = managementStates
 
   // Local States
   const [teacherList, setTeacherList] = useState([])
   const [classDetail, setClassDetail] = useState(null)
+  const [localFetch, setLocalFetch] = useState(false)
   const [scheduleList, setScheduleList] = useState([])
+  const [fileList, setFileList] = useState([])
   const [days] = useState([
     { value: 1, label: 'Senin' },
     { value: 2, label: 'Selasa' },
@@ -107,16 +128,18 @@ const EditClass = () => {
       await api.put(`/class/${willUpdateClassId}`, payload, config)
 
       // Show success message
-      mySwal.fire({
-        icon: 'success',
-        title: 'Kelas berhasil diperbarui!',
-        showConfirmButton: false,
-        backdrop: true,
-        allowOutsideClick: true,
-        allowEscapeKey: true,
-        timer: 2000,
-        timerProgressBar: true
-      }).then(() => closeModal())
+      mySwal
+        .fire({
+          icon: 'success',
+          title: 'Kelas berhasil diperbarui!',
+          showConfirmButton: false,
+          backdrop: true,
+          allowOutsideClick: true,
+          allowEscapeKey: true,
+          timer: 2000,
+          timerProgressBar: true
+        })
+        .then(() => closeModal())
     } catch (error) {
       console.log(error)
       mySwal.fire({
@@ -176,15 +199,75 @@ const EditClass = () => {
 
       // Set class detail
       setClassDetail(classData)
-      setScheduleList(schedule.map((schedule) => {
-        return {
-          day: new Date(schedule.start).getDay(),
-          time: [moment(schedule.start), moment(schedule.end)]
-        }
-      }))
+      setScheduleList(
+        schedule.map((schedule) => {
+          return {
+            day: new Date(schedule.start).getDay(),
+            time: [moment(schedule.start), moment(schedule.end)]
+          }
+        })
+      )
     } catch (error) {
       console.log(error)
     }
+  }
+
+  // Custom upload image request
+  const uploadImage = async (options) => {
+    const { onSuccess, onError, file } = options
+
+    const fmData = new FormData()
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+        Authorization: `Bearer ${Cookies.get('jwtToken')}`
+      }
+    }
+    fmData.append('files', file)
+    try {
+      await api.post(`class/${willUpdateClassId}/cover`, fmData, config)
+      onSuccess('Ok')
+      setLocalFetch(true)
+    } catch (err) {
+      console.log('Eroor: ', err)
+      onError({ err })
+    }
+  }
+
+  // Upload Configuration
+  const uploadProps = {
+    beforeUpload: (file) => {
+      const isJpgOrPng =
+        file.type === 'image/jpeg' || file.type === 'image/png'
+      if (!isJpgOrPng) {
+        message.error('You can only upload JPG/PNG file!')
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        message.error('Image must smaller than 2MB!')
+      }
+      setFileList(file)
+      return isJpgOrPng && isLt2M
+    },
+    fileList,
+    onChange: ({ fileList: newFileList }) => {
+      setFileList(newFileList)
+    },
+    onPreview: async (file) => {
+      let src = file.url
+      if (!src) {
+        src = await new Promise((resolve) => {
+          const reader = new FileReader()
+          reader.readAsDataURL(file.originFileObj)
+          reader.onload = () => resolve(reader.result)
+        })
+      }
+      const image = new Image()
+      image.src = src
+      const imgWindow = window.open(src)
+      imgWindow.document.write(image.outerHTML)
+    },
+    customRequest: uploadImage
   }
 
   // Monitor willUpdateClassId
@@ -195,6 +278,14 @@ const EditClass = () => {
     }
   }, [willUpdateClassId])
 
+  // Monitor cover change
+  useEffect(() => {
+    if (localFetch) {
+      getClassDetail()
+      setLocalFetch(false)
+    }
+  }, [localFetch])
+
   return (
     <div className="flex flex-col w-full items-center justify-center">
       {classDetail === null
@@ -202,157 +293,173 @@ const EditClass = () => {
         <Spin size="small" />
           )
         : (
-        <Form
-          name="editClassForm"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-          className="w-full"
-          initialValues={{
-            name: classDetail.name,
-            grade: classDetail.gradeId.name,
-            teachers: classDetail.teachers.map((teacher) => ({
-              label: teacher.fullName,
-              value: teacher._id
-            }))
-          }}
-        >
-          <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">
-            Nama Kelas/Mata Pelajaran
-          </p>
-          <Item
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: 'Mohon masukkan nama kelas/mata pelajaran'
-              }
-            ]}
-          >
-            <Input />
-          </Item>
-
-          <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">Kelas/Jenjang</p>
-          <Item
-            name="grade"
-            rules={[
-              {
-                required: true,
-                message: 'Mohon masukkan kelas/jenjang!'
-              }
-            ]}
-          >
-            <Input />
-          </Item>
-
-          <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">Guru/Pengajar</p>
-          <Item
-            name="teachers"
-            rules={[
-              {
-                required: true,
-                message: 'Mohon masukkan guru/pengajar!'
-              }
-            ]}
-          >
-            <DebounceSelect
-              mode="multiple"
-              value={teacherList}
-              placeholder="Nama Guru/Pengajar"
-              fetchOptions={fetchTeachers}
-              onChange={(newValue) => {
-                setTeacherList(newValue)
-              }}
+        <>
+          <div className="flex flex-col space-y-4 items-center justify-center">
+            <Image
+              src={classDetail.cover}
+              className="w-40 h-40"
+              fallback={FallBack}
             />
-          </Item>
+            <ImgCrop rotate>
+              <Upload {...uploadProps}>
+                <Button icon={<UploadOutlined />}>Perbarui Cover Kelas</Button>
+              </Upload>
+            </ImgCrop>
+          </div>
 
-          <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">Jadwal Kelas</p>
-          <List
-            name="schedule"
-            initialValue={scheduleList}
+          <Form
+            name="editClassForm"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+            className="w-full"
+            initialValues={{
+              name: classDetail.name,
+              grade: classDetail.gradeId.name,
+              teachers: classDetail.teachers.map((teacher) => ({
+                label: teacher.fullName,
+                value: teacher._id
+              }))
+            }}
           >
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map((field) => (
-                  <div key={field.key} className="flex flex-row w-full">
-                    <div className="flex flex-row w-full space-x-4 items-start">
+            <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">
+              Nama Kelas/Mata Pelajaran
+            </p>
+            <Item
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: 'Mohon masukkan nama kelas/mata pelajaran'
+                }
+              ]}
+            >
+              <Input />
+            </Item>
 
-                      {/* Hari */}
-                      <div className="flex w-2/12">
-                        <Item
-                          {...field}
-                          name={[field.name, 'day']}
-                          fieldKey={[field.fieldKey, 'day']}
-                          className="w-full"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Mohon pilih hari!'
-                            }
-                          ]}
-                        >
-                          <Select options={days} placeholder="Pilih Hari" />
-                        </Item>
-                      </div>
+            <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">
+              Kelas/Jenjang
+            </p>
+            <Item
+              name="grade"
+              rules={[
+                {
+                  required: true,
+                  message: 'Mohon masukkan kelas/jenjang!'
+                }
+              ]}
+            >
+              <Input />
+            </Item>
 
-                      {/* Jam */}
-                      <div className="flex w-8/12">
-                        <Item
-                          {...field}
-                          name={[field.name, 'time']}
-                          fieldKey={[field.fieldKey, 'time']}
-                          className="w-full"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Mohon masukkan waktu!'
-                            }
-                          ]}
-                        >
-                          <RangePicker
-                            placeholder={['Waktu Mulai', 'Waktu Selesai']}
-                            format="HH:mm"
+            <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">
+              Guru/Pengajar
+            </p>
+            <Item
+              name="teachers"
+              rules={[
+                {
+                  required: true,
+                  message: 'Mohon masukkan guru/pengajar!'
+                }
+              ]}
+            >
+              <DebounceSelect
+                mode="multiple"
+                value={teacherList}
+                placeholder="Nama Guru/Pengajar"
+                fetchOptions={fetchTeachers}
+                onChange={(newValue) => {
+                  setTeacherList(newValue)
+                }}
+              />
+            </Item>
+
+            <p className="text-black dark:text-white duration-300 ease-in-out text-base font-normal mb-0">
+              Jadwal Kelas
+            </p>
+            <List name="schedule" initialValue={scheduleList}>
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field) => (
+                    <div key={field.key} className="flex flex-row w-full">
+                      <div className="flex flex-row w-full space-x-4 items-start">
+                        {/* Hari */}
+                        <div className="flex w-2/12">
+                          <Item
+                            {...field}
+                            name={[field.name, 'day']}
+                            fieldKey={[field.fieldKey, 'day']}
                             className="w-full"
-                          />
-                        </Item>
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Mohon pilih hari!'
+                              }
+                            ]}
+                          >
+                            <Select options={days} placeholder="Pilih Hari" />
+                          </Item>
+                        </div>
+
+                        {/* Jam */}
+                        <div className="flex w-8/12">
+                          <Item
+                            {...field}
+                            name={[field.name, 'time']}
+                            fieldKey={[field.fieldKey, 'time']}
+                            className="w-full"
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Mohon masukkan waktu!'
+                              }
+                            ]}
+                          >
+                            <RangePicker
+                              placeholder={['Waktu Mulai', 'Waktu Selesai']}
+                              format="HH:mm"
+                              className="w-full"
+                            />
+                          </Item>
+                        </div>
+
+                        {/* Button */}
+                        <div className="flex w-2/12">
+                          <Button
+                            type="primary"
+                            danger
+                            onClick={() => remove(field.name)}
+                            className="w-full"
+                          >
+                            <div className="flex flex-row items-center justify-center space-x-2">
+                              <RiIndeterminateCircleLine className="w-6 h-6 fill-white" />
+                              <span>Hapus Jadwal</span>
+                            </div>
+                          </Button>
+                        </div>
                       </div>
-
-                      {/* Button */}
-                      <div className="flex w-2/12">
-                        <Button
-                          type="primary"
-                          danger
-                          onClick={() => remove(field.name)}
-                          className="w-full"
-                        >
-                          <div className="flex flex-row items-center justify-center space-x-2">
-                            <RiIndeterminateCircleLine className="w-6 h-6 fill-white" />
-                            <span>Hapus Jadwal</span>
-                          </div>
-                        </Button>
+                    </div>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add()} block>
+                      <div className="flex flex-row w-full space-x-2 items-center justify-center">
+                        <RiAddCircleLine className="w-6 h-6 fill-black" />
+                        <span>Tambah Jadwal</span>
                       </div>
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </List>
 
-                    </div>
-                  </div>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} block>
-                    <div className="flex flex-row w-full space-x-2 items-center justify-center">
-                      <RiAddCircleLine className="w-6 h-6 fill-black" />
-                      <span>Tambah Jadwal</span>
-                    </div>
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </List>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" className="w-full">
-              <p className="text-white font-medium">Perbarui Data Kelas</p>
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className="w-full">
+                <p className="text-white font-medium">Perbarui Data Kelas</p>
+              </Button>
+            </Form.Item>
+          </Form>
+        </>
           )}
     </div>
   )
