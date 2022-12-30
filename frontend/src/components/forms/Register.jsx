@@ -174,7 +174,7 @@ const Register = () => {
         ]}
       >
         {/* <DatePicker className="w-full" /> */}
-        <DatePicker className="w-full" format={'YYYY-MM-DD'}
+        <DatePicker className="w-full" placeholder='Tanggal lahir' format={'DD MMMM YYYY'}
             style={{ width: '100%' }}
             disabledDate={disabledDate}
           />
