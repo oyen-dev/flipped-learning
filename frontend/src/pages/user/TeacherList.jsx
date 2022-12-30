@@ -5,7 +5,7 @@ import Layout from '../../components/layouts'
 import { Breadcrumb } from '../../components/breadcrumb'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
-import { Image, Select, Skeleton } from 'antd'
+import { Image, Skeleton } from 'antd'
 import moment from 'moment/moment'
 import Cookies from 'js-cookie'
 
@@ -103,15 +103,6 @@ const TeacherList = () => {
                   />
                   <Field label="No Telp" value={teacher.phone} />
                   <Field label="Alamat" value={teacher.address} />
-                  <Enrolled
-                    label="Kelas Diampu"
-                    value={[
-                      'Teknik Audio Video',
-                      'Pemrograman Web',
-                      'Desain Grafis',
-                      'Dasar-dasar Keahlian Program'
-                    ]}
-                  />
                 </>
                   )
                 : (
@@ -136,28 +127,6 @@ const Field = ({ label, value }) => {
         <p className="text-lg font-semibold text-center lg:text-left mb-0">
           {value}
         </p>
-      </div>
-    </div>
-  )
-}
-
-const Enrolled = ({ label, value }) => {
-  return (
-    <div className="flex flex-col lg:flex-row w-full justify-center">
-      <div className="flex w-full lg:w-1/6 justify-center lg:justify-start">
-        <p className="text-base mb-0">{label}</p>
-      </div>
-
-      <div className="flex flex-col w-full space-y-4 lg:w-5/6 justify-center lg:justify-start mt-2 lg:mt-0">
-        <Select
-          mode="multiple"
-          disabled
-          style={{
-            width: '100%'
-          }}
-          placeholder="Please select"
-          defaultValue={value}
-        />
       </div>
     </div>
   )
