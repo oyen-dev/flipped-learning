@@ -4,7 +4,7 @@ services:
     image: olearning-fe:v1
     container_name: olearning-fe
     ports:
-      - "80:80"
+      - "3000:3000"
 
 # To change the port of the web server, simply change the ports
 # Make sure the port is same as in docker-compose.yml, Dockerfile and nginx.conf
