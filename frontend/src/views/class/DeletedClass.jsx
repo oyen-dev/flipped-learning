@@ -154,7 +154,7 @@ const DeletedClass = () => {
             ? <Empty message="Tidak ada data kelas ditemukan." />
             : <div className="grid w-full auto-rows-auto md:grid-cols-2 lg:grid-cols-3 gap-5 py-5">
                 {classList.map((kelas) => {
-                  const { gradeId, name, schedule, _id } = kelas
+                  const { gradeId, name, schedule, _id, cover } = kelas
                   return (
                     <Class
                       key={_id}
@@ -162,6 +162,7 @@ const DeletedClass = () => {
                       title={name}
                       clases={gradeId.name}
                       schedule={schedule}
+                      cover={cover}
                       mode="deleted"
                       admin={true}
                     />
