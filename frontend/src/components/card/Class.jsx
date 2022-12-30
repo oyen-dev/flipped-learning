@@ -14,7 +14,7 @@ moment.updateLocale('id', momentId)
 
 const Class = (props) => {
   // Props destructure
-  const { path, title, clases, schedule, mode, admin } = props
+  const { path, title, clases, schedule, mode, admin, cover } = props
 
   // Global Functions
   const { globalFunctions } = useGlobal()
@@ -211,7 +211,10 @@ const Class = (props) => {
       key={path}
       className="flex flex-col w-full items-center justify-center bg-[#e9ecef] text-black dark:bg-gray-700 dark:text-white px-5 pt-5 pb-2 rounded-md transition-all ease-in-out duration-300"
     >
-      <div className="flex flex-col w-full h-44 items-start justify-between bg-[url('/images/classpic.jpg')] bg-center object-fill object-center px-3 py-3 rounded-md">
+      <div
+        className="flex flex-col w-full h-44 items-start justify-between bg-center object-fill object-center px-3 py-3 rounded-md"
+        style={{ backgroundImage: cover === null ? 'url(\'/images/classpic.jpg\')' : `url(${cover})` }}
+      >
         <div className="flex w-full items-center justify-end">
           {user.role !== 'STUDENT' && (
             <div className="dropdown dropdown-end">
