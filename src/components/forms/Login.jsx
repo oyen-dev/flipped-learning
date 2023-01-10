@@ -155,7 +155,7 @@ const Login = () => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">
-          <p className="font-medium">Login</p>
+          <p className="font-medium">Masuk</p>
         </Button>
       </Form.Item>
     </Form>

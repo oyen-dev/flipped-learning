@@ -21,7 +21,7 @@ const ForgotPage = () => {
             className="flex flex-col space-y-2 items-center text-white"
           >
             <button className="text-base font-semibold mb-0 hover:text-blue-500 duration-150 cursor-pointer">
-              Kembali ke Login
+              Kembali ke halaman Masuk
             </button>
           </Link>
         </div>

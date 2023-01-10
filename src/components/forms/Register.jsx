@@ -253,7 +253,7 @@ const Register = () => {
               >
                 Kebijakan Privasi
               </label>{' '}
-              Flipped Learning.
+              Online Learning.
             </p>
           </div>
         </Form.Item>
@@ -261,7 +261,7 @@ const Register = () => {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="w-full">
-          <p className="text-white font-medium">Daftar Flipped Learning</p>
+          <p className="text-white font-medium">Daftar Online Learning</p>
         </Button>
       </Form.Item>
 
