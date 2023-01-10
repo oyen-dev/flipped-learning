@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom'
 const RegisterPage = () => {
   return (
     <main className="min-h-screen flex flex-col px-5 py-10 bg-gray-800 items-center justify-center space-y-10 text-white">
-        {/* <div className="flex w-full space-x-10 justify-center">
-          <img src={UBBG} alt="UBBG" className='flex w-[30%] h-[30%] md:w-[10%] md:h-[10%]'/>
-        </div> */}
         <p className="font-bold text-xl md:text-2xl lg:text-3xl text-center tracking-wide">
           Pendaftaran Pengguna Online Learning
         </p>

@@ -244,14 +244,7 @@ const Register = () => {
                 htmlFor="modal-privacy-policy"
                 className="modal-button font-bold hover:text-blue-500 duration-150 cursor-pointer"
               >
-                Ketentuan Penggunaan
-              </label>{' '}
-              dan{' '}
-              <label
-                htmlFor="modal-privacy-policy"
-                className="modal-button font-bold hover:text-blue-500 duration-150 cursor-pointer"
-              >
-                Kebijakan Privasi
+                Ketentuan Penggunaan dan Kebijakan Privasi
               </label>{' '}
               Online Learning.
             </p>

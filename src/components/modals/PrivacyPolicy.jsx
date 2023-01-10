@@ -1,6 +1,20 @@
+import { useState } from 'react'
 import { BsXLg } from 'react-icons/bs'
 
 const PrivacyPolicy = () => {
+  // Local states
+  const [policy] = useState([
+    'Pengguna harus memiliki akun yang sah dan terdaftar untuk dapat mengakses fitur dan fungsi aplikasi ini.',
+    'Pengguna harus menaati semua peraturan yang ditentukan oleh sekolah atau institusi pendidikan yang diterapkan dalam penggunaan aplikasi ini.',
+    'Pengguna harus menjaga kerahasiaan akun dan kata sandi mereka, dan tidak diperbolehkan untuk memberikan akses ke akun mereka kepada pihak ketiga.',
+    'Pengguna bertanggung jawab atas segala bentuk aktivitas yang dilakukan di akun mereka, dan pengembang aplikasi tidak bertanggung jawab atas kerugian yang diakibatkan oleh penyalahgunaan akun oleh pihak ketiga.'
+  ])
+  const [privacy] = useState([
+    'Aplikasi ini hanya akan mengumpulkan informasi yang diperlukan untuk menyediakan fitur dan fungsi yang ditentukan, seperti nama pengguna, alamat email, dan informasi akun sekolah.',
+    'Informasi yang dikumpulkan akan digunakan untuk menyediakan dan meningkatkan layanan yang ditawarkan melalui aplikasi, serta untuk mengelola akun pengguna.',
+    'Aplikasi ini mungkin menggunakan cookie dan teknologi lain untuk meningkatkan pengalaman pengguna dan untuk mengumpulkan data analitik. Pengguna dapat menonaktifkan cookie melalui pengaturan browser mereka.'
+  ])
+
   return (
     <div className="modal w-full">
       <div className="modal-box w-11/12 max-w-5xl relative bg-gray-800">
@@ -13,35 +27,30 @@ const PrivacyPolicy = () => {
 
         <div className="flex flex-col w-full h-full text-white">
           <h1 className="text-xl font-bold text-white text-center mb-0 pb-3">
-            Ketentuan Penggunaan
+            Ketentuan Penggunaan dan Kebijakan Privasi
           </h1>
-          <div className="flex flex-col w-full bg-gray-700 px-5 py-5 rounded-lg gap-5">
-            <p className="text-sm font-normal text-justify">
-              Izin Terbatas dan Akses terhadap Situs - Pemilik dengan ini
-              memberikan Anda izin terbatas untuk mengakses dan menggunakan
-              secara pribadi Situs Web ini tetapi Anda tidak diizinkan untuk
-              mengunduh (di luar penembolokan halaman/page caching) atau
-              memodifikasi seluruh atau sebagian dari Situs Web ini kecuali
-              dengan persetujuan tertulis dari Pemilik. Izin ini tidak termasuk
-              penjualan kembali atau penggunaan komersial Situs Web ini atau
-              isinya; pengambilan atau penggunaan daftar produk, deskripsi, atau
-              harganya, penggunaan lanjutan dari Situs Web ini atau isinya, atau
-              penggunaan alat penambangan data (data mining), robot, atau
-              pengumpul dan pengekstraksi data sejenis. Seluruh atau sebagian
-              dari Situs Web ini tidak boleh direproduksi, diduplikasi, disalin,
-              dijual, dijual kembali, dikunjungi, atau dimanfaatkan untuk tujuan
-              komersial tanpa persetujuan tertulis dari Pemilik. Anda tidak
-              diperkenankan mem-frame atau menggunakan teknik framing untuk
-              menyertakan setiap merek dagang, logo, atau informasi berpemilik
-              lainnya (termasuk gambar, teks, tata letak halaman, atau bentuk)
-              yang menjadi milik Pemilik dan afiliasinya tanpa persetujuan
-              tertulis yang jelas dari mereka. Anda tidak diperkenankan
-              menggunakan “meta-tag” atau “teks tersembunyi” lainnya yang
-              menggunakan nama (berbagai nama) Chubb atau merek jasa apapun
-              tanpa persetujuan tertulis dari para Pemilik. Setiap penggunaan
-              yang tidak diperkenankan akan mengakhiri persetujuan atau izin
-              yang diberikan oleh Pemilik.
+          <div className="flex flex-col w-full bg-gray-700 px-5 py-5 rounded-lg gap-2">
+            <p className="mb-0 text-sm font-normal text-justify">
+              Aplikasi Pembelajaran ini ditujukan untuk digunakan oleh siswa,
+              guru, dan administrator sekolah. Dalam penggunaannya, pengguna
+              harus memenuhi ketentuan berikut:
             </p>
+            <ul className="list-disc ml-3">
+              {policy.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+            <p className="mb-0 text-sm font-normal text-justify">
+              Selain itu, Aplikasi Pembelajaran ini juga menerapkan kebijakan
+              privasi yang menjamin perlindungan atas informasi yang dikumpulkan
+              dari pengguna. Ketentuan-ketentuan dalam kebijakan privasi ini
+              antara lain:
+            </p>
+            <ul className="list-disc ml-3">
+              {privacy.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

@@ -7,7 +7,6 @@ const ViewVideo = (props) => {
 
   return (
     <div className="flex flex-col space-y-2 w-full h-full">
-
       <div className="flex flex-row w-full items-center justify-between">
         <p className="w-1/2 mb-0 text-base break-words">{name}</p>
         <div className="w-1/2 flex flex-row space-x-2 items-center justify-end group">
