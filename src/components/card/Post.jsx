@@ -79,8 +79,8 @@ const Post = (props) => {
       showCancelButton: true,
       confirmButtonText: 'Ya, hapus!',
       cancelButtonText: 'Tidak, batalkan!',
-      cancelButtonColor: '#d33',
-      confirmButtonColor: '#3085d6'
+      cancelButtonColor: '#3085d6',
+      confirmButtonColor: '#d33'
     }).then((result) => {
       if (result.isConfirmed) {
         deletePost()
