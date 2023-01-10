@@ -1,7 +1,6 @@
 import { useGlobal } from '../../contexts/Global'
 
 import { useState, useEffect } from 'react'
-// import UBBG from '../../assets/images/ubbg.png'
 
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import api from '../../api'
@@ -21,7 +20,7 @@ const VerifyPage = () => {
 
   // Local States
   const [loading, setLoading] = useState(true)
-  const [text, setText] = useState('Verification on progress ...')
+  const [text, setText] = useState('Sedang memverifikasi...')
 
   useEffect(() => {
     // Verify token
@@ -29,7 +28,6 @@ const VerifyPage = () => {
       setLoading(true)
       await api.get(`/auth/verify?token=${token}`)
         .then(res => {
-          console.log('aman')
           mySwal.fire({
             icon: 'success',
             title: 'Success',
@@ -60,9 +58,6 @@ const VerifyPage = () => {
 
   return (
     <main className="min-h-screen flex flex-col px-5 py-2 bg-gray-800 items-center justify-center space-y-10 text-white">
-      {/* <div className="flex w-full space-x-10 justify-center">
-        <img src={UBBG} alt="UBBG" className='flex w-[30%] h-[30%] md:w-[10%] md:h-[10%]'/>
-      </div> */}
       <p className="font-bold text-xl md:text-2xl lg:text-3xl text-center tracking-wide">
         {text}
       </p>

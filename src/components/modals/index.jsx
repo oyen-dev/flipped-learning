@@ -13,3 +13,5 @@ export { default as Presence } from './Presence'
 export { default as CreateEvaluation } from './CreateEvaluation'
 export { default as AddQuestion } from './AddQuestion'
 export { default as EditQuestion } from './EditQuestion'
+
+export { default as VideoGuide } from './VideoGuide'

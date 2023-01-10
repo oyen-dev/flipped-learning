@@ -3,7 +3,6 @@ import { useGlobal } from '../../contexts/Global'
 
 import api from '../../api'
 import { useSearchParams } from 'react-router-dom'
-// import UBBG from '../../assets/images/ubbg.png'
 
 import { ResetPassword } from '../../components/forms'
 
@@ -17,7 +16,7 @@ const ResetPasswordPage = () => {
   const { mySwal } = globalFunctions
 
   // Local States
-  const [text, setText] = useState('Reset Your Password')
+  const [text, setText] = useState('Atur ulang passwordmu')
   const [isValid, setIsValid] = useState(false)
 
   // Check if token is valid
@@ -29,7 +28,6 @@ const ResetPasswordPage = () => {
           setIsValid(true)
         })
         .catch(err => {
-          console.log('error')
           console.log(err)
           setText(err.response.data.message)
           mySwal.fire({
@@ -47,9 +45,6 @@ const ResetPasswordPage = () => {
 
   return (
     <main className="min-h-screen flex flex-col px-5 py-10 bg-gray-800 items-center justify-center space-y-10 text-white">
-        {/* <div className="flex w-full space-x-10 justify-center">
-          <img src={UBBG} alt="UBBG" className='flex w-[30%] h-[30%] md:w-[10%] md:h-[10%]'/>
-        </div> */}
         <p className="font-bold text-xl md:text-2xl lg:text-3xl text-center tracking-wide">
           {text}
         </p>
