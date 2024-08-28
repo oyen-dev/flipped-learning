@@ -7,7 +7,8 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --fix \"**/*.{js,jsx}\""
+    "lint": "eslint --fix \"**/*.{js,jsx}\"",
+    "start:prod": "rm -rf dist && npm run build && pm2 restart ecosystem.config.cjs"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
